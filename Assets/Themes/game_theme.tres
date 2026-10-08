@@ -1,0 +1,169 @@
+[gd_resource type="Theme" format=3 uid="uid://bhq3f1pcberir"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_551l1"]
+color = Color(0.72156864, 0.7411765, 0.7607843, 0.6509804)
+thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="InteractionProgressBackground"]
+bg_color = Color(1, 1, 1, 0.16)
+
+[sub_resource type="StyleBoxFlat" id="InteractionProgressFill"]
+bg_color = Color(0.96, 0.97, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="InteractionPromptPanel"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.035, 0.04, 0.05, 0.82)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxEmpty" id="PauseButtonEmpty"]
+content_margin_left = 30.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxEmpty" id="SettingsButtonEmpty"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="SettingsButtonHover"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+bg_color = Color(1, 1, 1, 0.07)
+
+[sub_resource type="StyleBoxFlat" id="SettingsButtonPressed"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+bg_color = Color(0.79, 0.39, 0.17, 0.16)
+
+[sub_resource type="StyleBoxFlat" id="SettingsSliderHighlight"]
+content_margin_top = 1.5
+content_margin_bottom = 1.5
+bg_color = Color(0.93, 0.94, 0.96, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="SettingsSlider"]
+content_margin_top = 1.5
+content_margin_bottom = 1.5
+bg_color = Color(0.72, 0.74, 0.76, 0.75)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="SettingsScrollGrabber"]
+bg_color = Color(0.82, 0.83, 0.85, 0.72)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxEmpty" id="SettingsScrollEmpty"]
+
+[resource]
+Divider/base_type = &"Panel"
+Divider/styles/panel = SubResource("StyleBoxLine_551l1")
+InteractionHoldProgress/base_type = &"ProgressBar"
+InteractionHoldProgress/styles/background = SubResource("InteractionProgressBackground")
+InteractionHoldProgress/styles/fill = SubResource("InteractionProgressFill")
+InteractionKeyLabel/base_type = &"Label"
+InteractionKeyLabel/colors/font_color = Color(0.95, 0.96, 0.98, 1)
+InteractionKeyLabel/colors/font_outline_color = Color(0, 0, 0, 0.9)
+InteractionKeyLabel/constants/outline_size = 2
+InteractionKeyLabel/font_sizes/font_size = 16
+InteractionPromptEntry/base_type = &"PanelContainer"
+InteractionPromptEntry/styles/panel = SubResource("InteractionPromptPanel")
+InteractionPromptLabel/base_type = &"Label"
+InteractionPromptLabel/colors/font_color = Color(0.95, 0.96, 0.98, 1)
+InteractionPromptLabel/colors/font_outline_color = Color(0, 0, 0, 0.9)
+InteractionPromptLabel/constants/outline_size = 3
+InteractionPromptLabel/font_sizes/font_size = 22
+Label/font_sizes/font_size = 18
+MainHeaderLabel/base_type = &"Label"
+MainHeaderLabel/font_sizes/font_size = 36
+MenuHeaderLabel/base_type = &"Label"
+MenuHeaderLabel/colors/font_color = Color(0.81960785, 0.4, 0.18039216, 1)
+MenuHeaderLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+MenuHeaderLabel/constants/outline_size = 2
+MenuHeaderLabel/font_sizes/font_size = 32
+PauseBackLabel/base_type = &"Label"
+PauseBackLabel/colors/font_color = Color(0.68, 0.69, 0.71, 1)
+PauseBackLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+PauseBackLabel/constants/outline_size = 2
+PauseDescriptionLabel/base_type = &"Label"
+PauseDescriptionLabel/colors/font_color = Color(0.72, 0.73, 0.75, 1)
+PauseDescriptionLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+PauseDescriptionLabel/constants/outline_size = 2
+PauseEscapeLabel/base_type = &"Label"
+PauseEscapeLabel/colors/font_color = Color(0.28, 1, 0.43, 1)
+PauseEscapeLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+PauseEscapeLabel/constants/outline_size = 2
+PauseMenuButton/base_type = &"Button"
+PauseMenuButton/colors/font_color = Color(0.58, 0.59, 0.61, 1)
+PauseMenuButton/colors/font_disabled_color = Color(0.32, 0.33, 0.35, 1)
+PauseMenuButton/colors/font_focus_color = Color(1, 1, 1, 1)
+PauseMenuButton/colors/font_hover_color = Color(1, 1, 1, 1)
+PauseMenuButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+PauseMenuButton/colors/font_outline_color = Color(0, 0, 0, 0.75)
+PauseMenuButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+PauseMenuButton/constants/outline_size = 2
+PauseMenuButton/font_sizes/font_size = 24
+PauseMenuButton/styles/disabled = SubResource("PauseButtonEmpty")
+PauseMenuButton/styles/focus = SubResource("PauseButtonEmpty")
+PauseMenuButton/styles/hover = SubResource("PauseButtonEmpty")
+PauseMenuButton/styles/normal = SubResource("PauseButtonEmpty")
+PauseMenuButton/styles/pressed = SubResource("PauseButtonEmpty")
+SettingsButton/base_type = &"Button"
+SettingsButton/colors/font_color = Color(0.72, 0.73, 0.75, 1)
+SettingsButton/colors/font_disabled_color = Color(0.32, 0.33, 0.35, 1)
+SettingsButton/colors/font_focus_color = Color(1, 1, 1, 1)
+SettingsButton/colors/font_hover_color = Color(1, 1, 1, 1)
+SettingsButton/colors/font_outline_color = Color(0, 0, 0, 0.8)
+SettingsButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+SettingsButton/constants/outline_size = 2
+SettingsButton/font_sizes/font_size = 24
+SettingsButton/styles/disabled = SubResource("SettingsButtonEmpty")
+SettingsButton/styles/focus = SubResource("SettingsButtonEmpty")
+SettingsButton/styles/hover = SubResource("SettingsButtonHover")
+SettingsButton/styles/normal = SubResource("SettingsButtonEmpty")
+SettingsButton/styles/pressed = SubResource("SettingsButtonPressed")
+SettingsLabel/base_type = &"Label"
+SettingsLabel/colors/font_color = Color(0.69, 0.7, 0.72, 1)
+SettingsLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+SettingsLabel/constants/outline_size = 2
+SettingsLabel/font_sizes/font_size = 24
+SettingsMutedLabel/base_type = &"Label"
+SettingsMutedLabel/colors/font_color = Color(0.66, 0.67, 0.69, 1)
+SettingsMutedLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+SettingsMutedLabel/constants/outline_size = 2
+SettingsMutedLabel/font_sizes/font_size = 15
+SettingsSectionLabel/base_type = &"Label"
+SettingsSectionLabel/colors/font_color = Color(0.82, 0.4, 0.18, 1)
+SettingsSectionLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+SettingsSectionLabel/constants/outline_size = 2
+SettingsSectionLabel/font_sizes/font_size = 24
+SettingsSlider/base_type = &"HSlider"
+SettingsSlider/styles/grabber_area = SubResource("SettingsSliderHighlight")
+SettingsSlider/styles/grabber_area_highlight = SubResource("SettingsSliderHighlight")
+SettingsSlider/styles/slider = SubResource("SettingsSlider")
+SettingsVScrollBar/base_type = &"VScrollBar"
+SettingsVScrollBar/styles/grabber = SubResource("SettingsScrollGrabber")
+SettingsVScrollBar/styles/grabber_highlight = SubResource("SettingsScrollGrabber")
+SettingsVScrollBar/styles/grabber_pressed = SubResource("SettingsScrollGrabber")
+SettingsVScrollBar/styles/scroll = SubResource("SettingsScrollEmpty")
+SubHeaderLabel/base_type = &"Label"
+SubHeaderLabel/font_sizes/font_size = 24

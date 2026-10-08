@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnumSettingRegistry" format=3 uid="uid://c7cran3o8iie8"]
+
+[ext_resource type="Script" uid="uid://ddg164nitolps" path="res://Components/Settings/SettingRegistryTypes/enum_setting_registry.gd" id="1_ap40x"]
+
+[resource]
+script = ExtResource("1_ap40x")
+default_option_id = &"Default"
+options_provider_id = &"audio_input_devices"
+id = &"voice.input_device"
+display_name = "Input Device"
+description = "Microphone used for voice chat and radio transmissions."
+category_id = &"audio.communication"
+sort_order = 10
+metadata/_custom_type_script = "uid://ddg164nitolps"

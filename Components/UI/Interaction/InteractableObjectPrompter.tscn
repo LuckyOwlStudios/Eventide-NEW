@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3kbma4b2or08"]
+
+[ext_resource type="Script" uid="uid://jvmckjilu2gc" path="res://Components/UI/Interaction/interactable_object_prompter.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bhkgbyu4b52sy" path="res://Assets/UI/Selector.svg" id="2_selector"]
+
+[node name="InteractableObjectPrompter" type="Node3D" unique_id=586553083]
+script = ExtResource("1_script")
+
+[node name="PromptLayer" type="CanvasLayer" parent="." unique_id=1590293936]
+layer = 20
+
+[node name="Selector" type="TextureRect" parent="PromptLayer"]
+unique_name_in_owner = true
+visible = false
+offset_right = 96.0
+offset_bottom = 96.0
+mouse_filter = 2
+texture = ExtResource("2_selector")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="OptionList" type="VBoxContainer" parent="PromptLayer" unique_id=794813554]
+unique_name_in_owner = true
+offset_right = 340.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_constants/separation = 6

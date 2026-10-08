@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://ugd1pg1ak6d7"]
+
+[ext_resource type="Script" uid="uid://barg7ltfg07kv" path="res://Components/Radio/radio_speaker_3d.gd" id="1_oxcww"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4v7s"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="Speaker" type="AudioStreamPlayer3D" unique_id=454349077]
+emission_angle_enabled = true
+emission_angle_degrees = 60.0
+script = ExtResource("1_oxcww")
+metadata/_custom_type_script = "uid://barg7ltfg07kv"
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=712126354]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1137689255]
+size = Vector3(0.5, 0.5, 0.25)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=402517811]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -2.8066642e-09, 2.8066642e-09, -0.064208984)
+operation = 2
+radius = 0.225
+height = 0.12841797
+sides = 12
+cone = true
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=1888515899]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -4.1032786e-09, -0.09387207)
+radius = 0.22753906
+height = 0.037841797
+material = SubResource("StandardMaterial3D_g4v7s")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=871019717]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -4.404755e-09, -0.10076904)
+radius = 0.025878906
+height = 0.051635742

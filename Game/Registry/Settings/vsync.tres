@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BooleanSettingRegistry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Components/Settings/SettingRegistryTypes/boolean_setting_registry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+default_value = true
+id = &"graphics.vsync"
+display_name = "VSync"
+description = "Synchronizes frames with the monitor to prevent screen tearing."
+category_id = &"graphics"
+sort_order = 20

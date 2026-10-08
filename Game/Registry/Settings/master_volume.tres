@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IntSettingRegistry" format=3 uid="uid://bqlkafqlta7uw"]
+
+[ext_resource type="Script" uid="uid://coln8tdhrxsyn" path="res://Components/Settings/SettingRegistryTypes/integer_setting_registry.gd" id="1_8pq6a"]
+
+[resource]
+script = ExtResource("1_8pq6a")
+default_value = 100
+min_value = 0
+max_value = 100
+id = &"master_volume"
+display_name = "Master Volume"
+category_id = &"audio"
+metadata/_custom_type_script = "uid://coln8tdhrxsyn"

@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://dfbq0k8qyqolu" path="res://Game/Registry/Items/Flashlight/flashlight_actor.gd" id="1_actor"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.12, 0.14, 0.17, 1)
+metallic = 0.65
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+size = Vector3(0.16, 0.16, 0.42)
+
+[node name="Flashlight" type="Node3D"]
+script = ExtResource("1_actor")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_body")
+
+[node name="Light" type="SpotLight3D" parent="."]
+unique_name_in_owner = true
+position = Vector3(0, 0, -0.23)
+visible = false
+light_color = Color(1, 0.93, 0.74, 1)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 18.0
+spot_angle = 28.0

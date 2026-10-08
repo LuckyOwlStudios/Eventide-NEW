@@ -1,0 +1,120 @@
+[gd_scene load_steps=7 format=3 uid="uid://d4jyr173jlw6t"]
+
+[ext_resource type="Script" uid="uid://78ekkekxvlld" path="res://Testing/Turret/turret.gd" id="1_umlto"]
+[ext_resource type="Script" uid="uid://b6ekl0y6sn0gk" path="res://Components/Debug/player_position_marker_3d.gd" id="3_dt4ku"]
+[ext_resource type="Script" uid="uid://cvjthwdg7r0br" path="res://Components/Vehicles/vehicle_seat_3d.gd" id="3_seat"]
+[ext_resource type="Script" uid="uid://blnsevokptyy5" path="res://Components/Movement/rotator.gd" id="4_1yk1e"]
+[ext_resource type="Texture2D" uid="uid://coxoli1ab6vgv" path="res://addons/at-icons/node/target.svg" id="5_1yk1e"]
+[ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="6_interaction_option"]
+
+[sub_resource type="Resource" id="Resource_control_turret"]
+script = ExtResource("6_interaction_option")
+prompt = "Control Turret"
+metadata/_custom_type_script = "uid://c0qugb31qanoa"
+
+[node name="Turret3D" type="Node3D" unique_id=295808033 node_paths=PackedStringArray("vehicle_camera")]
+script = ExtResource("1_umlto")
+debug = true
+vehicle_camera = NodePath("CameraYaw/CameraPitch/SpringArm3D/CameraMount/Camera3D")
+metadata/_custom_type_script = "uid://78ekkekxvlld"
+
+[node name="VehicleSeat" type="Area3D" parent="." unique_id=1016690031 node_paths=PackedStringArray("vehicle", "seat_mount", "dismount_point", "prompt_anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+script = ExtResource("3_seat")
+vehicle = NodePath("..")
+seat_mount = NodePath("SeatMount")
+dismount_point = NodePath("DismountPoint")
+interaction_options = Array[ExtResource("6_interaction_option")]([SubResource("Resource_control_turret")])
+prompt_anchor = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleSeat" unique_id=1363272919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34375, 0)
+
+[node name="SeatMount" type="Node3D" parent="VehicleSeat" unique_id=1167539747]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0)
+script = ExtResource("3_dt4ku")
+metadata/_custom_type_script = "uid://b6ekl0y6sn0gk"
+
+[node name="DismountPoint" type="Marker3D" parent="VehicleSeat" unique_id=973097437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.375, -0.75, 0)
+
+[node name="GunYaw" type="Node3D" parent="." unique_id=845045875]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0)
+
+[node name="GunPitch" type="Node3D" parent="GunYaw" unique_id=1181676100]
+
+[node name="GunRayCast3D" type="RayCast3D" parent="GunYaw/GunPitch" unique_id=224768450]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1000)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="CameraYaw" type="Node3D" parent="." unique_id=668554998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0)
+
+[node name="CameraPitch" type="Node3D" parent="CameraYaw" unique_id=751740347]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraYaw/CameraPitch" unique_id=1618516714]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CameraMount" type="Marker3D" parent="CameraYaw/CameraPitch/SpringArm3D" unique_id=1711330235]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 0.99999994, 0, 0, 0)
+
+[node name="TargetRayCast3D" type="RayCast3D" parent="CameraYaw/CameraPitch/SpringArm3D/CameraMount" unique_id=1478103283]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1000)
+
+[node name="Camera3D" type="Camera3D" parent="CameraYaw/CameraPitch/SpringArm3D/CameraMount" unique_id=474604873]
+
+[node name="CameraLeftPoint" type="Marker3D" parent="CameraYaw/CameraPitch" unique_id=942848161]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, -1.25, 0, 0.625)
+
+[node name="CameraCenterPoint" type="Marker3D" parent="CameraYaw/CameraPitch" unique_id=1894781408]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 0, 0.75, 1.625)
+
+[node name="CameraRightPoint" type="Marker3D" parent="CameraYaw/CameraPitch" unique_id=1106055807]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 1.25, 0, 0.625)
+
+[node name="Rotator" type="Node" parent="." unique_id=1521761234 node_paths=PackedStringArray("yaw_pivot", "pitch_pivot", "lerping_yaw_nodes", "lerping_pitch_nodes", "aim_raycast")]
+unique_name_in_owner = true
+script = ExtResource("4_1yk1e")
+yaw_pivot = NodePath("../CameraYaw")
+pitch_pivot = NodePath("../CameraYaw/CameraPitch")
+minimum_pitch = -15.0
+maximum_pitch = 75.0
+input_enabled = false
+mechanical_follow_enabled = false
+lerping_yaw_nodes = [NodePath("../GunYaw")]
+lerping_pitch_nodes = [NodePath("../GunYaw/GunPitch")]
+mechanical_aim_mode = 1
+aim_raycast = NodePath("../CameraYaw/CameraPitch/SpringArm3D/CameraMount/TargetRayCast3D")
+follow_lerp_speed = 48.0
+maximum_turn_speed_degrees = 180.0
+
+[node name="UIBase" type="CanvasLayer" parent="." unique_id=1661823569]
+unique_name_in_owner = true
+visible = false
+
+[node name="GunScreenSpaceLocation" type="Control" parent="UIBase" unique_id=914438723]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="UIBase" unique_id=1112872715]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_1yk1e")

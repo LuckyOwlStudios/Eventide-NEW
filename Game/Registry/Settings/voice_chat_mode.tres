@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnumSettingRegistry" format=3 uid="uid://dbcfplgue42di"]
+
+[ext_resource type="Script" uid="uid://ddg164nitolps" path="res://Components/Settings/SettingRegistryTypes/enum_setting_registry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+option_ids = PackedStringArray("disabled", "open_mic", "push_to_talk")
+option_names = PackedStringArray("Disabled", "Open Mic", "Push to Talk")
+default_option_id = &"push_to_talk"
+id = &"voice.chat_mode"
+display_name = "Voice Chat Mode"
+description = "Choose when proximity voice chat transmits. Radio remains push-to-talk."
+category_id = &"audio.communication"
+sort_order = 100

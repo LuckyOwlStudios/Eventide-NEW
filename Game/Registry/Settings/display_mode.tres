@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnumSettingRegistry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Components/Settings/SettingRegistryTypes/enum_setting_registry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+option_ids = PackedStringArray("windowed", "borderless_fullscreen", "exclusive_fullscreen")
+option_names = PackedStringArray("Windowed", "Borderless Fullscreen", "Exclusive Fullscreen")
+default_option_id = &"borderless_fullscreen"
+id = &"graphics.display_mode"
+display_name = "Display Mode"
+description = "Choose how the game window is displayed."
+category_id = &"graphics"
+sort_order = 10

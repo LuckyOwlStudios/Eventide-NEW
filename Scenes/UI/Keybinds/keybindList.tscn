@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://ds2uict84fk2c"]
+
+[ext_resource type="PackedScene" uid="uid://dbk8uo5ktspt0" path="res://Scenes/UI/Keybinds/KeybindEntry.tscn" id="1_o6le1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[node name="Keybinds" type="PanelContainer" unique_id=1185596140]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=982429910]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1479125036]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Keybind" parent="ScrollContainer/VBoxContainer" unique_id=418340310 instance=ExtResource("1_o6le1")]
+layout_mode = 2
+
+[node name="Keybind2" parent="ScrollContainer/VBoxContainer" unique_id=894689761 instance=ExtResource("1_o6le1")]
+layout_mode = 2
+
+[node name="Keybind3" parent="ScrollContainer/VBoxContainer" unique_id=701379361 instance=ExtResource("1_o6le1")]
+layout_mode = 2
+
+[node name="Keybind4" parent="ScrollContainer/VBoxContainer" unique_id=419665757 instance=ExtResource("1_o6le1")]
+layout_mode = 2
+
+[node name="Keybind5" parent="ScrollContainer/VBoxContainer" unique_id=130262499 instance=ExtResource("1_o6le1")]
+layout_mode = 2

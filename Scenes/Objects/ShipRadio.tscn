@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Components/Radio/radio.gd" id="1_radio"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_ship_radio"]
+albedo_color = Color(0.08, 0.1, 0.12, 1)
+metallic = 0.7
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="BoxMesh_ship_radio"]
+material = SubResource("StandardMaterial_ship_radio")
+size = Vector3(0.8, 0.35, 0.5)
+
+[node name="ShipRadio" type="Node3D"]
+script = ExtResource("1_radio")
+device_label = "Ship Radio"
+channel_mode = 2
+frequency_code = 1000
+infinite_transmit_range = true
+speaker_audible_distance = 35.0
+
+[node name="ConsoleMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ship_radio")

@@ -1,0 +1,64 @@
+# C/C++ generated
+*.a
+*.ax
+*.d
+*.dll
+*.lib
+*.lo
+*.o
+*.os
+*.ox
+*.Plo
+*.so
+
+# Python generated
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+
+# Steam SDK
+sdk/*
+!sdk/put SDK here
+
+# Doxygen
+doxygen/
+
+# Misc
+/bin/
+/gen/
+/custom.py
+.sconsign.dblite
+/tags
+/TAGS
+*.swp
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc

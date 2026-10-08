@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://cjqlwu11deu1a"]
+
+[ext_resource type="Texture2D" uid="uid://oxuvtdos5u12" path="res://Assets/UI/Circle.svg" id="1_circle"]
+[ext_resource type="Script" uid="uid://bopwc58t6p1nb" path="res://Components/UI/Interaction/key_bind_interaction_entry.gd" id="2_script"]
+
+[node name="KeybindInteractionEntry" type="PanelContainer" unique_id=8302198]
+custom_minimum_size = Vector2(200, 0)
+offset_right = 200.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_type_variation = &"InteractionPromptEntry"
+script = ExtResource("2_script")
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1773572900]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="Content" type="HBoxContainer" parent="Layout" unique_id=1169345854]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="KeyBindHolder" type="TextureRect" parent="Layout/Content" unique_id=289724074]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="KeyBindLabel" type="Label" parent="Layout/Content/KeyBindHolder" unique_id=1170645789]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"InteractionKeyLabel"
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="Layout/Content" unique_id=593929491]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "INTERACT"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Layout" unique_id=966651169]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 4
+
+[node name="HoldProgress" type="ProgressBar" parent="Layout/MarginContainer" unique_id=1177639702]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"InteractionHoldProgress"
+max_value = 1.0
+step = 0.001
+show_percentage = false

@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://ervls3dvs4ro"]
+
+[ext_resource type="Script" uid="uid://dp80cmp5h3n78" path="res://Components/Orientor/orientor.gd" id="1_rhvht"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rhvht"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_kc2r7"]
+sky_material = SubResource("ProceduralSkyMaterial_rhvht")
+
+[sub_resource type="Environment" id="Environment_lpbn8"]
+background_mode = 2
+sky = SubResource("Sky_kc2r7")
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
+size = Vector3(4, 4, 4)
+
+[node name="Demo" type="Node3D" unique_id=541742338 groups=["gameplay_scene"]]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1150768033]
+environment = SubResource("Environment_lpbn8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1998222657]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1453514798]
+transform = Transform3D(1, 0, 0, 0, 0.9488222, 0.31581083, 0, -0.31581083, 0.9488222, 0, 1.7104285, 4.0141153)
+
+[node name="Cube" type="RigidBody3D" parent="." unique_id=2045858854]
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Cube" unique_id=141582079]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Cube/CSGBox3D2" unique_id=1431342516]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0)
+radius = 0.25
+height = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube" unique_id=311753310]
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Orientor" type="Node" parent="Cube" unique_id=409736526]
+script = ExtResource("1_rhvht")
+orientation_speed = 6.5
+metadata/_custom_type_script = "uid://dp80cmp5h3n78"
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1961989146]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+gravity_space_override = 3
+gravity_point_center = Vector3(1, 0, 0)
+gravity_direction = Vector3(1, 0, 0)
+gravity = 16.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1697339130]
+shape = SubResource("BoxShape3D_yf5fn")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Area3D" unique_id=1230181795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.371139e-08, -2.25, 0)
+use_collision = true
+size = Vector3(4, 0.5, 4)

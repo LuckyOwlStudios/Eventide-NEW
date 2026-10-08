@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SettingCategoryRegistry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Components/Settings/setting_category_registry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"audio.communication"
+display_name = "Communication"
+description = "Voice chat, microphone, and radio settings."
+parent_id = &"audio"
+sort_order = 10

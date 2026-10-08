@@ -1,0 +1,8 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+/steam_appid.txt
+/builds/
+
+# Godot creates temporary copies while reloading native extensions on Windows.
+/addons/godotsteam/**/~libgodotsteam*

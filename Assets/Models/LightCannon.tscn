@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://dc4di1bmxd1gs"]
+
+[node name="LightCannonModel" type="CSGCombiner3D" unique_id=2122153543]
+
+[node name="Base" type="CSGCylinder3D" parent="." unique_id=1898279768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+radius = 0.75
+height = 0.25
+sides = 12
+
+[node name="Base2" type="CSGCylinder3D" parent="." unique_id=1285890848]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3125, 0)
+radius = 0.625
+height = 0.125
+sides = 12
+
+[node name="TurretYaw" type="Node3D" parent="." unique_id=1063578042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+
+[node name="Bottom" type="CSGCylinder3D" parent="TurretYaw" unique_id=1475734925]
+height = 0.25
+sides = 12
+
+[node name="Middle" type="CSGCylinder3D" parent="TurretYaw" unique_id=1538559306]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.1875, 0, 0)
+radius = 0.375
+height = 0.375
+sides = 12
+
+[node name="Right" type="CSGCylinder3D" parent="TurretYaw" unique_id=1385194159]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.3125, 0, 0)
+radius = 0.375
+height = 0.125
+sides = 12
+
+[node name="Back" type="CSGPolygon3D" parent="TurretYaw" unique_id=1693581388]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.125, 0)
+polygon = PackedVector2Array(-0.5, 0, -0.375, 0.625, 0.375, 0.625, 0.5, 0)
+depth = 0.25
+
+[node name="BarrelPitch" type="Node3D" parent="TurretYaw" unique_id=1699557267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="TurretYaw/BarrelPitch" unique_id=687620681]
+
+[node name="RightBarrel" type="CSGCylinder3D" parent="TurretYaw/BarrelPitch/CSGCombiner3D" unique_id=839776432]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.125, 0, -0.5)
+radius = 0.09814453
+height = 1.0
+
+[node name="RightBarrel2" type="CSGCylinder3D" parent="TurretYaw/BarrelPitch/CSGCombiner3D" unique_id=964115728]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.125, 0, -0.68969727)
+operation = 2
+radius = 0.06201172
+height = 0.62060547
+
+[node name="CameraPitch" type="Node3D" parent="TurretYaw" unique_id=1853395283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, -0.125)
+
+[node name="Camera" type="CSGBox3D" parent="TurretYaw/CameraPitch" unique_id=1949056844]
+transform = Transform3D(1, 0, 0, 0, 0.7071067, -0.70710677, 0, 0.70710677, 0.7071067, -0.187, 0.125, -0.125)
+size = Vector3(0.125, 0.25, 0.125)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="TurretYaw/CameraPitch/Camera" unique_id=2031491841]
+transform = Transform3D(1, 0, 0, 0, 0, -0.9999999, 0, 0.9999999, 0, 0, -0.043768615, -0.06890482)
+radius = 0.0390625
+height = 0.020507813
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="TurretYaw/CameraPitch/Camera" unique_id=664054849]
+transform = Transform3D(1, 0, 0, 0, 0, -0.9999999, 0, 0.9999999, 0, 0, 0.060212433, -0.06750482)
+radius = 0.0390625
+height = 0.020507813

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SettingCategoryRegistry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Components/Settings/setting_category_registry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"audio"
+display_name = "Audio"
+description = "Sound and voice settings."
+sort_order = 10

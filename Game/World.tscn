@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://ctpvbs2u3kpet"]
+
+[ext_resource type="PackedScene" uid="uid://bry3npyddc8bg" path="res://Scenes/Player/Player.tscn" id="1_dyu4a"]
+[ext_resource type="Script" uid="uid://barg7ltfg07kv" path="res://Components/Radio/radio_speaker_3d.gd" id="3_rio8u"]
+[ext_resource type="PackedScene" uid="uid://ugd1pg1ak6d7" path="res://Scenes/Objects/Speaker.tscn" id="4_dyu4a"]
+[ext_resource type="Script" uid="uid://cd70lgntu48so" path="res://Components/Radio/radio_manager.gd" id="4_p8frc"]
+[ext_resource type="Script" uid="uid://c56hrvh084k5a" path="res://Components/Interaction/interactable_object_3d.gd" id="5_p8frc"]
+[ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="7_wb7ei"]
+[ext_resource type="Script" uid="uid://df748pr0kjr2g" path="res://Components/Physics/directional_gravity_field.gd" id="8_w5src"]
+[ext_resource type="PackedScene" uid="uid://bpnljsiqs8j5t" path="res://Testing/Turret/MediumTurret3D.tscn" id="9_uyedj"]
+[ext_resource type="PackedScene" uid="uid://bpw0eabirebmd" path="res://Testing/Turret/LightTurret3D.tscn" id="10_cfe18"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p8frc"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_5aejl"]
+sky_material = SubResource("ProceduralSkyMaterial_p8frc")
+
+[sub_resource type="Environment" id="Environment_wb7ei"]
+background_mode = 2
+sky = SubResource("Sky_5aejl")
+glow_enabled = true
+
+[sub_resource type="GDScript" id="GDScript_uyedj"]
+script/source = "extends Node3D
+
+@export var mesh: CSGPrimitive3D
+
+@onready var interactable: InteractableObject3D = $InteractableObject3D
+
+func _ready() -> void:
+	interactable.interacted.connect(_interacted)
+
+func _interacted(interactor: Node3D):
+	var material: Material = mesh.material
+	if material.get(\"albedo_color\") == Color.RED:
+		mesh.material.set(\"albedo_color\", Color.GREEN)
+	else:
+		mesh.material.set(\"albedo_color\", Color.RED)
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4v7s"]
+
+[sub_resource type="Resource" id="Resource_wb7ei"]
+script = ExtResource("7_wb7ei")
+prompt = "Pick Up"
+metadata/_custom_type_script = "uid://c0qugb31qanoa"
+
+[sub_resource type="Resource" id="Resource_w5src"]
+script = ExtResource("7_wb7ei")
+option_id = &"primary_action"
+input_action = &"primary_action"
+prompt = "Toggle Light"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g4v7s"]
+height = 1.0
+radius = 0.25
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
+size = Vector3(8, 8, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_57qmd"]
+size = Vector3(24, 4, 24)
+
+[node name="World" type="Node3D" unique_id=867967981 groups=["gameplay_scene"]]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1374628029]
+environment = SubResource("Environment_wb7ei")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1459844855]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="World" type="CSGCombiner3D" parent="." unique_id=449065065]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="World" unique_id=519505562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+use_collision = true
+size = Vector3(24, 0.5, 24)
+
+[node name="Player" parent="." unique_id=260935112 instance=ExtResource("1_dyu4a")]
+
+[node name="RadioSpeaker3D" type="AudioStreamPlayer3D" parent="." unique_id=571755930]
+script = ExtResource("3_rio8u")
+metadata/_custom_type_script = "uid://barg7ltfg07kv"
+
+[node name="Ingame Systems" type="Node" parent="." unique_id=1712449108]
+
+[node name="RadioManager" type="Node" parent="Ingame Systems" unique_id=578257098]
+script = ExtResource("4_p8frc")
+default_frequency_code = 1000
+metadata/_custom_type_script = "uid://cd70lgntu48so"
+
+[node name="Speaker" parent="." unique_id=454349077 instance=ExtResource("4_dyu4a")]
+transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, 4, 0.25, -4)
+hear_local_transmissions = true
+
+[node name="Speaker2" parent="." unique_id=103865412 instance=ExtResource("4_dyu4a")]
+transform = Transform3D(-0.70710665, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710665, -4, 0.25, -4)
+hear_local_transmissions = true
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1125703559 node_paths=PackedStringArray("mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+script = SubResource("GDScript_uyedj")
+mesh = NodePath("CSGBox3D")
+
+[node name="CSGBox3D" type="CSGCylinder3D" parent="Node3D" unique_id=846336274]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.375, 0)
+radius = 0.125
+height = 0.75
+material = SubResource("StandardMaterial3D_g4v7s")
+
+[node name="InteractableObject3D" type="Area3D" parent="Node3D" unique_id=952931066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.375, 0)
+script = ExtResource("5_p8frc")
+interaction_options = Array[ExtResource("7_wb7ei")]([SubResource("Resource_wb7ei"), SubResource("Resource_w5src")])
+selector_size = Vector3(0.5, 0.5, 0.5)
+metadata/_custom_type_script = "uid://c56hrvh084k5a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/InteractableObject3D" unique_id=1919065106]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_g4v7s")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=2007462488]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, -16)
+gravity_point_center = Vector3(1, 0, 0)
+gravity_direction = Vector3(1, 0, 0)
+gravity = 16.0
+script = ExtResource("8_w5src")
+metadata/_custom_type_script = "uid://df748pr0kjr2g"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2089569696]
+shape = SubResource("BoxShape3D_yf5fn")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Area3D" unique_id=1555424406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.25, 0)
+use_collision = true
+size = Vector3(8, 0.5, 8)
+
+[node name="DirectionalGravityField3D" type="Area3D" parent="." unique_id=992776477]
+script = ExtResource("8_w5src")
+metadata/_custom_type_script = "uid://df748pr0kjr2g"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DirectionalGravityField3D" unique_id=2074697573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_57qmd")
+
+[node name="MediumTurret3D" parent="." unique_id=295808033 instance=ExtResource("9_uyedj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 3)
+debug = false
+
+[node name="LightTurret3D" parent="." unique_id=1451393045 instance=ExtResource("10_cfe18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 3)

@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cocvijfaxr8j0"]
+
+[node name="MediumCannon" type="CSGCombiner3D" unique_id=2122153543]
+
+[node name="Base" type="CSGCylinder3D" parent="." unique_id=1898279768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+radius = 1.0
+height = 0.25
+sides = 12
+
+[node name="Yaw" type="Node3D" parent="." unique_id=1063578042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+
+[node name="Bottom" type="CSGCylinder3D" parent="Yaw" unique_id=1475734925]
+radius = 0.75
+height = 0.25
+sides = 12
+
+[node name="Left" type="CSGCylinder3D" parent="Yaw" unique_id=1890605932]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.5, 0, 0)
+height = 0.25
+sides = 12
+
+[node name="Middle" type="CSGCylinder3D" parent="Yaw" unique_id=1538559306]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+height = 0.25
+sides = 12
+
+[node name="Right" type="CSGCylinder3D" parent="Yaw" unique_id=1385194159]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.5, 0, 0)
+height = 0.25
+sides = 12
+
+[node name="Back" type="CSGPolygon3D" parent="Yaw" unique_id=1693581388]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+polygon = PackedVector2Array(-0.75, 0, -0.375, 0.875, 0.375, 0.875, 0.75, 0)
+depth = 0.5
+
+[node name="Pitch" type="Node3D" parent="Yaw" unique_id=1699557267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="RightBarrel" type="CSGCylinder3D" parent="Yaw/Pitch" unique_id=839776432]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.25, 0, -0.75)
+radius = 0.125
+height = 1.5
+
+[node name="LeftBarrel" type="CSGCylinder3D" parent="Yaw/Pitch" unique_id=2085923308]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.25, 0, -0.75)
+radius = 0.125
+height = 1.5
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Yaw" unique_id=1098133672]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, 0.75, 0.375, 0)
+size = Vector3(0.125, 0.25, 0.125)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Yaw" unique_id=760519015]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, -0.75, 0.375, 0)
+size = Vector3(0.125, 0.25, 0.125)

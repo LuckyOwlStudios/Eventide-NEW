@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dbk8uo5ktspt0"]
+
+[node name="Keybind" type="PanelContainer" unique_id=894689761]
+custom_minimum_size = Vector2(800, 0)
+offset_right = 290.0
+offset_bottom = 39.0
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1378715041]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=34770455]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer" unique_id=710612180]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Keybind Name"
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer" unique_id=550816507]
+custom_maximum_size = Vector2(400, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[Unassigned]"
+
+[node name="Button2" type="Button" parent="MarginContainer/HBoxContainer" unique_id=218070292]
+custom_maximum_size = Vector2(200, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset"

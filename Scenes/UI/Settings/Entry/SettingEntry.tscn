@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://cblgqy7xj4njp"]
+
+[ext_resource type="Script" uid="uid://ddcd8ll1kyj7r" path="res://Scenes/UI/Settings/Entry/setting_entry.gd" id="1"]
+
+[node name="SettingEntry" type="HBoxContainer" unique_id=738498954]
+custom_minimum_size = Vector2(0, 44)
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_constants/separation = 10
+script = ExtResource("1")
+
+[node name="FocusIndicator" type="ColorRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(4, 24)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.96, 0.97, 1, 1)
+modulate = Color(1, 1, 1, 0)
+
+[node name="NameLabel" type="Label" parent="." unique_id=1894855255]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+theme_type_variation = &"SettingsLabel"
+text = "Setting Name"
+vertical_alignment = 1
+
+[node name="ValueContainer" type="HBoxContainer" parent="." unique_id=326132488]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="AddKeybindButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(72, 40)
+layout_mode = 2
+theme_type_variation = &"SettingsButton"
+text = "ADD"
+
+[node name="ResetButton" type="Button" parent="." unique_id=688010964]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 40)
+layout_mode = 2
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0)
+theme_type_variation = &"SettingsButton"
+text = "RESET"

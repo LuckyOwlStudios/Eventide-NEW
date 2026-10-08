@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnumSettingRegistry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Components/Settings/SettingRegistryTypes/enum_setting_registry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+option_ids = PackedStringArray("0", "30", "60", "120", "144", "240")
+option_names = PackedStringArray("Unlimited", "30 FPS", "60 FPS", "120 FPS", "144 FPS", "240 FPS")
+default_option_id = &"0"
+id = &"graphics.fps_limit"
+display_name = "Frame Rate Limit"
+description = "Limits rendering speed to reduce power usage and heat."
+category_id = &"graphics"
+sort_order = 30

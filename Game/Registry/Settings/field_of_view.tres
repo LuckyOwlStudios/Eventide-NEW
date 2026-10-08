@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FloatSettingRegistry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Components/Settings/SettingRegistryTypes/float_setting_registry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+default_value = 75.0
+min_value = 60.0
+max_value = 110.0
+step = 1.0
+id = &"controls.field_of_view"
+display_name = "Field of View"
+description = "Adjusts the width of the first-person camera view."
+category_id = &"controls"
+sort_order = 20

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://fs4r81nv1eh"]
+
+[ext_resource type="Script" uid="uid://b7yfqxljawcwu" path="res://Components/Attributes/UI/lerping_attribute_bar.gd" id="1_bar"]
+
+[sub_resource type="Gradient" id="Gradient_default"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[node name="LerpingAttributeBar" type="Control" unique_id=1151568596]
+custom_minimum_size = Vector2(320, 20)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_bar")
+bar_gradient = SubResource("Gradient_default")

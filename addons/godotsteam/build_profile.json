@@ -1,0 +1,22 @@
+{
+	"enabled_classes": [
+		"CanvasItem",
+		"DisplayServer",
+		"Engine",
+		"MainLoop",
+		"Material",
+		"Mesh",
+		"MultiplayerAPI",
+		"MultiplayerPeerExtension",
+		"Node",
+		"Object",
+		"OS",
+		"PacketPeerExtension",
+		"ProjectSettings",
+		"RenderingServer",
+		"SceneTree",
+		"StyleBox",
+		"Texture2D",
+		"Window"
+	]
+}
