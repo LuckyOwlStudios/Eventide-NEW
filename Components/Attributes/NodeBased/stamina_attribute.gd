@@ -13,7 +13,7 @@ signal regen_cooldown_finished
 @export var starting_max_stamina := 100.0
 @export var starting_regen_cooldown := 1.0
 ## Signed stamina change per second. Positive regenerates; negative consumes.
-@export var starting_stamina_change_rate := 10.0
+@export var starting_stamina_change_rate := 25.0
 
 var stamina := 0.0
 var max_stamina := Attribute.new()

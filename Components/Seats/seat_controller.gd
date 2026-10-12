@@ -6,7 +6,7 @@ signal seat_entered(seat: Node)
 signal seat_exited(seat: Node)
 
 @export_category("Actor Components")
-@export var character_mover: Node
+@export var character_controller: Node
 @export var player_rotator: Node
 @export var orientation_component: Node
 @export var interaction_ray: InteractionRayCast3D
@@ -64,9 +64,10 @@ func enter_seat(seat: Node) -> bool:
 	_body.collision_mask = 0
 	_body.velocity = Vector3.ZERO
 	_body.global_transform = seat.get_seat_transform()
+	_body.reset_physics_interpolation()
 
 	_saved_process_modes.clear()
-	_disable_component(character_mover)
+	_lock_movement()
 	_disable_component(player_rotator)
 	_disable_component(orientation_component)
 	if is_instance_valid(interaction_ray):
@@ -89,10 +90,12 @@ func exit_seat() -> bool:
 
 	current_seat = null
 	_body.global_transform = exit_transform
+	_body.reset_physics_interpolation()
 	_body.velocity = Vector3.ZERO
 	_body.collision_layer = _saved_collision_layer
 	_body.collision_mask = _saved_collision_mask
 	_restore_components()
+	_unlock_movement()
 	if is_instance_valid(interaction_ray):
 		interaction_ray.interaction_enabled = _interaction_was_enabled
 
@@ -133,6 +136,20 @@ func _on_seat_entered(_seat: Node) -> void:
 
 func _on_seat_exited(_seat: Node) -> void:
 	pass
+
+
+## Stops the actor from moving itself. A CharacterController has a proper lock; anything
+## else is simply switched off.
+func _lock_movement() -> void:
+	if character_controller is CharacterController:
+		(character_controller as CharacterController).movement_blocker.add(get_instance_id(), "seat")
+	else:
+		_disable_component(character_controller)
+
+
+func _unlock_movement() -> void:
+	if character_controller is CharacterController:
+		(character_controller as CharacterController).movement_blocker.remove(get_instance_id())
 
 
 func _disable_component(component: Node) -> void:

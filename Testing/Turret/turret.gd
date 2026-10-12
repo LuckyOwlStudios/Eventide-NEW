@@ -1,7 +1,11 @@
 class_name Turret3D
-extends Vehicle3D
+extends Node3D
+## A gun a player can take control of from a [VehicleSeat3D]. It is not a [Vehicle3D]: it has no
+## body of its own and rides whatever it is mounted on.
 
 signal look_mode_changed(previous_mode: LOOK_MODE, current_mode: LOOK_MODE)
+signal control_started(controller: VehicleController)
+signal control_ended(controller: VehicleController)
 
 enum LOOK_MODE {
 	LEFT,
@@ -9,6 +13,8 @@ enum LOOK_MODE {
 	RIGHT
 }
 @export_range(0.0, 2.0, 0.05) var camera_side_transition_duration := 0.25
+## The camera the controlling player sees through.
+@export var vehicle_camera: Camera3D
 
 @export_group("Debugging")
 @export var debug := false
@@ -37,13 +43,15 @@ enum LOOK_MODE {
 ## Screen-space anchor for a crosshair showing the gun barrel's real aim point.
 @onready var gun_screen_space_location: Control = %GunScreenSpaceLocation
 
+var controller: VehicleController
 var look_mode := LOOK_MODE.CENTER
 var _camera_side_tween: Tween
 var _spring_arm_origin := Vector3.ZERO
 var _camera_offset := Vector3.ZERO
 
 func _ready() -> void:
-	super._ready()
+	if is_instance_valid(vehicle_camera):
+		vehicle_camera.current = false
 	rotator.set_input_enabled(has_local_control())
 	rotator.set_mechanical_follow_enabled(is_instance_valid(controller))
 	_spring_arm_origin = spring_arm.position
@@ -58,13 +66,38 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not has_local_control():
 		return
-	if event.is_action_pressed("roll_left") and not event.is_echo():
+	if event.is_action_pressed("turret_lean_left") and not event.is_echo():
 		toggle_camera_side(LOOK_MODE.LEFT)
 		get_viewport().set_input_as_handled()
 		return
-	if event.is_action_pressed("roll_right") and not event.is_echo():
+	if event.is_action_pressed("turret_lean_right") and not event.is_echo():
 		toggle_camera_side(LOOK_MODE.RIGHT)
 		get_viewport().set_input_as_handled()
+
+# --- Control, the same calls a VehicleSeat3D makes on a Vehicle3D -------------
+
+func can_be_controlled_by(candidate: VehicleController) -> bool:
+	return is_instance_valid(candidate) and not is_instance_valid(controller)
+
+func claim_control(candidate: VehicleController) -> bool:
+	if not can_be_controlled_by(candidate):
+		return false
+	controller = candidate
+	_on_control_started(candidate)
+	control_started.emit(candidate)
+	return true
+
+func release_control(candidate: VehicleController) -> bool:
+	if not is_instance_valid(controller) or controller != candidate:
+		return false
+	var previous := controller
+	controller = null
+	_on_control_ended(previous)
+	control_ended.emit(previous)
+	return true
+
+func has_local_control() -> bool:
+	return is_instance_valid(controller) and controller.is_local_controller()
 
 func _on_control_started(active_controller: VehicleController) -> void:
 	var actor := active_controller.get_parent()

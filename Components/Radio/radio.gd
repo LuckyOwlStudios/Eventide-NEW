@@ -72,7 +72,7 @@ func _exit_tree() -> void:
 
 
 func _ready() -> void:
-	_manager = Game.get_radio_manager_or_null()
+	_manager = InGameHandler.get_radio_manager_or_null()
 	if _manager == null:
 		push_warning("[Radio] No RadioManager exists in the active game world.")
 		return

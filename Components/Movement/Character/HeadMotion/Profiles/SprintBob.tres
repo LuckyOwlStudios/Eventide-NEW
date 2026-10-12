@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HeadBobProfile" format=3 uid="uid://dn6176cmpdjui"]
+
+[ext_resource type="Script" uid="uid://yvfdolq8uqa0" path="res://Components/Movement/Character/HeadMotion/footfall.gd" id="1_gdlya"]
+[ext_resource type="Script" uid="uid://brsx4s0jfj5j2" path="res://Components/Movement/Character/HeadMotion/head_bob_profile.gd" id="1_profile"]
+
+[resource]
+resource_name = "Sprint"
+script = ExtResource("1_profile")
+distance_per_cycle = 4.8
+maximum_intensity = 1.6
+vertical = 0.042
+lateral = 0.028
+roll_degrees = 0.7
+pitch_degrees = 0.55

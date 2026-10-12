@@ -26,6 +26,10 @@ const MINIMUM_GRAVITY := 0.001
 		base_jump_height = maxf(value, 0.0)
 		if jump_height:
 			jump_height.base_value = base_jump_height
+## Optional view-relative basis used to turn movement input into world direction.
+## Keeping this separate from the physics body lets a local camera turn immediately
+## without writing to the CharacterBody3D outside physics ticks.
+@export var movement_reference: Node3D
 ## Allows a double jump press to toggle between ground movement and flight.
 @export var toggle_flight := true
 
@@ -57,7 +61,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	# E is also the interaction key. During zero-gravity flight Q/E belong to roll.
 	if is_flying and not has_gravity:
-		if event.is_action_pressed("roll_left") or event.is_action_pressed("roll_right"):
+		if event.is_action_pressed("roll"):
 			get_viewport().set_input_as_handled()
 
 
@@ -143,7 +147,7 @@ func _get_ground_direction(body: Node3D, up: Vector3) -> Vector3:
 	if input_direction.is_zero_approx():
 		return Vector3.ZERO
 	var local_direction := Vector3(input_direction.x, 0.0, input_direction.y)
-	var world_direction := body.global_basis.orthonormalized() * local_direction
+	var world_direction := _get_movement_basis(body) * local_direction
 	world_direction = world_direction.slide(up)
 	if world_direction.is_zero_approx():
 		return Vector3.ZERO
@@ -161,11 +165,16 @@ func _get_flight_direction(body: Node3D) -> Vector3:
 	var local_direction := Vector3(horizontal_input.x, vertical_input, horizontal_input.y)
 	if local_direction.length_squared() > 1.0:
 		local_direction = local_direction.normalized()
-	return body.global_basis.orthonormalized() * local_direction
+	return _get_movement_basis(body) * local_direction
+
+
+func _get_movement_basis(body: Node3D) -> Basis:
+	var reference := movement_reference if is_instance_valid(movement_reference) else body
+	return reference.global_basis.orthonormalized()
 
 
 func _get_roll_input() -> float:
-	return Input.get_axis("roll_left", "roll_right") if not has_gravity else 0.0
+	return Input.get_action_strength("roll") if not has_gravity else 0.0
 
 
 func _consume_jump_request(can_jump: bool) -> bool:

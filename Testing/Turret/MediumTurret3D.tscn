@@ -9,7 +9,7 @@ radius = 1.0
 
 [node name="MediumTurret3D" unique_id=295808033 instance=ExtResource("1_base")]
 
-[node name="VehicleSeat" parent="." index="1" unique_id=1016690031]
+[node name="VehicleSeat" parent="." index="0" unique_id=1016690031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 selector_size = Vector3(1.5, 1.5, 1.5)
 
@@ -17,7 +17,7 @@ selector_size = Vector3(1.5, 1.5, 1.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0625, 0)
 shape = SubResource("CylinderShape3D_klhjf")
 
-[node name="SeatMount" parent="VehicleSeat" index="1" unique_id=1167539747]
+[node name="SeatMount" parent="VehicleSeat" index="1" unique_id=253981955]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0)
 
 [node name="DismountPoint" parent="VehicleSeat" index="2" unique_id=973097437]
@@ -35,12 +35,12 @@ transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 0, 1, 2)
 [node name="CameraRightPoint" parent="CameraYaw/CameraPitch" parent_id_path=PackedInt32Array(751740347) index="3" unique_id=1106055807]
 transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 1.25, 0.25, 1)
 
-[node name="Rotator" parent="." index="4" unique_id=1521761234 node_paths=PackedStringArray("lerping_yaw_nodes", "lerping_pitch_nodes")]
+[node name="Rotator" parent="." index="3" unique_id=1521761234 node_paths=PackedStringArray("lerping_yaw_nodes", "lerping_pitch_nodes")]
 lerping_yaw_nodes = [NodePath("../GunYaw"), NodePath("../Mesh/Yaw")]
 lerping_pitch_nodes = [NodePath("../GunYaw/GunPitch"), NodePath("../Mesh/Yaw/Pitch")]
 follow_lerp_speed = 6.0
 minimum_turn_speed_degrees = 5.0
 
-[node name="Mesh" parent="." index="6" unique_id=2122153543 instance=ExtResource("2_model")]
+[node name="Mesh" parent="." index="5" unique_id=2122153543 instance=ExtResource("2_model")]
 
 [editable path="Mesh"]

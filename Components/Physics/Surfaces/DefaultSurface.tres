@@ -1,0 +1,9 @@
+[gd_resource type="PhysicsMaterial" script_class="SurfaceMaterial" format=3]
+
+[ext_resource type="Script" path="res://Components/Physics/surface_material.gd" id="1_surface"]
+[ext_resource type="AudioStream" path="res://Assets/Audio/Footsteps/Surfaces/metal/metal_step.tres" id="2_step"]
+
+[resource]
+resource_name = "Default"
+script = ExtResource("1_surface")
+step_sound = ExtResource("2_step")

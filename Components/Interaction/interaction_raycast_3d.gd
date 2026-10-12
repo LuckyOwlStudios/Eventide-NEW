@@ -58,6 +58,13 @@ var _hold_completed: Dictionary = {}
 var _last_press_time_msec: Dictionary = {}
 
 
+func _enter_tree() -> void:
+	# By default it looks at interactables and at the solid things that can hide them. A
+	# mask a scene set to something other than Godot's stock value of 1 is left alone.
+	if collision_mask == 1:
+		collision_mask = PhysicsLayers.INTERACTION_RAY_MASK
+
+
 func _ready() -> void:
 	target_position = Vector3(0.0, 0.0, -interaction_distance)
 	collide_with_areas = true
@@ -100,6 +107,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if input_requires_multiplayer_authority and not is_multiplayer_authority():
 		return
 	if event is InputEventKey and event.echo:
+		return
+	# The focused object can be freed (picked up, say) before the next physics frame notices.
+	if not is_instance_valid(_focused_interactable):
 		return
 	var succeeded := false
 	for option_index in _available_option_indices:
@@ -144,7 +154,7 @@ func try_interact_option(option_index: int) -> bool:
 		return false
 	interaction_requested.emit(target, interactor)
 	interaction_option_requested.emit(target, interactor, option_index)
-	if not target.interact(interactor, option_index):
+	if not target.interact_at(interactor, get_collision_point(), option_index):
 		interaction_failed.emit(target, interactor)
 		return false
 	interaction_succeeded.emit(target, interactor)
@@ -187,6 +197,12 @@ func _update_focus() -> void:
 func _interactable_from_collider(collider: Object) -> Area3D:
 	if collider is INTERACTABLE_OBJECT_SCRIPT:
 		return collider
+	if collider is Area3D and collider.has_meta(INTERACTABLE_OBJECT_SCRIPT.INTERACTION_TARGET_META):
+		var mapped_target: Variant = collider.get_meta(
+			INTERACTABLE_OBJECT_SCRIPT.INTERACTION_TARGET_META
+		)
+		if is_instance_valid(mapped_target) and mapped_target is INTERACTABLE_OBJECT_SCRIPT:
+			return mapped_target
 	return null
 
 

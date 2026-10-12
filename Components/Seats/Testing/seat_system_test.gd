@@ -23,7 +23,7 @@ func _ready() -> void:
 	actor.add_child(orientor)
 	var controller = VEHICLE_CONTROLLER_SCRIPT.new()
 	controller.name = "VehicleController"
-	controller.character_mover = mover
+	controller.character_controller = mover
 	controller.player_rotator = rotator
 	controller.orientation_component = orientor
 	actor.add_child(controller)

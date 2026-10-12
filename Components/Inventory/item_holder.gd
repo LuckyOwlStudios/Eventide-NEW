@@ -2,48 +2,62 @@
 class_name ItemHolder
 extends Node
 
-const SLOT_COUNT := 4
-const SLOT_ACTIONS := [
-	&"inventory_slot_1",
-	&"inventory_slot_2",
-	&"inventory_slot_3",
-	&"inventory_slot_4",
-]
-
 signal item_equipped(instance: ItemInstance, actor: ItemActor)
 signal item_unequipped(instance: ItemInstance)
 
 ## Inventory whose items this holder is allowed to equip.
 @export var inventory: Inventory
+## The slot container whose slots the number keys pick from. Slot 1 answers to the input action
+## inventory_slot_1, and so on for as many of those actions as the project defines.
+@export var hotbar_id: StringName = &"hotbar"
 ## Position where the equipped ItemActor is instantiated, such as a hand or camera mount.
 @export var actor_parent: Node3D
 
 var equipped_instance: ItemInstance
 var equipped_actor: ItemActor
 
+var _slot_actions: Array[StringName] = []
+
 func _ready() -> void:
+	var number := 1
+	while InputMap.has_action(StringName("inventory_slot_%d" % number)):
+		_slot_actions.append(StringName("inventory_slot_%d" % number))
+		number += 1
 	if inventory == null:
 		push_warning("[ItemHolder] Inventory is not assigned.")
-	elif not inventory.item_removed.is_connected(_on_inventory_item_removed):
-		inventory.item_removed.connect(_on_inventory_item_removed)
+	else:
+		if get_hotbar() == null:
+			push_warning("[ItemHolder] The inventory has no slot container named '%s'." % hotbar_id)
+		if not inventory.item_removed.is_connected(_on_inventory_item_removed):
+			inventory.item_removed.connect(_on_inventory_item_removed)
 	if actor_parent == null:
 		push_warning("[ItemHolder] Actor parent is not assigned.")
 
 func _unhandled_input(event: InputEvent) -> void:
-	for slot_index in SLOT_COUNT:
-		if event.is_action_pressed(SLOT_ACTIONS[slot_index]):
+	var hotbar := get_hotbar()
+	if hotbar == null:
+		return
+	for slot_index in mini(_slot_actions.size(), hotbar.size):
+		if event.is_action_pressed(_slot_actions[slot_index]):
 			get_viewport().set_input_as_handled()
 			toggle_inventory_slot(slot_index)
 			return
 
+## The slot container the number keys pick from, or null.
+func get_hotbar() -> InventorySlotContainer:
+	if inventory == null:
+		return null
+	return inventory.get_container(hotbar_id) as InventorySlotContainer
+
 ## Equips a slot, switches to it, or unequips it when it is already held.
 func toggle_inventory_slot(slot_index: int) -> bool:
-	if inventory == null or slot_index < 0 or slot_index >= SLOT_COUNT:
+	var hotbar := get_hotbar()
+	if hotbar == null or slot_index < 0 or slot_index >= hotbar.size:
 		return false
-	if slot_index >= inventory.items.size() or inventory.items[slot_index] == null:
+	var instance := hotbar.get_instance(slot_index)
+	if instance == null:
 		unequip_item()
 		return false
-	var instance := inventory.items[slot_index]
 	if instance == equipped_instance:
 		unequip_item()
 		return true
@@ -52,7 +66,7 @@ func toggle_inventory_slot(slot_index: int) -> bool:
 func equip_item(instance: ItemInstance) -> bool:
 	if inventory == null or actor_parent == null:
 		return false
-	if instance == null or not inventory.has_item(instance):
+	if instance == null or not inventory.has_instance(instance):
 		return false
 	if instance == equipped_instance and is_instance_valid(equipped_actor):
 		return true
@@ -93,6 +107,8 @@ func secondary_use() -> void:
 func has_equipped_item() -> bool:
 	return equipped_instance != null and is_instance_valid(equipped_actor)
 
-func _on_inventory_item_removed(instance: ItemInstance, _index: int) -> void:
+## An item leaves its container when it is dropped, traded, or put in a bag, and you cannot
+## keep holding it then. Moving it to another hotbar slot is not leaving, so that keeps it in hand.
+func _on_inventory_item_removed(_container: InventoryContainer, instance: ItemInstance) -> void:
 	if instance == equipped_instance:
 		unequip_item()

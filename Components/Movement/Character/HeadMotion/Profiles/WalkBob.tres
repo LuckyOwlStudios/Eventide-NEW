@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HeadBobProfile" format=3 uid="uid://6v8ov0hqjkdu"]
+
+[ext_resource type="Script" uid="uid://yvfdolq8uqa0" path="res://Components/Movement/Character/HeadMotion/footfall.gd" id="1_n4rlu"]
+[ext_resource type="Script" uid="uid://brsx4s0jfj5j2" path="res://Components/Movement/Character/HeadMotion/head_bob_profile.gd" id="1_profile"]
+
+[resource]
+resource_name = "Walk"
+script = ExtResource("1_profile")

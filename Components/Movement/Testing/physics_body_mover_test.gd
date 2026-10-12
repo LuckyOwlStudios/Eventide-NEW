@@ -66,10 +66,10 @@ func _test_zero_gravity_flight() -> void:
 	Input.action_release("jump")
 	assert(body.linear_velocity.y > 0.0)
 
-	Input.action_press("roll_left")
+	Input.action_press("roll")
 	for frame in 10:
 		await physics_frame
-	Input.action_release("roll_left")
+	Input.action_release("roll")
 	assert(absf(body.angular_velocity.z) > 0.01)
 
 	body.free()

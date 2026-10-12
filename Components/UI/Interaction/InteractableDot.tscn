@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dot"]
+resource_local_to_scene = true
+shading_mode = 0
+billboard_mode = 1
+use_z_clip_scale = true
+z_clip_scale = 0.01
+distance_fade_mode = 1
+distance_fade_min_distance = 3.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_dot"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_dot")
+size = Vector2(0.05, 0.05)
+
+[node name="Dot" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("QuadMesh_dot")

@@ -1,4 +1,4 @@
-@icon("uid://bjvhyfwqn6jxf")
+@icon("uid://baeicuw6syt0x")
 class_name MicActivityIcon
 extends TextureRect
 ## A local HUD icon driven by a PlayerVoiceChat microphone's talking state.

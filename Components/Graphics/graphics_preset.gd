@@ -1,0 +1,33 @@
+class_name GraphicsPreset
+extends Resource
+## What one Graphics Quality level allows. An [AdvEnvironment] holds one per level.
+##
+## Presets only take things away: glow and shadows stay off wherever the scene itself
+## turned them off, whatever the quality.
+
+## Allows glow where the environment has it on.
+@export var glow := true
+## Allows shadows from the lights that have them on.
+@export var shadows := true
+## How much of the screen resolution the 3D world is drawn at. The interface always draws
+## at full resolution. This is the biggest saving on weaker graphics cards.
+@export_range(0.25, 1.0, 0.05) var render_scale := 1.0
+@export var msaa: Viewport.MSAA = Viewport.MSAA_DISABLED
+## Detail of the shadows from spot and omni lights.
+@export_range(256, 8192, 256) var positional_shadow_atlas_size := 2048
+
+
+static func create(
+	allow_glow: bool,
+	allow_shadows: bool,
+	scale: float,
+	antialiasing: Viewport.MSAA,
+	atlas_size: int,
+) -> GraphicsPreset:
+	var preset := GraphicsPreset.new()
+	preset.glow = allow_glow
+	preset.shadows = allow_shadows
+	preset.render_scale = scale
+	preset.msaa = antialiasing
+	preset.positional_shadow_atlas_size = atlas_size
+	return preset

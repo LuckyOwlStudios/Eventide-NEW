@@ -266,6 +266,9 @@ func _discover_input_map_keybinds() -> void:
 		# project. They are engine controls, not player keybinds.
 		if String(action).begins_with("ui_"):
 			continue
+		# A stick axis, like the look actions, cannot be a keyboard key to rebind.
+		if _is_stick_only_action(action):
+			continue
 		var keys := _capture_action_keys(action)
 		if not _keybind_defaults.has(action):
 			_keybind_defaults[action] = keys.duplicate()
@@ -280,6 +283,15 @@ func _discover_input_map_keybinds() -> void:
 			definition.keybind_category = _infer_keybind_category(action)
 			register_definition(definition)
 		definition.default_physical_keys = _keybind_defaults[action].duplicate()
+
+func _is_stick_only_action(action: StringName) -> bool:
+	var events := InputMap.action_get_events(action)
+	if events.is_empty():
+		return false
+	for event in events:
+		if not event is InputEventJoypadMotion:
+			return false
+	return true
 
 func _capture_action_keys(action: StringName) -> PackedInt64Array:
 	var keys := PackedInt64Array()
@@ -300,8 +312,7 @@ func _infer_keybind_category(action: StringName) -> String:
 		&"crouch",
 		&"sprint",
 		&"stroll",
-		&"roll_left",
-		&"roll_right",
+		&"roll",
 	]:
 		return "Movement"
 	if action_text.contains("voice") or action_text.contains("radio") or action_text.contains("chat"):

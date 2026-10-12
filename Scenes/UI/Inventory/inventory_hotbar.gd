@@ -1,27 +1,30 @@
-## Four-slot inventory display. ItemHolder owns selection and input behavior.
+## Shows the slots of an ItemHolder's hotbar. ItemHolder owns selection and input behavior.
 class_name InventoryHotbar
 extends HBoxContainer
 
-const SLOT_COUNT := 4
-
-@export var inventory: Inventory
 @export var item_holder: ItemHolder
 
+var _hotbar: InventorySlotContainer
 var _slots: Array[PanelContainer] = []
 var _icons: Array[TextureRect] = []
 var _quantity_labels: Array[Label] = []
 
 func _ready() -> void:
+	if item_holder != null:
+		_hotbar = item_holder.get_hotbar()
+	if _hotbar == null:
+		push_warning("[InventoryHotbar] There is no hotbar to show: assign an ItemHolder whose inventory has it.")
 	_build_slots()
-	if inventory != null:
-		inventory.inventory_changed.connect(_refresh)
+	if _hotbar != null:
+		_hotbar.changed.connect(_refresh)
 	if item_holder != null:
 		item_holder.item_equipped.connect(_on_item_equipped)
 		item_holder.item_unequipped.connect(_on_item_unequipped)
 	_refresh()
 
 func _build_slots() -> void:
-	for slot_index in SLOT_COUNT:
+	var slot_count := _hotbar.size if _hotbar != null else 0
+	for slot_index in slot_count:
 		var slot := PanelContainer.new()
 		slot.custom_minimum_size = Vector2(68.0, 68.0)
 		slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -55,10 +58,10 @@ func _build_slots() -> void:
 		_quantity_labels.append(quantity_label)
 
 func _refresh() -> void:
-	for slot_index in SLOT_COUNT:
+	for slot_index in _slots.size():
 		var instance: ItemInstance
-		if inventory != null and slot_index < inventory.items.size():
-			instance = inventory.items[slot_index]
+		if _hotbar != null:
+			instance = _hotbar.get_instance(slot_index)
 		var is_equipped := item_holder != null and instance != null and instance == item_holder.equipped_instance
 		_slots[slot_index].add_theme_stylebox_override(&"panel", _make_slot_style(is_equipped))
 		if instance == null or instance.item == null:

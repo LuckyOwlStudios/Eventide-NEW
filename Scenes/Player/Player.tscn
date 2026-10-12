@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dvpkwo6h7y0sj" path="res://addons/twovoip/voiphelper/two_voip_mic.tscn" id="6_twovoip_mic"]
 [ext_resource type="Script" uid="uid://842e4s3lsgsn" path="res://Components/Radio/radio.gd" id="7_t26db"]
 [ext_resource type="PackedScene" uid="uid://c613yggmsl08x" path="res://addons/twovoip/voiphelper/two_voip_speaker.tscn" id="7_twovoip_speaker"]
-[ext_resource type="Script" uid="uid://bvc3ookiijr1p" path="res://Components/Inventory/inventory.gd" id="8_825xp"]
 [ext_resource type="Script" uid="uid://37ga06wg7j1f" path="res://Components/Inventory/item_instance.gd" id="9_item_instance"]
 [ext_resource type="Script" uid="uid://de57cjhlw15p" path="res://Components/Inventory/item_holder.gd" id="10_item_holder"]
 [ext_resource type="PackedScene" path="res://Scenes/UI/Inventory/InventoryHotbar.tscn" id="11_hotbar"]
@@ -18,13 +17,28 @@
 [ext_resource type="Script" uid="uid://dkxoluktox8nu" path="res://Components/Interaction/interaction_raycast_3d.gd" id="14_interaction"]
 [ext_resource type="PackedScene" uid="uid://b3kbma4b2or08" path="res://Components/UI/Interaction/InteractableObjectPrompter.tscn" id="15_interaction_prompter"]
 [ext_resource type="Script" uid="uid://bhvyx0wc2ixmi" path="res://Components/Attributes/NodeBased/health_attribute.gd" id="17_spxdj"]
+[ext_resource type="Script" uid="uid://ckd5rah8n2xh3" path="res://Components/Inventory/inventory.gd" id="17_to4uw"]
+[ext_resource type="Script" uid="uid://ce722goueavtg" path="res://Components/Inventory/inventory_container.gd" id="18_p7cr0"]
 [ext_resource type="Script" uid="uid://l1dtyai1i81s" path="res://Components/Attributes/NodeBased/stamina_attribute.gd" id="18_stamina"]
 [ext_resource type="PackedScene" uid="uid://fs4r81nv1eh" path="res://Components/Attributes/UI/LerpingAttributeBar.tscn" id="19_attribute_bar"]
-[ext_resource type="Script" uid="uid://daqqtrlu3mhl7" path="res://Components/Movement/character_mover.gd" id="20_1e6p3"]
+[ext_resource type="Script" uid="uid://dtecqbok1dsgq" path="res://Components/Inventory/item.gd" id="19_vrod0"]
+[ext_resource type="Script" uid="uid://d0xugmu7b47ru" path="res://Components/Inventory/inventory_slot_container.gd" id="20_fcbn2"]
 [ext_resource type="Texture2D" uid="uid://nchp2s3lf2e2" path="res://Components/Attributes/UI/medkit_white.svg" id="20_health_icon"]
 [ext_resource type="Texture2D" uid="uid://cbhkd08igavmm" path="res://Components/Attributes/UI/lightning_bolt_white.svg" id="21_stamina_icon"]
 [ext_resource type="Script" uid="uid://dp80cmp5h3n78" path="res://Components/Orientor/orientor.gd" id="21_yb677"]
 [ext_resource type="Script" uid="uid://dp1uv17ft2p84" path="res://Components/Vehicles/vehicle_controller.gd" id="22_vehicle_controller"]
+[ext_resource type="Script" uid="uid://dbjqs6dmq5sjs" path="res://Components/Traversal/ladder_controller.gd" id="23_ladder_controller"]
+[ext_resource type="Script" uid="uid://7vphsxim0psu" path="res://Components/Movement/Character/movement_attribute.gd" id="24_movement_stats"]
+[ext_resource type="Script" uid="uid://bbclvnbuj8sp7" path="res://Components/Movement/Character/player_character_controller.gd" id="26_player_controller"]
+[ext_resource type="Script" uid="uid://47ss3h73ryta" path="res://Components/Movement/Character/character_net_sync.gd" id="27_net_sync"]
+[ext_resource type="Script" uid="uid://ca3dgm0rxcgxn" path="res://Components/Movement/Character/HeadMotion/head_motion.gd" id="30_head_motion"]
+[ext_resource type="Script" uid="uid://b04b0257hd6va" path="res://Components/Movement/Character/HeadMotion/footstep_player.gd" id="31_footstep_player"]
+[ext_resource type="Resource" uid="uid://6v8ov0hqjkdu" path="res://Components/Movement/Character/HeadMotion/Profiles/WalkBob.tres" id="32_walk_bob"]
+[ext_resource type="Resource" uid="uid://dn6176cmpdjui" path="res://Components/Movement/Character/HeadMotion/Profiles/SprintBob.tres" id="33_sprint_bob"]
+[ext_resource type="Resource" uid="uid://5rjidr5lo5ha" path="res://Components/Movement/Character/HeadMotion/Profiles/StrollBob.tres" id="34_stroll_bob"]
+[ext_resource type="Resource" uid="uid://c2mu4qxfltcdn" path="res://Components/Movement/Character/HeadMotion/Profiles/CrouchBob.tres" id="35_crouch_bob"]
+[ext_resource type="Script" uid="uid://dq4sxlfpls0va" path="res://Components/Movement/Character/jetpack.gd" id="35_lw74r"]
+[ext_resource type="Script" uid="uid://bj6lt1ihhp7kp" path="res://Components/Physics/soft_collision_3d.gd" id="36_tf3ct"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -32,16 +46,25 @@ height = 1.8
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
 
+[sub_resource type="Resource" id="Resource_flashlight_instance"]
+script = ExtResource("13_flashlight_instance")
+item = ExtResource("12_flashlight")
+
+[sub_resource type="Resource" id="Resource_hotbar"]
+script = ExtResource("20_fcbn2")
+size = 4
+id = &"hotbar"
+starting_items = Array[ExtResource("9_item_instance")]([SubResource("Resource_flashlight_instance")])
+metadata/_custom_type_script = "uid://d0xugmu7b47ru"
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_g4v7s"]
 color = Color(1, 1, 1, 1)
 thickness = 8
 
-[sub_resource type="Resource" id="Resource_flashlight_instance"]
-resource_local_to_scene = true
-script = ExtResource("13_flashlight_instance")
-item = ExtResource("12_flashlight")
-
 [node name="Player" type="CharacterBody3D" unique_id=260935112 node_paths=PackedStringArray("health", "stamina")]
+collision_layer = 2
+collision_mask = 29
+platform_floor_layers = 4294901777
 script = ExtResource("1_h54ih")
 health = NodePath("HealthAttribute")
 stamina = NodePath("StaminaAttribute")
@@ -51,6 +74,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_player")
 
 [node name="HeadRoot" type="Node3D" parent="." unique_id=2048153428]
+physics_interpolation_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="YawPivot" type="Node3D" parent="HeadRoot" unique_id=1179328855]
@@ -63,12 +87,13 @@ metadata/_custom_type_script = "uid://bp4nmxk7cvakx"
 
 [node name="InteractionRayCast3D" type="RayCast3D" parent="HeadRoot/YawPivot/PitchPivot/Camera3D" unique_id=1350245565 node_paths=PackedStringArray("interaction_source", "interaction_prompter")]
 target_position = Vector3(0, 0, -3)
+collision_mask = 64
 collide_with_areas = true
 script = ExtResource("14_interaction")
 interaction_source = NodePath("../../../../..")
 interaction_prompter = NodePath("InteractableObjectPrompter")
 
-[node name="InteractableObjectPrompter" parent="HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D" instance=ExtResource("15_interaction_prompter")]
+[node name="InteractableObjectPrompter" parent="HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D" unique_id=1501321948 instance=ExtResource("15_interaction_prompter")]
 
 [node name="ItemMount" type="Marker3D" parent="HeadRoot/YawPivot/PitchPivot/Camera3D" unique_id=964718294]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.25, -0.55)
@@ -102,6 +127,97 @@ audiobufferlagtimetargettolerance = 0.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_g4v7s")
 
+[node name="Radio" type="Node3D" parent="." unique_id=720242909 node_paths=PackedStringArray("voice_chat")]
+script = ExtResource("7_t26db")
+device_label = "Player Walkie-Talkie"
+voice_chat = NodePath("../HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat")
+metadata/_custom_type_script = "uid://842e4s3lsgsn"
+
+[node name="SoftCollision3D" type="Node" parent="." unique_id=1270775002]
+script = ExtResource("36_tf3ct")
+metadata/_custom_type_script = "uid://bj6lt1ihhp7kp"
+
+[node name="Orientor" type="Node" parent="." unique_id=580396143]
+script = ExtResource("21_yb677")
+metadata/_custom_type_script = "uid://dp80cmp5h3n78"
+
+[node name="Rotator" type="Node" parent="." unique_id=554106115 node_paths=PackedStringArray("yaw_pivot", "pitch_pivot")]
+script = ExtResource("4_look")
+yaw_pivot = NodePath("../HeadRoot/YawPivot")
+pitch_pivot = NodePath("../HeadRoot/YawPivot/PitchPivot")
+metadata/_custom_type_script = "uid://blnsevokptyy5"
+
+[node name="PlayerCharacterController" type="Node" parent="." unique_id=764652907 node_paths=PackedStringArray("rotator", "character", "stats", "net_sync", "orientor", "collision_shape", "stamina", "head")]
+script = ExtResource("26_player_controller")
+rotator = NodePath("../Rotator")
+character = NodePath("..")
+stats = NodePath("../MovementAttribute")
+net_sync = NodePath("../CharacterNetSync")
+orientor = NodePath("../Orientor")
+collision_shape = NodePath("../CollisionShape3D")
+stamina = NodePath("../StaminaAttribute")
+head = NodePath("../HeadRoot")
+
+[node name="HealthAttribute" type="Node" parent="." unique_id=2004094872]
+script = ExtResource("17_spxdj")
+metadata/_custom_type_script = "uid://bhvyx0wc2ixmi"
+
+[node name="StaminaAttribute" type="Node" parent="." unique_id=1690833458]
+script = ExtResource("18_stamina")
+
+[node name="MovementAttribute" type="Node" parent="." unique_id=1833839511]
+script = ExtResource("24_movement_stats")
+
+[node name="Inventory" type="Node" parent="." unique_id=815178438]
+script = ExtResource("17_to4uw")
+containers = Array[ExtResource("18_p7cr0")]([SubResource("Resource_hotbar")])
+metadata/_custom_type_script = "uid://ckd5rah8n2xh3"
+
+[node name="ItemHolder" type="Node" parent="." unique_id=318815422 node_paths=PackedStringArray("inventory", "actor_parent")]
+script = ExtResource("10_item_holder")
+inventory = NodePath("../Inventory")
+actor_parent = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/ItemMount")
+
+[node name="VehicleController" type="Node" parent="." unique_id=1485242158 node_paths=PackedStringArray("player_camera", "player_view_root", "visual_root", "character_controller", "player_rotator", "interaction_ray")]
+script = ExtResource("22_vehicle_controller")
+player_camera = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D")
+player_view_root = NodePath("../HeadRoot")
+visual_root = NodePath("../ThirdPersonRoot")
+character_controller = NodePath("../PlayerCharacterController")
+player_rotator = NodePath("../Rotator")
+interaction_ray = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D")
+
+[node name="LadderController" type="Node" parent="." unique_id=1657702923 node_paths=PackedStringArray("character_controller", "orientation_component", "interaction_ray", "player_rotator", "seat_controller")]
+script = ExtResource("23_ladder_controller")
+character_controller = NodePath("../PlayerCharacterController")
+orientation_component = NodePath("../Orientor")
+interaction_ray = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D")
+player_rotator = NodePath("../Rotator")
+seat_controller = NodePath("../VehicleController")
+
+[node name="HeadMotion" type="Node" parent="." unique_id=1724680301 node_paths=PackedStringArray("target", "controller")]
+script = ExtResource("30_head_motion")
+target = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D")
+controller = NodePath("../PlayerCharacterController")
+bob_strength = 0.75
+walk_profile = ExtResource("32_walk_bob")
+sprint_profile = ExtResource("33_sprint_bob")
+stroll_profile = ExtResource("34_stroll_bob")
+crouch_profile = ExtResource("35_crouch_bob")
+impact_strength = 0.5
+
+[node name="FootstepPlayer" type="Node" parent="." unique_id=1724680302 node_paths=PackedStringArray("head_motion")]
+script = ExtResource("31_footstep_player")
+head_motion = NodePath("../HeadMotion")
+
+[node name="Jetpack" type="Node" parent="." unique_id=1020602988]
+script = ExtResource("35_lw74r")
+metadata/_custom_type_script = "uid://dq4sxlfpls0va"
+
+[node name="CharacterNetSync" type="Node" parent="." unique_id=484725145 node_paths=PackedStringArray("controller")]
+script = ExtResource("27_net_sync")
+controller = NodePath("../PlayerCharacterController")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=495458726]
 
 [node name="AttributeBars" type="VBoxContainer" parent="CanvasLayer" unique_id=1868833305]
@@ -127,9 +243,8 @@ increase_color = Color(0.2, 0.9019608, 1, 1)
 decrease_color = Color(0.9490196, 0.63529414, 0.12156863, 1)
 icon = ExtResource("21_stamina_icon")
 
-[node name="InventoryHotbar" parent="CanvasLayer" unique_id=385567340 node_paths=PackedStringArray("inventory", "item_holder") instance=ExtResource("11_hotbar")]
+[node name="InventoryHotbar" parent="CanvasLayer" unique_id=385567340 node_paths=PackedStringArray("item_holder") instance=ExtResource("11_hotbar")]
 anchors_preset = 7
-inventory = NodePath("../../Inventory")
 item_holder = NodePath("../../ItemHolder")
 
 [node name="MicIcon" type="TextureRect" parent="CanvasLayer" unique_id=2127712436 node_paths=PackedStringArray("player_voice_chat")]
@@ -181,51 +296,3 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Radio" type="Node3D" parent="." unique_id=720242909 node_paths=PackedStringArray("voice_chat")]
-script = ExtResource("7_t26db")
-device_label = "Player Walkie-Talkie"
-voice_chat = NodePath("../HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat")
-metadata/_custom_type_script = "uid://842e4s3lsgsn"
-
-[node name="Rotator" type="Node" parent="." unique_id=554106115 node_paths=PackedStringArray("yaw_pivot", "pitch_pivot")]
-script = ExtResource("4_look")
-yaw_pivot = NodePath("..")
-pitch_pivot = NodePath("../HeadRoot/YawPivot/PitchPivot")
-metadata/_custom_type_script = "uid://blnsevokptyy5"
-
-[node name="CharacterMover" type="Node" parent="." unique_id=407877821]
-script = ExtResource("20_1e6p3")
-base_movement_speed = 5.0
-base_jump_height = 1.0
-
-[node name="Orientor" type="Node" parent="." unique_id=580396143]
-script = ExtResource("21_yb677")
-metadata/_custom_type_script = "uid://dp80cmp5h3n78"
-
-[node name="HealthAttribute" type="Node" parent="." unique_id=2004094872]
-script = ExtResource("17_spxdj")
-metadata/_custom_type_script = "uid://bhvyx0wc2ixmi"
-
-[node name="StaminaAttribute" type="Node" parent="." unique_id=1690833458]
-script = ExtResource("18_stamina")
-
-[node name="Inventory" type="Node" parent="." unique_id=650828379]
-script = ExtResource("8_825xp")
-capacity = 4
-items = Array[ExtResource("9_item_instance")]([SubResource("Resource_flashlight_instance")])
-metadata/_custom_type_script = "uid://bvc3ookiijr1p"
-
-[node name="ItemHolder" type="Node" parent="." unique_id=318815422 node_paths=PackedStringArray("inventory", "actor_parent")]
-script = ExtResource("10_item_holder")
-inventory = NodePath("../Inventory")
-actor_parent = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/ItemMount")
-
-[node name="VehicleController" type="Node" parent="." unique_id=1485242158 node_paths=PackedStringArray("player_camera", "player_view_root", "visual_root", "character_mover", "player_rotator", "interaction_ray")]
-script = ExtResource("22_vehicle_controller")
-player_camera = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D")
-player_view_root = NodePath("../HeadRoot")
-visual_root = NodePath("../ThirdPersonRoot")
-character_mover = NodePath("../CharacterMover")
-player_rotator = NodePath("../Rotator")
-interaction_ray = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D")

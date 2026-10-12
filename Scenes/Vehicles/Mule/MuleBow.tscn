@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://qaocaks7otn4"]
+
+[ext_resource type="PackedScene" uid="uid://daks8xcg0nkqr" path="res://Assets/Models/Vehicles/Mule/MuleBowModel.tscn" id="1_em35d"]
+[ext_resource type="Script" uid="uid://cjga2ykahv8uq" path="res://Components/Physics/curved_raycast_3d.gd" id="2_0un3b"]
+[ext_resource type="PackedScene" uid="uid://f7g2niq3jqwo" path="res://Assets/Models/Vehicles/Mule/MuleRampModel.tscn" id="2_03jwp"]
+[ext_resource type="Script" uid="uid://dffxoy312fs7" path="res://Components/Doors/door_switch_3d.gd" id="4_switch"]
+[ext_resource type="Script" uid="uid://ey2qin5odqdt" path="res://Components/Doors/hinged_door_3d.gd" id="5_door"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.375, 0.5, 0.25)
+
+[node name="MuleBow" type="Node3D" unique_id=1601944499]
+
+[node name="MuleBowModel" parent="." unique_id=1534942812 instance=ExtResource("1_em35d")]
+
+[node name="InteriorLight" type="OmniLight3D" parent="." unique_id=1794167867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.125, 0)
+
+[node name="RightHeadLight" type="SpotLight3D" parent="." unique_id=1749112852]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.625, 1.25, -2.25)
+spot_range = 32.0
+
+[node name="LeftHeadLight" type="SpotLight3D" parent="." unique_id=609124019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.625, 1.25, -2.25)
+spot_range = 32.0
+
+[node name="MuleRampModel" parent="." unique_id=854908899 instance=ExtResource("2_03jwp")]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, -2.125)
+
+[node name="CurvedRayCast3DLeft" type="Node3D" parent="." unique_id=521393931]
+transform = Transform3D(-4.371139e-08, -1, 0, -2.9802322e-08, 1.7763568e-15, -1.0000001, 1.0000001, -4.3711392e-08, -2.9802322e-08, -1.875, -0.125, -2.125)
+script = ExtResource("2_0un3b")
+target_angle = 120.0
+radius = 2.751
+max_angle_step = 5.0
+metadata/_custom_type_script = "uid://cjga2ykahv8uq"
+
+[node name="CurvedRayCast3DRight" type="Node3D" parent="." unique_id=781965747]
+transform = Transform3D(-4.3711392e-08, -1, 0, -2.9802322e-08, 1.7763568e-15, -1.0000001, 1.0000001, -4.3711395e-08, -2.9802322e-08, 1.875, -0.125, -2.125)
+script = ExtResource("2_0un3b")
+target_angle = 120.0
+radius = 2.751
+max_angle_step = 5.0
+metadata/_custom_type_script = "uid://cjga2ykahv8uq"
+
+[node name="ExteriorDoorSwitch" type="Node3D" parent="." unique_id=632450210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.375, -2)
+
+[node name="DoorInteractableObject3D" type="Area3D" parent="ExteriorDoorSwitch" unique_id=16111328 node_paths=PackedStringArray("door")]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("4_switch")
+door = NodePath("../../Door")
+selector_size = Vector3(0.25, 0.25, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExteriorDoorSwitch/DoorInteractableObject3D" unique_id=591313577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.125)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="ExteriorDoorSwitch" unique_id=644666565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.033447266)
+size = Vector3(0.25, 0.375, 0.06689453)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="ExteriorDoorSwitch/CSGBox3D" unique_id=1551638098]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.07895076, -0.06101942)
+radius = 0.06201172
+height = 0.0625
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="ExteriorDoorSwitch/CSGBox3D" unique_id=313205811]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.070139885, -0.06101942)
+radius = 0.06201172
+height = 0.0625
+
+[node name="InteriorDoorSwitch" type="Node3D" parent="." unique_id=1063565679]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.75, 1.875, -1.75)
+
+[node name="DoorInteractableObject3D" type="Area3D" parent="InteriorDoorSwitch" unique_id=599545123 node_paths=PackedStringArray("door")]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("4_switch")
+door = NodePath("../../Door")
+selector_size = Vector3(0.25, 0.25, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteriorDoorSwitch/DoorInteractableObject3D" unique_id=386615190]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.125)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="InteriorDoorSwitch" unique_id=2083970636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.033447266)
+size = Vector3(0.25, 0.375, 0.06689453)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="InteriorDoorSwitch/CSGBox3D" unique_id=1888604539]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.07895076, -0.06101942)
+radius = 0.06201172
+height = 0.0625
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="InteriorDoorSwitch/CSGBox3D" unique_id=1543883711]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.070139885, -0.06101942)
+radius = 0.06201172
+height = 0.0625
+
+[node name="Door" type="Node3D" parent="." unique_id=1930482716 node_paths=PackedStringArray("pivot", "limit_raycasts")]
+script = ExtResource("5_door")
+pivot = NodePath("../MuleRampModel")
+open_angle = -135.0
+rotation_speed = 45.0
+limit_raycasts = [NodePath("../CurvedRayCast3DLeft"), null, NodePath("../CurvedRayCast3DRight")]

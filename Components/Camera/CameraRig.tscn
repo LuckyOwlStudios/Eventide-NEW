@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dfuv6214g5jtd"]
+
+[ext_resource type="Script" uid="uid://c7dnv3oifu6q1" path="res://Components/Camera/camera_rig.gd" id="1_fvq8t"]
+[ext_resource type="Script" uid="uid://dp80cmp5h3n78" path="res://Components/Orientor/orientor.gd" id="2_rl6ue"]
+[ext_resource type="Script" uid="uid://bp4nmxk7cvakx" path="res://Components/Camera/base_camera.gd" id="3_camera"]
+
+[node name="CameraRig" type="RemoteTransform3D" unique_id=424562844]
+remote_path = NodePath("View")
+update_rotation = false
+update_scale = false
+script = ExtResource("1_fvq8t")
+
+[node name="View" type="Node3D" parent="." unique_id=753738607]
+unique_name_in_owner = true
+physics_interpolation_mode = 2
+top_level = true
+
+[node name="Orientator" type="Node" parent="View" unique_id=821995534]
+unique_name_in_owner = true
+script = ExtResource("2_rl6ue")
+orientation_speed = 1.0
+step_automatically = false
+
+[node name="Pitch" type="Node3D" parent="View" unique_id=138206275]
+unique_name_in_owner = true
+
+[node name="FreeLook" type="Node3D" parent="View/Pitch" unique_id=1326419510]
+unique_name_in_owner = true
+
+[node name="SpringArm3D" type="SpringArm3D" parent="View/Pitch/FreeLook" unique_id=5556115]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.9238796, 0.38268352, 0, -0.38268352, 0.9238796, 0, 0, 0)
+spring_length = 3.0
+
+[node name="Camera" type="Camera3D" parent="View/Pitch/FreeLook/SpringArm3D" unique_id=2066091629]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.9238796, -0.38268352, 0, 0.38268352, 0.9238796, 0, 0, 0)
+current = true
+script = ExtResource("3_camera")

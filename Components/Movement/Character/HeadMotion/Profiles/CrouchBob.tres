@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HeadBobProfile" format=3 uid="uid://c2mu4qxfltcdn"]
+
+[ext_resource type="Script" uid="uid://yvfdolq8uqa0" path="res://Components/Movement/Character/HeadMotion/footfall.gd" id="1_8ixvy"]
+[ext_resource type="Script" uid="uid://brsx4s0jfj5j2" path="res://Components/Movement/Character/HeadMotion/head_bob_profile.gd" id="1_profile"]
+
+[resource]
+resource_name = "Crouch"
+script = ExtResource("1_profile")
+distance_per_cycle = 2.6
+maximum_intensity = 1.0
+minimum_speed = 0.4
+step_loudness = 0.6
+vertical = 0.035
+lateral = 0.022
+roll_degrees = 0.8
+pitch_degrees = 0.5

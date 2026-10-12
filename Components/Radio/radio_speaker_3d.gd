@@ -30,12 +30,10 @@ signal channel_changed(mode: RadioManager.RadioChannelMode, frequency_code: int)
 var _manager: RadioManager
 var _source_outputs: Dictionary = {}
 
-
 func _exit_tree() -> void:
 	if is_instance_valid(_manager):
 		_manager.unregister_speaker(self)
 	clear_all_sources()
-
 
 func _ready() -> void:
 	# This node is only the shared position/configuration. Child players do the
@@ -43,14 +41,13 @@ func _ready() -> void:
 	stream = null
 	if not register_with_manager:
 		return
-	_manager = Game.get_radio_manager_or_null()
+	_manager = InGameHandler.get_radio_manager_or_null()
 	if _manager == null:
 		push_warning("[RadioSpeaker3D] No RadioManager exists in the active game world.")
 		return
 	_manager.register_speaker(self)
 	if frequency_code == 0:
 		frequency_code = _manager.default_frequency_code
-
 
 ## Feed a control or Opus packet for one distinct transmitter.
 func play_voip_packet(source_id: StringName, packet: PackedByteArray) -> void:

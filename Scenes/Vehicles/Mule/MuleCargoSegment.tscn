@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dcbnhr2pwhc8v"]
+
+[ext_resource type="PackedScene" uid="uid://bupdqaldrwko1" path="res://Assets/Models/Vehicles/Mule/MuleCargoSegmentModel.tscn" id="1_wmq3l"]
+
+[node name="MuleCargoSegment" type="Node3D" unique_id=1601944499]
+
+[node name="MuleCargoSegmentModel" parent="." unique_id=292614007 instance=ExtResource("1_wmq3l")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1794167867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.125, 0)

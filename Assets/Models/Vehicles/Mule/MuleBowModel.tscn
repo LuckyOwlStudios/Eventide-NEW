@@ -1,0 +1,270 @@
+[gd_scene format=3 uid="uid://daks8xcg0nkqr"]
+
+[ext_resource type="PhysicsMaterial" path="res://Components/Physics/Surfaces/MetalSurface.tres" id="surface_metal"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wtv4n"]
+emission_enabled = true
+emission = Color(1, 0.6156863, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8gc3m"]
+material = SubResource("StandardMaterial3D_wtv4n")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djt5g"]
+emission_enabled = true
+emission = Color(1, 0.6156863, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_30wep"]
+material = SubResource("StandardMaterial3D_djt5g")
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.4
+
+[node name="MuleBowModel" type="CSGCombiner3D" unique_id=1534942812]
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+metadata/surface_material = ExtResource("surface_metal")
+
+[node name="Hull" type="CSGPolygon3D" parent="." unique_id=496916569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+polygon = PackedVector2Array(-1.5, -0.25, -2.25, 0.5, -2.25, 2, -1.5, 2.75, 1.5, 2.75, 2.25, 2, 2.25, 0.5, 1.5, -0.25)
+depth = 3.75
+
+[node name="BackBand" type="CSGPolygon3D" parent="." unique_id=403650097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+polygon = PackedVector2Array(-1.5, -0.375, -2.375, 0.5, -2.375, 2, -1.5, 2.875, 1.5, 2.875, 2.375, 2, 2.375, 0.5, 1.5, -0.375)
+depth = 0.25
+
+[node name="FrontBand" type="CSGPolygon3D" parent="." unique_id=332263323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+polygon = PackedVector2Array(-1.5, -0.375, -2.375, 0.125, -2.375, 2.375, -1.5, 2.875, 1.5, 2.875, 2.375, 2.375, 2.375, 0.125, 1.5, -0.375)
+depth = 2.25
+
+[node name="MiddleBand" type="CSGPolygon3D" parent="." unique_id=533792329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+polygon = PackedVector2Array(-1.5, -0.375, -2.375, 0.5, -2.375, 2, -1.5, 2.875, 1.5, 2.875, 2.375, 2, 2.375, 0.5, 1.5, -0.375)
+depth = 0.5
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=500839889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8125, 1)
+size = Vector3(1, 0.125, 1.5)
+
+[node name="TopSideBeams" type="CSGBox3D" parent="." unique_id=1024551971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9375, 1)
+size = Vector3(4.75, 0.125, 1.5)
+
+[node name="BottomSideBeams" type="CSGBox3D" parent="." unique_id=673785186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5625, 1)
+size = Vector3(4.75, 0.125, 1.5)
+
+[node name="InnerCutout" type="CSGPolygon3D" parent="." unique_id=1051709586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+operation = 2
+polygon = PackedVector2Array(-1.5, 0, -2, 0.5, -2, 2, -1.5, 2.5, 1.5, 2.5, 2, 2, 2, 0.5, 1.5, 0)
+depth = 3.75
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=1832861573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.875)
+operation = 2
+size = Vector3(3, 2.5, 0.25)
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="." unique_id=1353948747]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.5, 1.25, -1.375)
+polygon = PackedVector2Array(-0.375, -1.25, -0.125, 0.625, 0, 0.625, 0.375, 0.25, 0.375, -1.25)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1758846957]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.5, 0.5, -0.875)
+operation = 2
+size = Vector3(0.5, 1, 0.75)
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="." unique_id=2032135898]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 2.5, 1.25, -0.375)
+polygon = PackedVector2Array(-0.375, -1.25, -0.125, 0.625, 0, 0.625, 0.375, 0.25, 0.375, -1.25)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1384621324]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 2.5, 0.5, -0.875)
+operation = 2
+size = Vector3(0.5, 1, 0.75)
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="." unique_id=2120288319]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 1.5625, -0.124999955, -2.125)
+radius = 0.16699219
+height = 0.125
+sides = 12
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="." unique_id=955304165]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1.563, -0.125, -2.125)
+radius = 0.16699219
+height = 0.125
+sides = 12
+
+[node name="Sockets" type="Node3D" parent="." unique_id=419766731]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.375, 1.25, 2)
+
+[node name="ConnectionSocket" type="CSGCylinder3D" parent="Sockets" unique_id=1907428852]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug7" type="CSGCylinder3D" parent="Sockets" unique_id=86429111]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocket2" type="CSGCylinder3D" parent="Sockets" unique_id=92873292]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug8" type="CSGCylinder3D" parent="Sockets" unique_id=1952282975]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocketRightTop" type="CSGCylinder3D" parent="Sockets" unique_id=1224604606]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug9" type="CSGCylinder3D" parent="Sockets" unique_id=550050585]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="Sockets2" type="Node3D" parent="." unique_id=180009271]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.375, 1.25, 2)
+
+[node name="ConnectionSocket" type="CSGCylinder3D" parent="Sockets2" unique_id=658806191]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug7" type="CSGCylinder3D" parent="Sockets2" unique_id=1243934357]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocket2" type="CSGCylinder3D" parent="Sockets2" unique_id=1127965145]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug8" type="CSGCylinder3D" parent="Sockets2" unique_id=944232590]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocketRightTop" type="CSGCylinder3D" parent="Sockets2" unique_id=1440474559]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug9" type="CSGCylinder3D" parent="Sockets2" unique_id=1523052651]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="Light" type="CSGCombiner3D" parent="." unique_id=2115441489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.25, -1.375)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Light" unique_id=1820602041]
+polygon = PackedVector2Array(0, -0.625, -0.25, -0.625, -0.25, 0.625, 0, 0.625, 0.375, 0.25, 0.375, -0.25)
+depth = 0.75
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Light" unique_id=1661439646]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.625)
+operation = 2
+polygon = PackedVector2Array(0, -0.56700003, -0.18900001, -0.56700003, -0.18900001, 0.56700003, 0, 0.56700003, 0.315, 0.252, 0.315, -0.252)
+depth = 0.13
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Light" unique_id=935832898]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.062000036, 0, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Light" unique_id=1654932491]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.062000036, 0.25, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Light" unique_id=1597927159]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.062000036, -0.25, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Light" unique_id=2107596112]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.18799996, -0.125, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Light" unique_id=1580060564]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.18799996, 0.125, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="Light2" type="CSGCombiner3D" parent="." unique_id=507646886]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, -2.5, 1.25, -1.375)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Light2" unique_id=126155390]
+polygon = PackedVector2Array(0, -0.625, -0.25, -0.625, -0.25, 0.625, 0, 0.625, 0.375, 0.25, 0.375, -0.25)
+depth = 0.75
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Light2" unique_id=555181473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.625)
+operation = 2
+polygon = PackedVector2Array(0, -0.56700003, -0.18900001, -0.56700003, -0.18900001, 0.56700003, 0, 0.56700003, 0.315, 0.252, 0.315, -0.252)
+depth = 0.13
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Light2" unique_id=1228515666]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.062000036, 0, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Light2" unique_id=2119872419]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.062000036, 0.25, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Light2" unique_id=1172351936]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.062000036, -0.25, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Light2" unique_id=1951094427]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.18799996, -0.125, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Light2" unique_id=1253537545]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.18799996, 0.125, -0.6865001)
+radius = 0.125
+height = 0.125
+
+[node name="LeftAccentLight" type="Node3D" parent="." unique_id=953298023]
+
+[node name="Light" type="MeshInstance3D" parent="LeftAccentLight" unique_id=1134826620]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -2.25, 1.25, 1)
+mesh = SubResource("CylinderMesh_8gc3m")
+
+[node name="Light2" type="MeshInstance3D" parent="LeftAccentLight" unique_id=1817473062]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 2.25, 1.25, 1)
+mesh = SubResource("CylinderMesh_8gc3m")
+
+[node name="Light3" type="MeshInstance3D" parent="LeftAccentLight" unique_id=1610304867]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -2.6545258, 1.6648659, -0.875)
+mesh = SubResource("CylinderMesh_30wep")
+
+[node name="Light4" type="MeshInstance3D" parent="LeftAccentLight" unique_id=672671390]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 2.655, 1.6648659, -0.875)
+mesh = SubResource("CylinderMesh_30wep")

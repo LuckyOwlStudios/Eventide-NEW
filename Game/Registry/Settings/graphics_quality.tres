@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnumSettingRegistry" format=3 uid="uid://bg5q2moyhmw4t"]
+
+[ext_resource type="Script" uid="uid://ddg164nitolps" path="res://Components/Settings/SettingRegistryTypes/enum_setting_registry.gd" id="1_p218l"]
+
+[resource]
+script = ExtResource("1_p218l")
+option_ids = PackedStringArray("low", "medium", "high", "ultra")
+option_names = PackedStringArray("Low", "Medium", "High", "Ultra")
+default_option_id = &"medium"
+id = &"graphics_quality"
+display_name = "Graphics Quality"
+description = "General quality of graphics. Set to low for weaker devices"
+category_id = &"graphics"
+metadata/_custom_type_script = "uid://ddg164nitolps"

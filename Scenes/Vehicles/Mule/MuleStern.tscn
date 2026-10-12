@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://cimtf2ndfk6sv"]
+
+[ext_resource type="PackedScene" uid="uid://bpnljsiqs8j5t" path="res://Testing/Turret/MediumTurret3D.tscn" id="1_sgmyo"]
+[ext_resource type="PackedScene" uid="uid://bj54now1jbahn" path="res://Assets/Models/Vehicles/Mule/MuleSternModel.tscn" id="1_t4kw1"]
+[ext_resource type="Script" uid="uid://nvotufr2jav7" path="res://Components/Light/blinking_light_3d.gd" id="3_ohkxu"]
+[ext_resource type="Script" uid="uid://800hktxikrb8" path="res://Components/Traversal/ladder_3d.gd" id="4_hhi10"]
+[ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="5_41q1o"]
+[ext_resource type="Script" uid="uid://dffxoy312fs7" path="res://Components/Doors/door_switch_3d.gd" id="6_41q1o"]
+[ext_resource type="Script" uid="uid://ey2qin5odqdt" path="res://Components/Doors/hinged_door_3d.gd" id="7_hatch"]
+
+[sub_resource type="Gradient" id="Gradient_ohkxu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.1, 0.15, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_p22qx"]
+script = ExtResource("5_41q1o")
+prompt = "Climb"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hhi10"]
+size = Vector3(0.75, 3.125, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_de0lr"]
+size = Vector3(1.375, 0.25, 1.5)
+
+[node name="MuleStern" type="Node3D" unique_id=1601944499]
+
+[node name="MuleSternModel" parent="." unique_id=1208405230 instance=ExtResource("1_t4kw1")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1794167867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.125, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="." unique_id=1630999675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 2.719, 1.5)
+radius = 1.0
+height = 0.5625
+sides = 12
+
+[node name="TopRearModule" type="Node3D" parent="CSGCylinder3D" unique_id=642690015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="MediumTurret3D" parent="CSGCylinder3D/TopRearModule" unique_id=295808033 instance=ExtResource("1_sgmyo")]
+debug = false
+
+[node name="BlinkingOmniLight3D" type="OmniLight3D" parent="." unique_id=577427643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 4.775015, 2)
+light_color = Color(1, 0, 0, 1)
+script = ExtResource("3_ohkxu")
+Frequency = 0.75
+Pulse = SubResource("Gradient_ohkxu")
+metadata/_custom_type_script = "uid://nvotufr2jav7"
+
+[node name="Ladder3D" type="Area3D" parent="." unique_id=1602350484]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 1.25, 0, -1.125)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("4_hhi10")
+top_dismount = Vector3(0.75, 0.05, 0.5)
+bottom_dismount = Vector3(0, 0.01, 0.5)
+interaction_options = Array[ExtResource("5_41q1o")]([SubResource("Resource_p22qx")])
+prompt_local_offset = Vector3(0, 0, 0)
+center_prompt = true
+show_interaction_selector = false
+runtime_status = "1 configured interaction option(s)."
+metadata/_custom_type_script = "uid://800hktxikrb8"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder3D" unique_id=183409885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5625, 0.025000095)
+shape = SubResource("BoxShape3D_hhi10")
+
+[node name="Hatch" type="Node3D" parent="." unique_id=500770594 node_paths=PackedStringArray("pivot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 3, -1.125)
+script = ExtResource("7_hatch")
+pivot = NodePath("Hinge")
+open_angle = 120.0
+rotation_speed = 90.0
+
+[node name="Hinge" type="Node3D" parent="Hatch" unique_id=1870439890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0.625)
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Hatch/Hinge" unique_id=1524539364]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.125
+height = 1.25
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Hatch/Hinge" unique_id=1801541229]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.625, -0.125, 0)
+polygon = PackedVector2Array(0, 0, 0, 0.25, 0.625, 0.25, 1.25, 0.125, 1.25, 0)
+depth = 1.25
+
+[node name="InteractableObject3D" type="Area3D" parent="Hatch/Hinge" unique_id=1194690086 node_paths=PackedStringArray("door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.625)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_41q1o")
+door = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hatch/Hinge/InteractableObject3D" unique_id=863953175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0625)
+shape = SubResource("BoxShape3D_de0lr")

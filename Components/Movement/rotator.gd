@@ -14,8 +14,10 @@ signal authoritative_look_updated(yaw: float, pitch: float, acknowledged_sequenc
 signal look_reconciled(yaw_error: float, pitch_error: float)
 
 const MOUSE_SENSITIVITY_SETTING: StringName = &"controls.mouse_sensitivity"
+const CONTROLLER_SENSITIVITY_SETTING: StringName = &"controls.controller_sensitivity"
 const INVERT_MOUSE_Y_SETTING: StringName = &"controls.invert_mouse_y"
 const ROTATION_SPEED_MULTIPLIER := 0.12
+const ROLL_ACTION: StringName = &"roll"
 const LOOK_NETWORK_CHANNEL := 5
 const MAX_PENDING_INPUTS := 128
 
@@ -31,6 +33,22 @@ const MAX_PENDING_INPUTS := 128
 @export var capture_mouse_on_start := true
 ## Disables local input without stopping authoritative or proxy rotation updates.
 @export var input_enabled := true
+
+@export_group("Controller Look")
+## Turns the view with the right stick. The mouse always works as well.
+@export var controller_look_enabled := true
+## How fast the view turns with the stick pushed all the way, before the Controller
+## Sensitivity setting.
+@export_range(30.0, 720.0, 5.0, "suffix:°/s") var controller_look_speed_degrees := 200.0
+## Shapes the stick. 1 is straight; higher gives fine control near the middle and still turns
+## fast at the edge.
+@export_range(1.0, 3.0, 0.05) var controller_look_curve := 1.8
+## Vertical turning is this share of the horizontal speed.
+@export_range(0.25, 1.5, 0.05) var controller_pitch_scale := 0.7
+@export var look_left_action: StringName = &"look_left"
+@export var look_right_action: StringName = &"look_right"
+@export var look_up_action: StringName = &"look_up"
+@export var look_down_action: StringName = &"look_down"
 
 @export_group("Mechanical Follow")
 ## Controls mechanical yaw/pitch tracking without disabling view or network updates.
@@ -70,7 +88,11 @@ var snapshot_interval := 0.05
 var input_resend_interval := 0.1
 
 var sensitivity := 1.0
+var controller_sensitivity := 1.0
 var invert_mouse_y := false
+## Set by whatever can roll the character (zero gravity). While it is true and the roll action is
+## held, sideways look is roll and not turning, so the view does not also yaw.
+var roll_enabled := false
 var can_look_around := ActionBlocker.new()
 
 var _initial_pitch := 0.0
@@ -110,6 +132,7 @@ func _ready() -> void:
 		return
 
 	_apply_mouse_sensitivity(Settings.get_setting(MOUSE_SENSITIVITY_SETTING, 1.0))
+	controller_sensitivity = float(Settings.get_setting(CONTROLLER_SENSITIVITY_SETTING, 1.0))
 	invert_mouse_y = bool(Settings.get_setting(INVERT_MOUSE_Y_SETTING, false))
 	Settings.setting_changed.connect(_on_setting_changed)
 	_initial_pitch = pitch_pivot.rotation.x
@@ -133,24 +156,55 @@ func _ready() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
+## The stick may turn the view: this is the local player's, nothing is blocking it, and no menu
+## or in-game screen is open.
+## Sideways look is rolling the character right now, so it must not turn the view too.
+func _is_rolling() -> bool:
+	return roll_enabled and Input.is_action_pressed(ROLL_ACTION)
+
+
+func _can_look_with_stick() -> bool:
+	return (
+		input_enabled
+		and _is_local_input_owner()
+		and can_look_around.is_permitted()
+		and not InGameUIHandler.is_ui_open
+	)
+
+
+## Turns the view with the right stick. Pushing the stick all the way turns at
+## [member controller_look_speed_degrees] and gentle pushes turn much slower, so aiming is easy.
+func _apply_controller_look(delta: float) -> void:
+	if not controller_look_enabled or not _can_look_with_stick():
+		return
+	var stick := Input.get_vector(look_left_action, look_right_action, look_up_action, look_down_action)
+	if stick.is_zero_approx():
+		return
+	var shaped := stick.normalized() * pow(minf(stick.length(), 1.0), controller_look_curve)
+	var turn := deg_to_rad(controller_look_speed_degrees) * controller_sensitivity * delta
+	var vertical_direction := -1.0 if invert_mouse_y else 1.0
+	# Stick right turns right and stick down looks down, like the mouse.
+	add_look_input(
+		0.0 if _is_rolling() else -shaped.x * turn,
+		-shaped.y * turn * controller_pitch_scale * vertical_direction,
+	)
+
+
 func _input(event: InputEvent) -> void:
-	if (
-		not input_enabled
-		or not _is_local_input_owner()
-		or not can_look_around.is_permitted()
-	):
+	if not input_enabled or not _is_local_input_owner() or not can_look_around.is_permitted():
 		return
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		var rotation_amount := deg_to_rad(sensitivity)
 		var vertical_direction := -1.0 if invert_mouse_y else 1.0
 		add_look_input(
-			-event.relative.x * rotation_amount,
+			0.0 if _is_rolling() else -event.relative.x * rotation_amount,
 			-event.relative.y * rotation_amount * vertical_direction,
 		)
 
 func _process(delta: float) -> void:
 	if yaw_pivot == null or pitch_pivot == null:
 		return
+	_apply_controller_look(delta)
 
 	var desired_yaw: float
 	var desired_pitch: float
@@ -228,7 +282,6 @@ func _physics_process(delta: float) -> void:
 			_snapshot_elapsed = fmod(_snapshot_elapsed, snapshot_interval)
 			_broadcast_authoritative_look()
 
-
 ## Adds an already-scaled yaw and pitch delta in radians.
 func add_look_input(yaw_delta: float, pitch_delta: float) -> void:
 	if not is_finite(yaw_delta) or not is_finite(pitch_delta):
@@ -244,30 +297,24 @@ func add_look_input(yaw_delta: float, pitch_delta: float) -> void:
 	_input_dirty = _input_dirty or not is_zero_approx(applied_yaw_delta) or not is_zero_approx(applied_pitch_delta)
 	_apply_view_pivots(_predicted_yaw, _predicted_pitch)
 
-
 func set_input_peer(peer_id: int) -> void:
 	input_peer_id = maxi(peer_id, 0)
-
 
 func set_input_enabled(enabled: bool) -> void:
 	input_enabled = enabled
 	if input_enabled and capture_mouse_on_start and _is_local_input_owner():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-
 func set_mechanical_follow_enabled(enabled: bool) -> void:
 	if enabled and not mechanical_follow_enabled:
 		_has_follow_target_sample = false
 	mechanical_follow_enabled = enabled
 
-
 func get_predicted_look() -> Vector2:
 	return Vector2(_predicted_yaw, _predicted_pitch)
 
-
 func get_authoritative_look() -> Vector2:
 	return Vector2(_authoritative_yaw, _authoritative_pitch)
-
 
 ## Returns the yaw and pitch currently applied to the mechanical follow nodes.
 func get_mechanical_look() -> Vector2:
@@ -605,7 +652,7 @@ func _apply_view_pivots(desired_yaw: float, desired_pitch: float) -> void:
 		yaw_residual = angle_difference(_applied_follow_yaw, desired_yaw)
 	var yaw_step := angle_difference(_applied_view_yaw, yaw_residual)
 	if not is_zero_approx(yaw_step):
-		# Incremental local-axis rotation preserves gravity alignment applied by Orientor.
+		# Incremental local-axis rotation preserves gravity alignment applied by the Orientator.
 		yaw_pivot.rotate_object_local(Vector3.UP, yaw_step)
 	_applied_view_yaw = yaw_residual
 
@@ -668,6 +715,8 @@ func _is_local_input_owner() -> bool:
 func _on_setting_changed(id: StringName, value: Variant) -> void:
 	if id == MOUSE_SENSITIVITY_SETTING:
 		_apply_mouse_sensitivity(value)
+	elif id == CONTROLLER_SENSITIVITY_SETTING:
+		controller_sensitivity = float(value)
 	elif id == INVERT_MOUSE_Y_SETTING:
 		invert_mouse_y = bool(value)
 

@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://bupdqaldrwko1"]
+[ext_resource type="Resource" path="res://Components/Physics/Surfaces/MetalSurface.tres" id="surface_metal"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j0nvi"]
+emission_enabled = true
+emission = Color(1, 0.6156863, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3mris"]
+material = SubResource("StandardMaterial3D_j0nvi")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.4
+
+[node name="MuleCargoSegmentModel" type="CSGCombiner3D" unique_id=292614007]
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+metadata/surface_material = ExtResource("surface_metal")
+
+[node name="Hull" type="CSGPolygon3D" parent="." unique_id=2000227700]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+polygon = PackedVector2Array(-1.5, -0.25, -2.25, 0.5, -2.25, 2, -1.5, 2.75, 1.5, 2.75, 2.25, 2, 2.25, 0.5, 1.5, -0.25)
+depth = 4.0
+
+[node name="BackBand" type="CSGPolygon3D" parent="." unique_id=1644473540]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+polygon = PackedVector2Array(-1.5, -0.375, -2.375, 0.5, -2.375, 2, -1.5, 2.875, 1.5, 2.875, 2.375, 2, 2.375, 0.5, 1.5, -0.375)
+depth = 0.25
+
+[node name="BackBand2" type="CSGPolygon3D" parent="." unique_id=1229150868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.75)
+polygon = PackedVector2Array(-1.5, -0.375, -2.375, 0.5, -2.375, 2, -1.5, 2.875, 1.5, 2.875, 2.375, 2, 2.375, 0.5, 1.5, -0.375)
+depth = 0.25
+
+[node name="MiddleBand" type="CSGPolygon3D" parent="." unique_id=1890579340]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+polygon = PackedVector2Array(-1.5, -0.375, -2.375, 0.5, -2.375, 2, -1.5, 2.875, 1.5, 2.875, 2.375, 2, 2.375, 0.5, 1.5, -0.375)
+depth = 0.5
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=632813252]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8125, 0)
+size = Vector3(1, 0.125, 3.5)
+
+[node name="TopSideBeams" type="CSGBox3D" parent="." unique_id=1830959238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9375, 0)
+size = Vector3(4.75, 0.125, 3.5)
+
+[node name="BottomSideBeams" type="CSGBox3D" parent="." unique_id=2049042283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5625, 0)
+size = Vector3(4.75, 0.125, 3.5)
+
+[node name="InnerCutout" type="CSGPolygon3D" parent="." unique_id=355536215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+operation = 2
+polygon = PackedVector2Array(-1.5, 0, -2, 0.5, -2, 2, -1.5, 2.5, 1.5, 2.5, 2, 2, 2, 0.5, 1.5, 0)
+depth = 4.0
+
+[node name="Sockets" type="Node3D" parent="." unique_id=875854346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.375, 1.25, 2)
+
+[node name="ConnectionSocket" type="CSGCylinder3D" parent="Sockets" unique_id=44199212]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug7" type="CSGCylinder3D" parent="Sockets" unique_id=152305368]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocket2" type="CSGCylinder3D" parent="Sockets" unique_id=1694303195]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug8" type="CSGCylinder3D" parent="Sockets" unique_id=355379904]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocketRightTop" type="CSGCylinder3D" parent="Sockets" unique_id=1656959132]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug9" type="CSGCylinder3D" parent="Sockets" unique_id=220693435]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionPlug10" type="CSGCylinder3D" parent="Sockets" unique_id=1854544089]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -4)
+operation = 2
+radius = 0.063
+height = 0.25
+
+[node name="ConnectionPlug11" type="CSGCylinder3D" parent="Sockets" unique_id=777938932]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, -4)
+operation = 2
+radius = 0.063
+height = 0.25
+
+[node name="ConnectionPlug12" type="CSGCylinder3D" parent="Sockets" unique_id=688279193]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, -4)
+operation = 2
+radius = 0.063
+height = 0.25
+
+[node name="Sockets2" type="Node3D" parent="." unique_id=1541429619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.375, 1.25, 2)
+
+[node name="ConnectionSocket" type="CSGCylinder3D" parent="Sockets2" unique_id=656123180]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug7" type="CSGCylinder3D" parent="Sockets2" unique_id=1277043574]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocket2" type="CSGCylinder3D" parent="Sockets2" unique_id=1490149287]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug8" type="CSGCylinder3D" parent="Sockets2" unique_id=1888982470]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionSocketRightTop" type="CSGCylinder3D" parent="Sockets2" unique_id=399403472]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, -0.015625)
+radius = 0.1
+height = 0.21875
+
+[node name="ConnectionPlug9" type="CSGCylinder3D" parent="Sockets2" unique_id=1020350512]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, 0.0390625)
+operation = 2
+radius = 0.063
+height = 0.109375
+
+[node name="ConnectionPlug10" type="CSGCylinder3D" parent="Sockets2" unique_id=1630463142]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -4)
+operation = 2
+radius = 0.063
+height = 0.25
+
+[node name="ConnectionPlug11" type="CSGCylinder3D" parent="Sockets2" unique_id=913894421]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.5, -4)
+operation = 2
+radius = 0.063
+height = 0.25
+
+[node name="ConnectionPlug12" type="CSGCylinder3D" parent="Sockets2" unique_id=1593286259]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, -4)
+operation = 2
+radius = 0.063
+height = 0.25
+
+[node name="AccentLightLeft" type="Node3D" parent="." unique_id=1954500822]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 1.25, 0)
+
+[node name="Light" type="MeshInstance3D" parent="AccentLightLeft" unique_id=673404035]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0, -1)
+mesh = SubResource("CylinderMesh_3mris")
+
+[node name="Light2" type="MeshInstance3D" parent="AccentLightLeft" unique_id=1896388231]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0, 1)
+mesh = SubResource("CylinderMesh_3mris")
+
+[node name="AccentLightRight" type="Node3D" parent="." unique_id=510123305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 1.25, 0)
+
+[node name="Light" type="MeshInstance3D" parent="AccentLightRight" unique_id=1967768006]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0, -1)
+mesh = SubResource("CylinderMesh_3mris")
+
+[node name="Light2" type="MeshInstance3D" parent="AccentLightRight" unique_id=1184662598]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0, 1)
+mesh = SubResource("CylinderMesh_3mris")

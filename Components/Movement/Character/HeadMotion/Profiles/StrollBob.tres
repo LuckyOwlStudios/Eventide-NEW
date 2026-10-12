@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="HeadBobProfile" format=3 uid="uid://5rjidr5lo5ha"]
+
+[ext_resource type="Script" uid="uid://yvfdolq8uqa0" path="res://Components/Movement/Character/HeadMotion/footfall.gd" id="1_fn4mp"]
+[ext_resource type="Script" uid="uid://brsx4s0jfj5j2" path="res://Components/Movement/Character/HeadMotion/head_bob_profile.gd" id="1_profile"]
+
+[resource]
+resource_name = "Stroll"
+script = ExtResource("1_profile")
+distance_per_cycle = 3.2
+maximum_intensity = 1.0
+step_loudness = 0.8
+vertical = 0.05
+lateral = 0.03
+roll_degrees = 0.7
+pitch_degrees = 0.5

@@ -13,6 +13,10 @@ extends Resource
 @export var icon: Texture2D
 ## Maximum quantity represented by one ItemInstance. Unique items use 1.
 @export_range(1, 9999, 1, "or_greater") var max_stack_size: int = 1
+## Cells this item covers in a grid container: width, then height. Slots ignore it.
+@export var grid_size := Vector2i.ONE
+## What kind of thing this is, such as &"tool". Containers use these to decide what they accept.
+@export var tags: Array[StringName] = []
 ## Node3D scene created while this item is equipped or present in the world.
 @export var actor_scene: PackedScene
 ## Optional ItemInstance subclass used when creating this item.
@@ -20,6 +24,17 @@ extends Resource
 
 func is_valid_definition() -> bool:
 	return not id.is_empty() and not display_name.is_empty()
+
+## The cells this item covers in a grid, turned on its side when rotated.
+func get_grid_size(rotated: bool = false) -> Vector2i:
+	var cells := Vector2i(maxi(grid_size.x, 1), maxi(grid_size.y, 1))
+	return Vector2i(cells.y, cells.x) if rotated else cells
+
+func has_any_tag(wanted: Array[StringName]) -> bool:
+	for tag in wanted:
+		if tags.has(tag):
+			return true
+	return false
 
 func create_instance(quantity: int = 1) -> ItemInstance:
 	var instance := ItemInstance.new()

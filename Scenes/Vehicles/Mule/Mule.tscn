@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://bgoqo23744dl0"]
+
+[ext_resource type="Script" uid="uid://dmp6vksn0j1ji" path="res://Scenes/Vehicles/Mule/mule.gd" id="1_w0j3q"]
+[ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="2_option"]
+[ext_resource type="Script" uid="uid://bxocd75hyt7fc" path="res://Components/Vehicles/power_switch_3d.gd" id="2_power"]
+[ext_resource type="PackedScene" uid="uid://dfuv6214g5jtd" path="res://Components/Camera/CameraRig.tscn" id="2_rig"]
+[ext_resource type="Script" uid="uid://cvjthwdg7r0br" path="res://Components/Vehicles/vehicle_seat_3d.gd" id="2_seat"]
+[ext_resource type="Script" uid="uid://bwywua3ao50ii" path="res://Components/Vehicles/vehicle_interior_3d.gd" id="3_h1s1g"]
+[ext_resource type="PackedScene" uid="uid://qaocaks7otn4" path="res://Scenes/Vehicles/Mule/MuleBow.tscn" id="4_g31rl"]
+[ext_resource type="PackedScene" uid="uid://cimtf2ndfk6sv" path="res://Scenes/Vehicles/Mule/MuleStern.tscn" id="5_h1s1g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hull"]
+resource_local_to_scene = true
+size = Vector3(4.75, 3.25, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
+resource_local_to_scene = true
+size = Vector3(4, 2.5, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_switch"]
+size = Vector3(0.375, 0.5, 0.25)
+
+[sub_resource type="Resource" id="Resource_pilot"]
+script = ExtResource("2_option")
+prompt = "Pilot Ship"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_seat"]
+size = Vector3(0.875, 1, 0.875)
+
+[node name="Mule" type="RigidBody3D" unique_id=2108023721 node_paths=PackedStringArray("camera_rig")]
+mass = 20000.0
+script = ExtResource("1_w0j3q")
+camera_rig = NodePath("CameraRig")
+power_state = true
+walkable_interior = true
+metadata/_custom_type_script = "uid://bxui026uokkfo"
+
+[node name="Hull" type="CollisionShape3D" parent="." unique_id=572052660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_hull")
+
+[node name="CameraRig" parent="." unique_id=1978980037 instance=ExtResource("2_rig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+cam_distance = 12.0
+
+[node name="VehicleInterior3D" type="Area3D" parent="." unique_id=434548579 node_paths=PackedStringArray("vehicle")]
+collision_layer = 256
+collision_mask = 46
+script = ExtResource("3_h1s1g")
+vehicle = NodePath("..")
+metadata/_custom_type_script = "uid://bwywua3ao50ii"
+
+[node name="DynamicCargoArea" type="CollisionShape3D" parent="VehicleInterior3D" unique_id=83092771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_yf5fn")
+
+[node name="MuleBow" parent="." unique_id=1601944499 instance=ExtResource("4_g31rl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="PowerSwitch" type="Area3D" parent="MuleBow" unique_id=1748614517]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -1.95, 1.4, -0.9000001)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("2_power")
+selector_size = Vector3(0.25, 0.25, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MuleBow/PowerSwitch" unique_id=2092683040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.125)
+shape = SubResource("BoxShape3D_switch")
+
+[node name="Panel" type="CSGBox3D" parent="MuleBow/PowerSwitch" unique_id=1856506274]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.033)
+size = Vector3(0.25, 0.375, 0.067)
+
+[node name="Lever" type="CSGBox3D" parent="MuleBow/PowerSwitch/Panel" unique_id=461165172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
+size = Vector3(0.06, 0.2, 0.05)
+
+[node name="PilotSeat" type="Area3D" parent="MuleBow" unique_id=604769344 node_paths=PackedStringArray("dismount_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 6.7250004)
+script = ExtResource("2_seat")
+dismount_point = NodePath("DismountPoint")
+interaction_options = Array[ExtResource("2_option")]([SubResource("Resource_pilot")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MuleBow/PilotSeat" unique_id=1356028542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.375, 0.0625)
+shape = SubResource("BoxShape3D_seat")
+
+[node name="SeatMount" type="Marker3D" parent="MuleBow/PilotSeat" unique_id=307945107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="DismountPoint" type="Marker3D" parent="MuleBow/PilotSeat" unique_id=1243197442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.95, -0.025000095)
+
+[node name="Chair" type="CSGBox3D" parent="MuleBow/PilotSeat" unique_id=1473511555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0.1)
+size = Vector3(0.7, 0.5, 0.7)
+
+[node name="Backrest" type="CSGBox3D" parent="MuleBow/PilotSeat/Chair" unique_id=225073100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.3)
+size = Vector3(0.7, 0.9, 0.15)
+
+[node name="MuleStern" parent="." unique_id=1898438369 instance=ExtResource("5_h1s1g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="Segments" type="Node3D" parent="." unique_id=1131717435]
+
+[editable path="MuleStern"]

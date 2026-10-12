@@ -66,27 +66,36 @@ func _ready() -> void:
 	_check(prompter.option_list.get_child_count() == 3, "all available interaction options appear together")
 	_check(prompter.get_entry(0).key_bind_label.text == "F", "entry includes current input binding")
 	_check(prompter.get_entry(0).description_label.text == "TO PICKUP", "entry includes option prompt")
-	prompter._update_screen_position()
-	_check(prompter.selector.visible, "selector appears for an opted-in interactable")
-	_check(prompter.selector.size.x > 0.0 and prompter.selector.size.y > 0.0, "selector encloses a projected 3D box")
+	_check(not prompter.is_showing_prompt(), "the quads are held back while the options are drawn for the first time")
+	await _frames(4)
+	_check(prompter.is_showing_prompt(), "and shown once they have been")
+	var prompt := prompter.get_prompt()
+	_check(prompt != null and prompt.get_parent() == interactable, "the prompt belongs to the object, like its dot")
+	_check(not interactable.get_children().has(prompt), "and stays out of the way of code that walks its children")
+	_check(prompt.selector.visible, "selector appears for an opted-in interactable")
+	var selector_quad := prompt.selector.mesh as QuadMesh
+	_check(selector_quad.size.x > 0.0 and selector_quad.size.y > 0.0, "selector encloses the object's selector box")
+	_check(selector_quad.size.x > 1.0 and selector_quad.size.x < 1.4, "at about the box's own width (1 m) plus padding (%.2f m)" % selector_quad.size.x)
 	_check(
-		is_equal_approx(prompter.selector.size.x, prompter.selector.size.y),
+		is_equal_approx(selector_quad.size.x, selector_quad.size.y),
 		"equal selector width and height remain square on screen"
 	)
+	var options_quad := prompt.options.mesh as QuadMesh
 	_check(
-		prompter.option_list.position.x >= prompter.selector.position.x + prompter.selector.size.x,
+		options_quad.center_offset.x - options_quad.size.x * 0.5 >= selector_quad.size.x * 0.5,
 		"interaction options appear to the right of the selector"
 	)
-	var near_selector_width := prompter.selector.size.x
+	_check(prompt.global_position.is_equal_approx(interactable.global_position), "the prompt sits on the object")
 	interactable.position.z = -2.5
-	prompter._update_screen_position()
-	_check(prompter.selector.size.x < near_selector_width, "selector shrinks as the object moves away")
+	await _frames(1)
+	_check(prompt.global_position.is_equal_approx(interactable.global_position), "and stays on it when it moves")
 	interactable.position.z = -2.0
 	interactable.show_interaction_selector = false
-	prompter._update_screen_position()
-	_check(not prompter.selector.visible, "selector can be disabled per interactable")
+	await _frames(2)
+	_check(not prompt.selector.visible, "selector can be disabled per interactable")
 	interactable.show_interaction_selector = true
-	prompter._update_screen_position()
+	await _frames(2)
+	_check(prompt.selector.visible, "and back on")
 	_check(ray.try_interact(), "interaction succeeds")
 	_check(_interaction_count == 1, "interacted signal emitted once")
 	_check(_triggered_indices == [0], "interaction callback receives option index")
@@ -112,6 +121,7 @@ func _ready() -> void:
 	_check(ray.get_focused_interactable() == null, "ordinary physics body blocks interaction")
 	_check(hover_geometry.material_overlay == null, "losing focus restores previous geometry overlay")
 	_check(not prompter.option_list.visible, "interaction option list hides when blocked")
+	_check(not prompter.is_showing_prompt(), "and the selector and options with it")
 	_check(not ray.try_interact(), "blocked interaction fails")
 
 	interactable.interaction_options[0].one_shot = true
@@ -167,6 +177,11 @@ func _make_shape() -> CollisionShape3D:
 	shape.size = Vector3(0.5, 0.5, 0.5)
 	collision.shape = shape
 	return collision
+
+
+func _frames(count: int) -> void:
+	for frame in count:
+		await get_tree().process_frame
 
 
 func _check(value: bool, message: String) -> void:

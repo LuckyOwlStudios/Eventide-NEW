@@ -1,17 +1,18 @@
 @icon("uid://bdtpjdtqo1qch")
 class_name VehicleController
-extends "res://Components/Seats/seat_controller.gd"
+extends SeatController
 ## SeatController specialization that also transfers vehicle and camera control.
 
-signal vehicle_entered(vehicle: Vehicle3D)
-signal vehicle_exited(vehicle: Vehicle3D)
+signal vehicle_entered(vehicle: Node3D)
+signal vehicle_exited(vehicle: Node3D)
 
 @export_category("Player Components")
 @export var player_camera: Camera3D
 @export var player_view_root: Node3D
 @export var visual_root: Node3D
 
-var current_vehicle: Vehicle3D
+## The vehicle or turret being controlled.
+var current_vehicle: Node3D
 
 var _view_was_visible := true
 var _visual_was_visible := true
@@ -23,7 +24,7 @@ func _ready() -> void:
 		player_camera.current = true
 
 
-func enter_vehicle(vehicle: Vehicle3D) -> bool:
+func enter_vehicle(vehicle: Node3D) -> bool:
 	if not is_instance_valid(vehicle):
 		return false
 	var seat := _find_vehicle_seat(vehicle)

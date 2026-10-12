@@ -6,7 +6,7 @@ extends Node3D
 @export var height: float = 2
 
 func _process(delta: float) -> void:
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and visible:
 		return
 	var offset := global_basis * Vector3.UP * (height / 2.0)
 

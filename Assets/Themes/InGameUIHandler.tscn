@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Game/AutoLoads/in_game_ui_handler.gd" id="1_handler"]
+[ext_resource type="Script" uid="uid://fru8ipmel4om" path="res://Components/UI/Overlays/blur_overlay.gd" id="2_blur"]
+[ext_resource type="Material" uid="uid://4lapvqhpfavy" path="res://Assets/Shaders/blur_shader_material.tres" id="3_blur_material"]
+[ext_resource type="Script" uid="uid://bb7b0pofte4u2" path="res://Components/UI/Overlays/dimmer_overlay.gd" id="4_dimmer"]
+[ext_resource type="PackedScene" uid="uid://d0a5hhi8k0fk6" path="res://Scenes/UI/Pause/PauseMenu.tscn" id="5_pause_menu"]
+
+[node name="InGameUIHandler" type="Node"]
+process_mode = 3
+script = ExtResource("1_handler")
+
+[node name="EffectsLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 90
+
+[node name="Blur" type="ColorRect" parent="EffectsLayer"]
+unique_name_in_owner = true
+process_mode = 3
+material = ExtResource("3_blur_material")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("2_blur")
+
+[node name="Dimmer" type="ColorRect" parent="EffectsLayer"]
+unique_name_in_owner = true
+process_mode = 3
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015686275, 0.019607844, 0.023529412, 0.8352941)
+script = ExtResource("4_dimmer")
+
+[node name="InGameUILayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 95
+
+[node name="InGameUIRoot" type="Control" parent="InGameUILayer"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PauseLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 100
+
+[node name="PauseMenu" parent="PauseLayer" instance=ExtResource("5_pause_menu")]
+unique_name_in_owner = true

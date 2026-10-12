@@ -38,7 +38,7 @@ var _diagnostics_elapsed := 0.0
 
 
 func _enter_tree() -> void:
-	Game.register_radio_manager(self)
+	InGameHandler.register_radio_manager(self)
 	if default_frequency_code == 0:
 		set_default_frequency(randi_range(MIN_FREQUENCY_CODE, MAX_FREQUENCY_CODE))
 
@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 
 
 func _exit_tree() -> void:
-	Game.unregister_radio_manager(self)
+	InGameHandler.unregister_radio_manager(self)
 
 
 func set_default_frequency(frequency_code: int) -> void:

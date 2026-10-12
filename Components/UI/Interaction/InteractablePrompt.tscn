@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Components/UI/Interaction/interactable_prompt.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bhkgbyu4b52sy" path="res://Assets/UI/Selector.svg" id="2_selector"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_selector"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("2_selector")
+billboard_mode = 1
+use_z_clip_scale = true
+z_clip_scale = 0.01
+
+[sub_resource type="QuadMesh" id="QuadMesh_selector"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_selector")
+size = Vector2(0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_options"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+texture_filter = 1
+texture_repeat = false
+billboard_mode = 1
+use_z_clip_scale = true
+z_clip_scale = 0.01
+
+[sub_resource type="QuadMesh" id="QuadMesh_options"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_options")
+
+[node name="Prompt" type="Node3D"]
+visible = false
+script = ExtResource("1_script")
+
+[node name="Selector" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+cast_shadow = 0
+mesh = SubResource("QuadMesh_selector")
+
+[node name="Options" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+cast_shadow = 0
+mesh = SubResource("QuadMesh_options")

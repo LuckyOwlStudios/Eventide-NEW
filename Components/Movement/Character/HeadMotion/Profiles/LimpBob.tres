@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="HeadBobProfile" format=3 uid="uid://diq7158iygvbu"]
+
+[ext_resource type="Script" uid="uid://brsx4s0jfj5j2" path="res://Components/Movement/Character/HeadMotion/head_bob_profile.gd" id="1_profile"]
+[ext_resource type="Script" uid="uid://yvfdolq8uqa0" path="res://Components/Movement/Character/HeadMotion/footfall.gd" id="2_footfall"]
+
+[sub_resource type="Resource" id="Resource_bad_leg"]
+script = ExtResource("2_footfall")
+side = -1.0
+
+[sub_resource type="Resource" id="Resource_good_leg"]
+script = ExtResource("2_footfall")
+phase = 0.62
+strength = 0.45
+side = 1.0
+
+[resource]
+resource_name = "Limp"
+script = ExtResource("1_profile")
+distance_per_cycle = 2.8
+maximum_intensity = 1.0
+footfalls = Array[ExtResource("2_footfall")]([SubResource("Resource_bad_leg"), SubResource("Resource_good_leg")])
+vertical = 0.05
+lateral = 0.04
+roll_degrees = 1.6
+pitch_degrees = 0.9

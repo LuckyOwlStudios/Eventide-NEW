@@ -1,0 +1,19 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://csb74d2f3khlk"]
+
+[ext_resource type="AudioStream" uid="uid://3ylyvnxigslj" path="res://Assets/Audio/Footsteps/Surfaces/metal/step_metal_00.ogg" id="1_s8kfh"]
+[ext_resource type="AudioStream" uid="uid://dje272tali5nt" path="res://Assets/Audio/Footsteps/Surfaces/metal/step_metal_01.ogg" id="2_3p04m"]
+[ext_resource type="AudioStream" uid="uid://caa7gej6atyui" path="res://Assets/Audio/Footsteps/Surfaces/metal/step_metal_02.ogg" id="3_mp7sj"]
+[ext_resource type="AudioStream" uid="uid://f3v0jlcuia25" path="res://Assets/Audio/Footsteps/Surfaces/metal/step_metal_03.ogg" id="4_00d8g"]
+[ext_resource type="AudioStream" uid="uid://bd5wf7qq3yhej" path="res://Assets/Audio/Footsteps/Surfaces/metal/step_metal_04.ogg" id="5_iyiim"]
+[ext_resource type="AudioStream" uid="uid://dxwyfan8qmt4w" path="res://Assets/Audio/Footsteps/Surfaces/metal/step_metal_05.ogg" id="6_qeasw"]
+[ext_resource type="AudioStream" uid="uid://kkaov6w4yp5h" path="res://Assets/Audio/Footsteps/Surfaces/metal/step_metal_06.ogg" id="7_odxq4"]
+
+[resource]
+streams_count = 7
+stream_0/stream = ExtResource("1_s8kfh")
+stream_1/stream = ExtResource("2_3p04m")
+stream_2/stream = ExtResource("3_mp7sj")
+stream_3/stream = ExtResource("4_00d8g")
+stream_4/stream = ExtResource("5_iyiim")
+stream_5/stream = ExtResource("6_qeasw")
+stream_6/stream = ExtResource("7_odxq4")
