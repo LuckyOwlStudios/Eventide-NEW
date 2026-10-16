@@ -353,7 +353,7 @@ func _apply_pending_snapshot() -> void:
 		_sequence = maxi(_sequence, _last_applied_ack)
 		controller.apply_state(snapshot.state)
 		controller.get_body().reset_physics_interpolation()
-		controller.clear_visual_offset()
+		controller.get_body().clear_visual_offset()
 		return
 
 	var acknowledged := snapshot.acknowledged_sequence
@@ -387,9 +387,9 @@ func _reconcile(authoritative: MoveState) -> void:
 	var distance := error.length()
 	body.reset_physics_interpolation()
 	if distance > snap_distance:
-		controller.clear_visual_offset()
+		controller.get_body().clear_visual_offset()
 	else:
-		controller.add_visual_offset(error)
+		controller.get_body().add_visual_offset(error)
 	reconciled.emit(distance, _history.size())
 
 

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="SystemTemplate" format=3]
+
+[ext_resource type="Script" path="res://Components/Space/system_template.gd" id="1_xdkp3"]
+[ext_resource type="Script" path="res://Components/Space/star.gd" id="2_41am4"]
+
+[sub_resource type="Resource" id="Resource_162e4"]
+script = ExtResource("2_41am4")
+distance = 0.38
+distance_variation = 0.16
+random_color = true
+
+[sub_resource type="Resource" id="Resource_5aj1v"]
+script = ExtResource("2_41am4")
+distance = 0.38
+distance_variation = 0.16
+random_color = true
+
+[resource]
+script = ExtResource("1_xdkp3")
+display_name = "Binary System"
+weight = 4.0
+temperature_min = 50.0
+temperature_max = 80.0
+density_min = 0.375
+density_max = 0.625
+stars = Array[ExtResource("2_41am4")]([SubResource("Resource_162e4"), SubResource("Resource_5aj1v")])

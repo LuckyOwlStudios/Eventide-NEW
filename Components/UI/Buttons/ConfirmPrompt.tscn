@@ -1,0 +1,67 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Components/UI/Buttons/confirm_prompt.gd" id="1_prompt"]
+
+[node name="ConfirmPrompt" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_prompt")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015686275, 0.019607844, 0.023529412, 0.7)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_type_variation = &"MenuPanel"
+
+[node name="Layout" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="MessageLabel" type="Label" parent="Center/Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardTitleLabel"
+text = "Are you sure?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Center/Panel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="YesButton" type="Button" parent="Center/Panel/Layout/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 38)
+layout_mode = 2
+theme_type_variation = &"SettingsButton"
+text = "YES"
+
+[node name="NoButton" type="Button" parent="Center/Panel/Layout/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 38)
+layout_mode = 2
+theme_type_variation = &"SettingsButton"
+text = "NO"

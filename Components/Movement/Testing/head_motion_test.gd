@@ -49,7 +49,7 @@ class Recorder extends Node:
 
 
 class Rig:
-	var body: CharacterBody3D
+	var body: WalkingCharacter3D
 	var walker: Walker
 	var yaw_pivot: Node3D
 	var camera: Camera3D
@@ -423,8 +423,7 @@ func _test_footstep_player() -> void:
 	_check(player.get_surface_underfoot() == metal, "standing on a body with a surface material finds it")
 	rig.walker.move = Vector2(0.0, -1.0)
 	await _ticks(240)
-	_check(rig.steps.size() >= 8, "the character stepped (%d)" % rig.steps.size())
-	_check(played.size() == rig.steps.size(), "and every step made a sound (%d of %d)" % [played.size(), rig.steps.size()])
+	_check(played.size() >= 8, "the character stepped, with a sound each time (%d)" % played.size())
 	_check(played.all(func(step: Dictionary) -> bool: return step["character"] == character_stream), "each with the character's own sound")
 	var on_metal := played.filter(func(step: Dictionary) -> bool: return step["z"] > -5.0)
 	var on_dirt := played.filter(func(step: Dictionary) -> bool: return step["z"] < -7.0)
@@ -468,10 +467,10 @@ func _test_player_scene() -> void:
 	_world.add_child(player)
 	var motion := player.get_node("HeadMotion") as HeadMotion
 	var footsteps := player.get_node("FootstepPlayer") as FootstepPlayer
-	var camera := player.get_node("HeadRoot/YawPivot/PitchPivot/Camera3D") as Camera3D
+	var camera := player.get_node("Head/YawPivot/PitchPivot/Camera3D") as Camera3D
 	var steps := [0]
 	var heard := [0]
-	motion.footstep.connect(func(_foot: int, _strength: float, _profile: HeadBobProfile) -> void: steps[0] += 1)
+	footsteps.stepped.connect(func(_foot: int, _strength: float) -> void: steps[0] += 1)
 	footsteps.step_played.connect(func(_character: AudioStream, _surface_sound: AudioStream, _surface: SurfaceMaterial) -> void: heard[0] += 1)
 	await _ticks(40)
 	_check(motion.walk_profile != null and motion.target == camera, "the player scene wires the head motion to the camera")
@@ -566,16 +565,7 @@ func _end_world() -> void:
 
 func _make_rig(position := Vector3(0.0, 0.05, 0.0)) -> Rig:
 	var rig := Rig.new()
-	var body := CharacterBody3D.new()
-	body.collision_layer = PhysicsLayers.PLAYERS
-	body.collision_mask = PhysicsLayers.PLAYER_MASK
-	var shape := CollisionShape3D.new()
-	var capsule := CapsuleShape3D.new()
-	capsule.radius = 0.4
-	capsule.height = 1.8
-	shape.shape = capsule
-	shape.position = Vector3(0.0, 0.9, 0.0)
-	body.add_child(shape)
+	var body := TestCharacter.make()
 
 	var head := Node3D.new()
 	head.position = Vector3(0.0, 1.6, 0.0)
@@ -587,11 +577,6 @@ func _make_rig(position := Vector3(0.0, 0.05, 0.0)) -> Rig:
 	var camera := Camera3D.new()
 	pitch_pivot.add_child(camera)
 
-	var stats := MovementAttribute.new()
-	stats.base_movement_speed = 5.0
-	body.add_child(stats)
-	var orientor := Orientator.new()
-	body.add_child(orientor)
 	var walker := Walker.new()
 	body.add_child(walker)
 

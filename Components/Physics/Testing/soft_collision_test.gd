@@ -565,18 +565,7 @@ func _make_item(center: Vector3, size: Vector3, mass: float, soft: bool, shape: 
 ## A character the way the project makes players, walked by a real controller. With the node when
 ## [param soft] is on, pushing away from other players.
 func _make_character(position: Vector3, soft := false) -> Walker:
-	var body := CharacterBody3D.new()
-	body.collision_layer = PhysicsLayers.PLAYERS
-	body.collision_mask = PhysicsLayers.PLAYER_MASK
-	var shape := CollisionShape3D.new()
-	var capsule := CapsuleShape3D.new()
-	capsule.radius = 0.4
-	capsule.height = 1.8
-	shape.shape = capsule
-	shape.position = Vector3(0.0, 0.9, 0.0)
-	body.add_child(shape)
-	body.add_child(MovementAttribute.new())
-	body.add_child(Orientator.new())
+	var body := TestCharacter.make()
 	if soft:
 		var node := SoftCollision3D.new()
 		node.push_mask = PhysicsLayers.PLAYERS

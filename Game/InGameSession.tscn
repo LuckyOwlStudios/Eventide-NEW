@@ -1,0 +1,417 @@
+[gd_scene format=3 uid="uid://ctpvbs2u3kpet"]
+
+[ext_resource type="Texture2D" uid="uid://cuou5yg5kye45" path="res://Assets/Textures/Backgrounds/panorama6.jpg" id="1_ml440"]
+[ext_resource type="Script" uid="uid://cxkgdx7ierwxb" path="res://Components/Graphics/adv_environment.gd" id="2_dlurn"]
+[ext_resource type="Script" uid="uid://cd70lgntu48so" path="res://Components/Radio/radio_manager.gd" id="3_dbho0"]
+[ext_resource type="PackedScene" uid="uid://icihho8b8rfv" path="res://Components/Jump/JumpDirector.tscn" id="4_s073g"]
+[ext_resource type="Script" uid="uid://df748pr0kjr2g" path="res://Components/Physics/directional_gravity_field.gd" id="5_bvk4o"]
+[ext_resource type="Script" uid="uid://b2tg46y73nkf4" path="res://Components/Temperature/temperature.gd" id="5_dlurn"]
+[ext_resource type="Script" uid="uid://800hktxikrb8" path="res://Components/Traversal/ladder_3d.gd" id="6_r8hbx"]
+[ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="7_o3iv5"]
+[ext_resource type="PackedScene" uid="uid://bry3npyddc8bg" path="res://Scenes/Player/Player.tscn" id="8_aper2"]
+[ext_resource type="PackedScene" uid="uid://bgoqo23744dl0" path="res://Scenes/Vehicles/Mule/Mule.tscn" id="9_gdfn8"]
+[ext_resource type="Script" uid="uid://bj6lt1ihhp7kp" path="res://Components/Physics/soft_collision_3d.gd" id="10_jclb4"]
+[ext_resource type="Script" uid="uid://c56hrvh084k5a" path="res://Components/Interaction/interactable_object_3d.gd" id="11_nluor"]
+[ext_resource type="Script" uid="uid://jq6xnq5m1fuk" path="res://Scenes/Items/item_spawner.gd" id="12_db0ab"]
+[ext_resource type="Resource" uid="uid://rq20qbg8obg4" path="res://Game/Registry/Items/Battery/battery_item.tres" id="13_0w8kv"]
+[ext_resource type="PackedScene" uid="uid://ddi732tldqge0" path="res://Scenes/Characters/Types/Mimic/Mimic.tscn" id="14_aj4df"]
+[ext_resource type="PackedScene" uid="uid://ugd1pg1ak6d7" path="res://Scenes/Objects/Speaker.tscn" id="15_0dtnq"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_uyedj"]
+panorama = ExtResource("1_ml440")
+
+[sub_resource type="Sky" id="Sky_p22qx"]
+sky_material = SubResource("PanoramaSkyMaterial_uyedj")
+
+[sub_resource type="Environment" id="Environment_wb7ei"]
+background_mode = 2
+sky = SubResource("Sky_p22qx")
+ambient_light_source = 3
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+glow_intensity = 1.5
+fog_light_color = Color(0.19565815, 0.21669, 0.2517383, 1)
+fog_sun_scatter = 0.13
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_57qmd"]
+size = Vector3(24, 10.25, 24)
+
+[sub_resource type="Resource" id="Resource_p22qx"]
+script = ExtResource("7_o3iv5")
+prompt = "Climb"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ladder"]
+size = Vector3(0.75, 3.375, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="InGameSession" type="Node3D" unique_id=867967981 groups=["gameplay_scene"]]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1374628029]
+environment = SubResource("Environment_wb7ei")
+script = ExtResource("2_dlurn")
+
+[node name="Ingame Systems" type="Node" parent="." unique_id=1712449108]
+
+[node name="RadioManager" type="Node" parent="Ingame Systems" unique_id=578257098]
+script = ExtResource("3_dbho0")
+default_frequency_code = 1000
+metadata/_custom_type_script = "uid://cd70lgntu48so"
+
+[node name="JumpDirector" parent="Ingame Systems" unique_id=1920384756 node_paths=PackedStringArray("ship", "world_root") instance=ExtResource("4_s073g")]
+ship = NodePath("../../Mule")
+world_root = NodePath("../../Space")
+
+[node name="TemperatureHandler" type="Node" parent="Ingame Systems" unique_id=1035943415]
+script = ExtResource("5_dlurn")
+metadata/_custom_type_script = "uid://b2tg46y73nkf4"
+
+[node name="Sideways" type="CSGCombiner3D" parent="." unique_id=705952319 groups=["jump_purge"]]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 24, 0, 0)
+use_collision = true
+collision_mask = 0
+
+[node name="DirectionalGravityField3D" type="Area3D" parent="Sideways" unique_id=1756217601]
+collision_layer = 256
+collision_mask = 558
+script = ExtResource("5_bvk4o")
+metadata/_custom_type_script = "uid://df748pr0kjr2g"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sideways/DirectionalGravityField3D" unique_id=1103526584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.125, 0)
+shape = SubResource("BoxShape3D_57qmd")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Sideways" unique_id=659405516]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+use_collision = true
+size = Vector3(24, 0.5, 24)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Sideways" unique_id=359643285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 2.3125, -10.125)
+use_collision = true
+size = Vector3(5, 4.625, 3.75)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Sideways" unique_id=149491598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5, 6)
+use_collision = true
+size = Vector3(12, 3, 12)
+
+[node name="Ladder2" type="Node3D" parent="Sideways" unique_id=554809788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.278354e-08, 0.75)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=30684376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125, 1.6328125, -0.25)
+radius = 0.05
+height = 3.234375
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1350710127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125, 1.6328125, 0.25)
+radius = 0.05
+height = 3.234375
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=817042730]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 0.25, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1707333343]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 0.5, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=420897780]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 0.75, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1326659810]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1834937395]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1.25, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1001487213]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1.5, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D9" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=589712574]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1.75, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D10" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1664889599]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D11" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1387381364]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2.25, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D12" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=308569518]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2.5, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D13" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=1772593114]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2.75, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D14" type="CSGCylinder3D" parent="Sideways/Ladder2" unique_id=93209010]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 3, 0)
+radius = 0.025
+height = 0.5
+
+[node name="Ladder3D" type="Area3D" parent="Sideways/Ladder2" unique_id=1735919199]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.125, 0, 0)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_r8hbx")
+prompt_follow_speed = 14.0
+interaction_options = Array[ExtResource("7_o3iv5")]([SubResource("Resource_p22qx")])
+prompt_local_offset = Vector3(0, 0, 0)
+center_prompt = true
+show_interaction_selector = false
+runtime_status = "1 configured interaction option(s)."
+metadata/_custom_type_script = "uid://800hktxikrb8"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sideways/Ladder2/Ladder3D" unique_id=1110737293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0.025000095)
+shape = SubResource("BoxShape3D_ladder")
+
+[node name="Player" parent="." unique_id=260935112 instance=ExtResource("8_aper2")]
+
+[node name="Mule" parent="." unique_id=2108023721 instance=ExtResource("9_gdfn8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.75, 0, 1)
+turn_acceleration_degrees = 45.0
+engine_state = false
+power_state = false
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=956665352]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -18, 1.25, 0)
+collision_layer = 32
+collision_mask = 49
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=2132594704]
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1073799779]
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="SoftCollision3D" type="Node" parent="RigidBody3D" unique_id=163743705]
+script = ExtResource("10_jclb4")
+strength = 5.0
+friction_while_pushed = 0.52
+metadata/_custom_type_script = "uid://bj6lt1ihhp7kp"
+
+[node name="InteractableObject3D" type="Area3D" parent="RigidBody3D" unique_id=1599665044]
+script = ExtResource("11_nluor")
+selector_size = Vector3(0.25, 0.25, 0.25)
+metadata/_custom_type_script = "uid://c56hrvh084k5a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/InteractableObject3D" unique_id=1824554882]
+shape = SubResource("BoxShape3D_yf5fn")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="." unique_id=670092691]
+transform = Transform3D(0, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 0, -17.5, 1.25, 0.625)
+collision_layer = 32
+collision_mask = 49
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2" unique_id=1384382164]
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2" unique_id=2028305738]
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="SoftCollision3D" type="Node" parent="RigidBody3D2" unique_id=381353934]
+script = ExtResource("10_jclb4")
+strength = 5.0
+friction_while_pushed = 0.52
+metadata/_custom_type_script = "uid://bj6lt1ihhp7kp"
+
+[node name="InteractableObject3D" type="Area3D" parent="RigidBody3D2" unique_id=379695324]
+script = ExtResource("11_nluor")
+selector_size = Vector3(0.25, 0.25, 0.25)
+metadata/_custom_type_script = "uid://c56hrvh084k5a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2/InteractableObject3D" unique_id=143716785]
+shape = SubResource("BoxShape3D_yf5fn")
+
+[node name="RigidBody3D3" type="RigidBody3D" parent="." unique_id=1754996291]
+transform = Transform3D(0, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 0, -17.75, 1.875, 0.125)
+collision_layer = 32
+collision_mask = 49
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D3" unique_id=675346182]
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D3" unique_id=717541739]
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="SoftCollision3D" type="Node" parent="RigidBody3D3" unique_id=1302329796]
+script = ExtResource("10_jclb4")
+strength = 5.0
+friction_while_pushed = 0.52
+metadata/_custom_type_script = "uid://bj6lt1ihhp7kp"
+
+[node name="InteractableObject3D" type="Area3D" parent="RigidBody3D3" unique_id=22114814]
+script = ExtResource("11_nluor")
+selector_size = Vector3(0.25, 0.25, 0.25)
+metadata/_custom_type_script = "uid://c56hrvh084k5a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D3/InteractableObject3D" unique_id=473767057]
+shape = SubResource("BoxShape3D_yf5fn")
+
+[node name="ItemSpawner" type="Node3D" parent="." unique_id=742912238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -3.25)
+script = ExtResource("12_db0ab")
+item = ExtResource("13_0w8kv")
+metadata/_custom_type_script = "uid://jq6xnq5m1fuk"
+
+[node name="Mimic" parent="." unique_id=2092718941 instance=ExtResource("14_aj4df")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -7)
+collision_layer = 1
+collision_mask = 1
+script = null
+
+[node name="Space" type="Node3D" parent="." unique_id=2146029267]
+
+[node name="DirectionalGravityField3D" type="Area3D" parent="Space" unique_id=992776477]
+collision_layer = 256
+collision_mask = 558
+script = ExtResource("5_bvk4o")
+metadata/_custom_type_script = "uid://df748pr0kjr2g"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Space/DirectionalGravityField3D" unique_id=2074697573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.125, 0)
+shape = SubResource("BoxShape3D_57qmd")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Space" unique_id=519505562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+use_collision = true
+size = Vector3(24, 0.5, 24)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Space" unique_id=634147404]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 2.3125, -10.125)
+use_collision = true
+size = Vector3(5, 4.625, 3.75)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Space" unique_id=1705928439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5, 6)
+use_collision = true
+size = Vector3(12, 3, 12)
+
+[node name="Ladder" type="Node3D" parent="Space" unique_id=85822501]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Space/Ladder" unique_id=1829460402]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125, 1.6328125, -0.25)
+radius = 0.05
+height = 3.234375
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Space/Ladder" unique_id=1571406810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125, 1.6328125, 0.25)
+radius = 0.05
+height = 3.234375
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Space/Ladder" unique_id=1699721111]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 0.25, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Space/Ladder" unique_id=668502421]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 0.5, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Space/Ladder" unique_id=952897281]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 0.75, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Space/Ladder" unique_id=572943571]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="Space/Ladder" unique_id=2100972694]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1.25, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="Space/Ladder" unique_id=1157838744]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1.5, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D9" type="CSGCylinder3D" parent="Space/Ladder" unique_id=1279833719]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 1.75, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D10" type="CSGCylinder3D" parent="Space/Ladder" unique_id=96547146]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D11" type="CSGCylinder3D" parent="Space/Ladder" unique_id=737192221]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2.25, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D12" type="CSGCylinder3D" parent="Space/Ladder" unique_id=320827044]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2.5, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D13" type="CSGCylinder3D" parent="Space/Ladder" unique_id=709998195]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 2.75, 0)
+radius = 0.025
+height = 0.5
+
+[node name="CSGCylinder3D14" type="CSGCylinder3D" parent="Space/Ladder" unique_id=1350053886]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, -0.125, 3, 0)
+radius = 0.025
+height = 0.5
+
+[node name="Ladder3D" type="Area3D" parent="Space/Ladder" unique_id=594698880]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.125, 0, 0)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_r8hbx")
+prompt_follow_speed = 14.0
+interaction_options = Array[ExtResource("7_o3iv5")]([SubResource("Resource_p22qx")])
+prompt_local_offset = Vector3(0, 0, 0)
+center_prompt = true
+show_interaction_selector = false
+runtime_status = "1 configured interaction option(s)."
+metadata/_custom_type_script = "uid://800hktxikrb8"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Space/Ladder/Ladder3D" unique_id=1557248576]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0.025000095)
+shape = SubResource("BoxShape3D_ladder")
+
+[node name="Speaker" parent="Space" unique_id=454349077 instance=ExtResource("15_0dtnq")]
+transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, 4, 0.25, -4)
+hear_local_transmissions = true
+
+[node name="Speaker2" parent="Space" unique_id=103865412 instance=ExtResource("15_0dtnq")]
+transform = Transform3D(-0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, -0.7071067, -4, 0.25, -4)
+hear_local_transmissions = true

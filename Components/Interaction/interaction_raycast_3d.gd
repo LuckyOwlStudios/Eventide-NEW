@@ -61,8 +61,9 @@ var _last_press_time_msec: Dictionary = {}
 func _enter_tree() -> void:
 	# By default it looks at interactables and at the solid things that can hide them. A
 	# mask a scene set to something other than Godot's stock value of 1 is left alone.
-	if collision_mask == 1:
-		collision_mask = PhysicsLayers.INTERACTION_RAY_MASK
+	set_collision_mask_value(1, true)
+	set_collision_mask_value(5, true)
+	set_collision_mask_value(7, true)
 
 
 func _ready() -> void:

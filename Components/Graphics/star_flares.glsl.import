@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dh8t8frhtxv3"
+path="res://.godot/imported/star_flares.glsl-cfebd01ff138e4157cd1e0ac2a0f0604.res"
+
+[deps]
+
+source_file="res://Components/Graphics/star_flares.glsl"
+dest_files=["res://.godot/imported/star_flares.glsl-cfebd01ff138e4157cd1e0ac2a0f0604.res"]
+
+[params]
+

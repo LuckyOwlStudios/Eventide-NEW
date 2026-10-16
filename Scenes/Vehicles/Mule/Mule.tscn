@@ -8,17 +8,25 @@
 [ext_resource type="Script" uid="uid://bwywua3ao50ii" path="res://Components/Vehicles/vehicle_interior_3d.gd" id="3_h1s1g"]
 [ext_resource type="PackedScene" uid="uid://qaocaks7otn4" path="res://Scenes/Vehicles/Mule/MuleBow.tscn" id="4_g31rl"]
 [ext_resource type="PackedScene" uid="uid://cimtf2ndfk6sv" path="res://Scenes/Vehicles/Mule/MuleStern.tscn" id="5_h1s1g"]
+[ext_resource type="PackedScene" uid="uid://q31vvtep3vr2" path="res://Assets/Models/Seat.tscn" id="9_mmumh"]
+[ext_resource type="Script" uid="uid://dno1j8qhyyuhx" path="res://Components/Seats/seat_3d.gd" id="10_3j7pt"]
+[ext_resource type="Script" uid="uid://civb8nlbwe0gh" path="res://Components/Vehicles/vehicle_ambience.gd" id="11_ambience"]
+[ext_resource type="AudioStream" uid="uid://x24ug7whb2vf" path="res://Assets/Audio/Ambience/main_ship_interior_loop.wav" id="12_hum"]
+[ext_resource type="Script" uid="uid://c3lsu6hxi0lh0" path="res://Components/Vehicles/lever_3d.gd" id="13_lever"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hull"]
 resource_local_to_scene = true
-size = Vector3(4.75, 3.25, 12)
+size = Vector3(4.75, 3.25, 16)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
 resource_local_to_scene = true
-size = Vector3(4, 2.5, 12)
+size = Vector3(4, 2.5, 16)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_switch"]
 size = Vector3(0.375, 0.5, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lever"]
+albedo_color = Color(0.85, 0.2, 0.1, 1)
 
 [sub_resource type="Resource" id="Resource_pilot"]
 script = ExtResource("2_option")
@@ -27,12 +35,21 @@ prompt = "Pilot Ship"
 [sub_resource type="BoxShape3D" id="BoxShape3D_seat"]
 size = Vector3(0.875, 1, 0.875)
 
-[node name="Mule" type="RigidBody3D" unique_id=2108023721 node_paths=PackedStringArray("camera_rig")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.75, 1.25, 0.75)
+
+[node name="Mule" type="RigidBody3D" unique_id=2108023721 node_paths=PackedStringArray("camera_rig", "power_on_nodes", "lights", "exterior_doors")]
 mass = 20000.0
 script = ExtResource("1_w0j3q")
+segments = 2
 camera_rig = NodePath("CameraRig")
+engine_state = true
 power_state = true
 walkable_interior = true
+power_on_nodes = [NodePath("MuleBow/MuleBowModel/LeftAccentLight")]
+lights = [NodePath("MuleBow/RightHeadLight"), NodePath("MuleBow/LeftHeadLight")]
+light_state = false
+exterior_doors = [NodePath("MuleBow/Door")]
 metadata/_custom_type_script = "uid://bxui026uokkfo"
 
 [node name="Hull" type="CollisionShape3D" parent="." unique_id=572052660]
@@ -55,13 +72,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
 shape = SubResource("BoxShape3D_yf5fn")
 
 [node name="MuleBow" parent="." unique_id=1601944499 instance=ExtResource("4_g31rl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
 
-[node name="PowerSwitch" type="Area3D" parent="MuleBow" unique_id=1748614517]
+[node name="Door" parent="MuleBow" index="7" unique_id=1930482716 node_paths=PackedStringArray("limit_raycasts")]
+limit_raycasts = [NodePath("../CurvedRayCast3DLeft"), null, NodePath("../CurvedRayCast3DRight")]
+
+[node name="PowerSwitch" type="Area3D" parent="MuleBow" unique_id=1748614517 node_paths=PackedStringArray("lever")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -1.95, 1.4, -0.9000001)
 collision_layer = 64
 collision_mask = 0
 script = ExtResource("2_power")
+lever = NodePath("Panel/Lever")
 selector_size = Vector3(0.25, 0.25, 0.25)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MuleBow/PowerSwitch" unique_id=2092683040]
@@ -72,37 +94,81 @@ shape = SubResource("BoxShape3D_switch")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.033)
 size = Vector3(0.25, 0.375, 0.067)
 
-[node name="Lever" type="CSGBox3D" parent="MuleBow/PowerSwitch/Panel" unique_id=461165172]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
-size = Vector3(0.06, 0.2, 0.05)
+[node name="Hub" type="CSGCylinder3D" parent="MuleBow/PowerSwitch/Panel" unique_id=461165173]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0.05)
+radius = 0.045
+height = 0.04
 
-[node name="PilotSeat" type="Area3D" parent="MuleBow" unique_id=604769344 node_paths=PackedStringArray("dismount_point")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 6.7250004)
+[node name="Lever" type="Node3D" parent="MuleBow/PowerSwitch/Panel" unique_id=461165172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+script = ExtResource("13_lever")
+
+[node name="Arm" type="CSGBox3D" parent="MuleBow/PowerSwitch/Panel/Lever" unique_id=461165174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07, 0)
+size = Vector3(0.03, 0.14, 0.03)
+material = SubResource("StandardMaterial3D_lever")
+
+[node name="Knob" type="CSGSphere3D" parent="MuleBow/PowerSwitch/Panel/Lever" unique_id=461165175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+radius = 0.04
+material = SubResource("StandardMaterial3D_lever")
+
+[node name="RightHeadLight" type="SpotLight3D" parent="MuleBow" unique_id=1900248936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.625, 1.25, -2.25)
+spot_range = 64.0
+
+[node name="LeftHeadLight" type="SpotLight3D" parent="MuleBow" unique_id=875673587]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.625, 1.25, -2.25)
+spot_range = 64.0
+
+[node name="MuleStern" parent="." unique_id=1898438369 instance=ExtResource("5_h1s1g")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="PilotSeat" type="Area3D" parent="MuleStern" unique_id=604769344 node_paths=PackedStringArray("vehicle", "dismount_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.875, 1, -1)
 script = ExtResource("2_seat")
+vehicle = NodePath("../..")
 dismount_point = NodePath("DismountPoint")
 interaction_options = Array[ExtResource("2_option")]([SubResource("Resource_pilot")])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MuleBow/PilotSeat" unique_id=1356028542]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MuleStern/PilotSeat" unique_id=1356028542]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.375, 0.0625)
 shape = SubResource("BoxShape3D_seat")
 
-[node name="SeatMount" type="Marker3D" parent="MuleBow/PilotSeat" unique_id=307945107]
+[node name="SeatMount" type="Marker3D" parent="MuleStern/PilotSeat" unique_id=307945107]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
-[node name="DismountPoint" type="Marker3D" parent="MuleBow/PilotSeat" unique_id=1243197442]
+[node name="DismountPoint" type="Marker3D" parent="MuleStern/PilotSeat" unique_id=1243197442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.95, -0.025000095)
 
-[node name="Chair" type="CSGBox3D" parent="MuleBow/PilotSeat" unique_id=1473511555]
+[node name="Seat" parent="MuleStern/PilotSeat" unique_id=1781131570 instance=ExtResource("9_mmumh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0.1)
-size = Vector3(0.7, 0.5, 0.7)
-
-[node name="Backrest" type="CSGBox3D" parent="MuleBow/PilotSeat/Chair" unique_id=225073100]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.3)
-size = Vector3(0.7, 0.9, 0.15)
-
-[node name="MuleStern" parent="." unique_id=1898438369 instance=ExtResource("5_h1s1g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
 [node name="Segments" type="Node3D" parent="." unique_id=1131717435]
+unique_name_in_owner = true
 
-[editable path="MuleStern"]
+[node name="Seat3D" type="Area3D" parent="." unique_id=1165828603 node_paths=PackedStringArray("dismount_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.875, 0, 3.625)
+script = ExtResource("10_3j7pt")
+dismount_point = NodePath("Marker3D")
+allow_items = true
+occupant_can_look = true
+metadata/_custom_type_script = "uid://dno1j8qhyyuhx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Seat3D" unique_id=518328024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Seat" parent="Seat3D" unique_id=762982658 instance=ExtResource("9_mmumh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="Marker3D" type="Marker3D" parent="Seat3D" unique_id=2146642066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -0.875)
+
+[node name="InteriorAmbience" type="Node" parent="." unique_id=1095625351]
+script = ExtResource("11_ambience")
+stream = ExtResource("12_hum")
+
+[editable path="MuleBow"]
+[editable path="MuleBow/MuleBowModel"]

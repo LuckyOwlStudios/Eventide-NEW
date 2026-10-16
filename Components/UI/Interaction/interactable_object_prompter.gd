@@ -19,6 +19,10 @@ const KEY_BIND_INTERACTION_ENTRY := preload("res://Components/UI/Interaction/Key
 ## drawn its options at least once.
 const REVEAL_FRAMES := 2
 
+## How many texels the options panel gets per real screen pixel, in each direction. More than 1
+## makes the text and icons smooth, like the selector, because the GPU averages them down.
+const SUPERSAMPLE := 2.0
+
 ## Gap, in screen pixels, between the selector and the options. When the object has no selector,
 ## the options are placed this far from its prompt spot instead.
 @export var screen_offset := Vector2(18.0, 0.0)
@@ -43,6 +47,8 @@ var _reveal_frames := 0
 ## The size of the options panel in logical (UI) pixels. The SubViewport itself is rendered at the
 ## window's real resolution so the text stays sharp when the window is scaled.
 var _ui_size := Vector2i.ZERO
+## Real window pixels per logical (UI) pixel, set by _match_window_resolution.
+var _pixel_scale := 1.0
 
 
 func _ready() -> void:
@@ -224,16 +230,16 @@ func _update_prompt() -> void:
 	left += kept_on_screen.x - top_left.x
 	middle += kept_on_screen.y - top_left.y
 
-	# Land the panel's pixels exactly on screen pixels. Half a pixel off, every texel is smeared
+	# Land the panel's pixels exactly on real screen pixels. Half a pixel off, every texel is smeared
 	# over two by the filtering and the text goes soft.
-	var viewport_top_left := anchor_pixel + Vector2(left, middle - _ui_size.y * 0.5)
-	var snap := viewport_top_left.round() - viewport_top_left
+	var viewport_size := Vector2(sub_viewport.size) / (_pixel_scale * SUPERSAMPLE)
+	var viewport_top_left := anchor_pixel + Vector2(left, middle - viewport_size.y * 0.5)
+	var snap := (viewport_top_left * _pixel_scale).round() / _pixel_scale - viewport_top_left
 	left += snap.x
 	middle += snap.y
 
 	# The list sits at the left edge of the viewport, centered vertically, so the quad's center is
 	# half a viewport to the right of where the list starts.
-	var viewport_size := Vector2(_ui_size)
 	var panel := _prompt.options.mesh as QuadMesh
 	panel.size = viewport_size * meters_per_pixel
 	panel.center_offset = Vector3(
@@ -243,12 +249,13 @@ func _update_prompt() -> void:
 	)
 
 
-## The window is usually bigger than the UI's logical size (the stretch mode scales it up), so the
-## SubViewport is drawn at the real pixel count, with the UI laid out at its logical size.
+## The window is usually not the UI's logical size (the stretch mode scales it), so the SubViewport
+## is drawn at SUPERSAMPLE times the real pixel count, with the UI laid out at its logical size. One logical pixel is
+## [member _pixel_scale] real ones; the quad and its snapping use that, or the text is resampled.
 func _match_window_resolution(logical_screen: Vector2) -> void:
 	var window := get_window()
-	var window_scale := maxf(float(window.size.y) / maxf(logical_screen.y, 1.0), 1.0)
-	var wanted := Vector2i((Vector2(_ui_size) * window_scale).ceil())
+	_pixel_scale = maxf(float(window.size.y) / maxf(logical_screen.y, 1.0), 0.01)
+	var wanted := Vector2i((Vector2(_ui_size) * _pixel_scale * SUPERSAMPLE).round())
 	if sub_viewport.size != wanted:
 		sub_viewport.size = wanted
 

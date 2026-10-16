@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://bqp2v3rq7j2nm"]
+
+[ext_resource type="PackedScene" uid="uid://bawj444abgxbt" path="res://Game/Registry/Items/Flashlight/Flashlight.tscn" id="1_eq3wb"]
+[ext_resource type="Texture2D" uid="uid://cu3cjd144la4w" path="res://Assets/Icons/flashlight_icon.png" id="2_e0qws"]
+[ext_resource type="Script" uid="uid://cbflbmfb7hx46" path="res://Game/Registry/Items/Flashlight/flashlight_instance.gd" id="3_tqlgg"]
+[ext_resource type="Script" uid="uid://dtecqbok1dsgq" path="res://Components/Inventory/item.gd" id="4_h4ek4"]
+
+[resource]
+script = ExtResource("4_h4ek4")
+id = &"flashlight"
+display_name = "Flashlight"
+description = "A handheld light powered by a rechargeable battery."
+icon = ExtResource("2_e0qws")
+grid_size = Vector2i(2, 1)
+tags = Array[StringName]([&"tool", &"lamp"])
+actor_scene = ExtResource("1_eq3wb")
+instance_script = ExtResource("3_tqlgg")

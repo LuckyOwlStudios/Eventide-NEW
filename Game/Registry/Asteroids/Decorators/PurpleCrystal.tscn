@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i0hdr"]
+resource_name = "Purple Crystal"
+albedo_color = Color(0.5, 0.16, 0.85, 1)
+metallic_specular = 1.0
+roughness = 0.08
+emission_enabled = true
+emission = Color(0.62, 0.18, 1, 1)
+emission_energy_multiplier = 0.9
+rim_enabled = true
+rim = 0.8
+rim_tint = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yeck2"]
+material = SubResource("StandardMaterial3D_i0hdr")
+top_radius = 0.15
+bottom_radius = 0.2
+height = 0.55
+radial_segments = 6
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1e1qi"]
+material = SubResource("StandardMaterial3D_i0hdr")
+top_radius = 0.0
+bottom_radius = 0.15
+height = 0.45
+radial_segments = 6
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[node name="PurpleCrystal" type="Node3D" unique_id=362482626]
+
+[node name="Column" type="MeshInstance3D" parent="." unique_id=1674115616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
+mesh = SubResource("CylinderMesh_yeck2")
+
+[node name="Tip" type="MeshInstance3D" parent="." unique_id=721208560]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775, 0)
+mesh = SubResource("CylinderMesh_1e1qi")

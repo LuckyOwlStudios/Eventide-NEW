@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://cdvg2sumkxqm"]
+
+[ext_resource type="PackedScene" uid="uid://d66xtrvq3c4a" path="res://Game/Registry/Items/Lightpack/LightPack.tscn" id="1_feuve"]
+[ext_resource type="Texture2D" uid="uid://bqyagygiol3d" path="res://addons/at-icons/node/backpack.svg" id="2_52msa"]
+[ext_resource type="Script" uid="uid://dtecqbok1dsgq" path="res://Components/Inventory/item.gd" id="3_snaic"]
+
+[resource]
+script = ExtResource("3_snaic")
+id = &"light_pack"
+display_name = "Light Pack"
+description = "A backpack that emits light"
+icon = ExtResource("2_52msa")
+grid_size = Vector2i(3, 3)
+tags = Array[StringName]([&"equippable"])
+actor_scene = ExtResource("1_feuve")
+metadata/_custom_type_script = "uid://dtecqbok1dsgq"

@@ -7,4 +7,5 @@ func _pressed() -> void:
 	if not SteamNetwork.has_lobby():
 		push_warning("Cannot open Steam invites without an active Steam lobby.")
 		return
-	Steam.activateGameOverlayInviteDialog(SteamNetwork.lobby_id)
+	else:
+		Steam.activateGameOverlayInviteDialog(SteamNetwork.lobby_id)

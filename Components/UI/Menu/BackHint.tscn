@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[node name="BackHint" type="Button"]
+custom_minimum_size = Vector2(150, 40)
+theme_type_variation = &"SettingsButton"
+
+[node name="Content" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="BackLabel" type="Label" parent="Content"]
+layout_mode = 2
+theme_type_variation = &"PauseBackLabel"
+text = "Back"
+vertical_alignment = 1
+
+[node name="EscapeLabel" type="Label" parent="Content"]
+layout_mode = 2
+theme_type_variation = &"PauseBackLabel"
+theme_override_colors/font_color = Color(0.42745098, 0.87058824, 0.23921569, 1)
+text = "ESC"
+vertical_alignment = 1

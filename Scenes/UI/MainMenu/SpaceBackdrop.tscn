@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/UI/MainMenu/space_backdrop.gd" id="1_backdrop"]
+[ext_resource type="Texture2D" uid="uid://cuou5yg5kye45" path="res://Assets/Textures/Backgrounds/panorama6.jpg" id="2_sky"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_menu"]
+panorama = ExtResource("2_sky")
+
+[sub_resource type="Sky" id="Sky_menu"]
+sky_material = SubResource("PanoramaSkyMaterial_menu")
+
+[sub_resource type="Environment" id="Environment_menu"]
+background_mode = 2
+sky = SubResource("Sky_menu")
+glow_enabled = true
+glow_intensity = 1.5
+
+[node name="SpaceBackdrop" type="Node3D"]
+script = ExtResource("1_backdrop")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_menu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true
+fov = 70.0

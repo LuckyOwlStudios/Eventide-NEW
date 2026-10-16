@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Asteroid" format=3]
+
+[ext_resource type="Script" path="res://Components/Space/asteroid_decorator.gd" id="1_2vfwc"]
+[ext_resource type="Script" path="res://Components/Space/asteroid_drop.gd" id="2_c0ug7"]
+[ext_resource type="Script" path="res://Components/Space/asteroid.gd" id="3_4j3hy"]
+
+[resource]
+script = ExtResource("3_4j3hy")
+display_name = "Metallic"
+temperature_min = -45.0
+weight = 0.15
+tint = Color(1, 0.8, 0.64, 1)
+roughness = 0.5
+metallic = 0.55

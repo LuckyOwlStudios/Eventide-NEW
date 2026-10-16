@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://c3011x23tw2mi"]
+
+[ext_resource type="Script" uid="uid://uhefigswykqh" path="res://Scenes/UI/Lobby/lobby_panel.gd" id="1_panel"]
+[ext_resource type="Script" uid="uid://84b223y7xhrl" path="res://Components/Network/invite_player_button.gd" id="2_invite"]
+
+[node name="LobbyPanel" type="PanelContainer" unique_id=1843994082]
+custom_minimum_size = Vector2(380, 0)
+theme_type_variation = &"MenuPanel"
+script = ExtResource("1_panel")
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1068486881]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Layout" unique_id=1142323092]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Layout/Header" unique_id=787587889]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SettingsSectionLabel"
+text = "LOBBY"
+
+[node name="CountLabel" type="Label" parent="Layout/Header" unique_id=1640144191]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SettingsMutedLabel"
+text = "1 / 4"
+vertical_alignment = 1
+
+[node name="Divider" type="Panel" parent="Layout" unique_id=1473522662]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_type_variation = &"Divider"
+
+[node name="Cards" type="VBoxContainer" parent="Layout" unique_id=1500101853]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StatusLabel" type="Label" parent="Layout" unique_id=2049793548]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+theme_type_variation = &"SettingsMutedLabel"
+text = "Invite friends to play together."
+autowrap_mode = 3
+
+[node name="Actions" type="HBoxContainer" parent="Layout" unique_id=1158616043]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="InviteButton" type="Button" parent="Layout/Actions" unique_id=90622884]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 34)
+layout_mode = 2
+theme_type_variation = &"SettingsButton"
+text = "INVITE FRIENDS"
+script = ExtResource("2_invite")
+
+[node name="Divider" type="Panel" parent="Layout/Actions" unique_id=1918838557]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_type_variation = &"DividerVertical"
+
+[node name="LeaveButton" type="Button" parent="Layout/Actions" unique_id=1252646907]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 34)
+layout_mode = 2
+theme_type_variation = &"SettingsButton"
+text = "LEAVE LOBBY"

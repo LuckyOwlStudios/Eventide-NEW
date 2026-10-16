@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bj8hl5vx8he4s"]
+
+[ext_resource type="Texture2D" uid="uid://cb1whmwsbsovb" path="res://Assets/Materials/asteroid_albedo.png" id="1_0cqp8"]
+[ext_resource type="Texture2D" uid="uid://dxcu32r7aguwb" path="res://Assets/Materials/asteroid_normal.png" id="2_1qoud"]
+
+[resource]
+resource_name = "Space Rock"
+cull_mode = 2
+albedo_texture = ExtResource("1_0cqp8")
+roughness = 0.5
+normal_enabled = true
+normal_texture = ExtResource("2_1qoud")

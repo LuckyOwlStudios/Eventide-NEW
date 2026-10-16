@@ -5,12 +5,18 @@ extends InteractableObject3D
 ## off also stops them.
 ##
 ## It offers "Turn Power On" while the power is off and "Turn Power Off" while it is on.
+##
+## Give it a [Lever3D] and the lever follows the power: pulled down while the power is on, up while it
+## is off. It follows whoever changed the power, so a lever does not lie when the power is cut some
+## other way.
 
 const ON_OPTION_ID: StringName = &"power_on"
 const OFF_OPTION_ID: StringName = &"power_off"
 
 ## The vehicle it switches. The nearest one above this node when left empty.
 @export var vehicle: Vehicle3D
+## The lever that shows the power: down when on, up when off. Optional.
+@export var lever: Lever3D
 
 
 func _init() -> void:
@@ -28,6 +34,11 @@ func _init() -> void:
 func _ready() -> void:
 	if not is_instance_valid(vehicle):
 		vehicle = _find_vehicle_above()
+	if is_instance_valid(vehicle):
+		vehicle.power_state_changed.connect(_on_power_state_changed)
+		if is_instance_valid(lever):
+			# Ready runs children first, so the lever has already noted where it starts.
+			lever.snap(vehicle.power_state)
 	super._ready()
 
 
@@ -53,6 +64,11 @@ func _interact_option(_interactor: Node3D, option_index: int) -> bool:
 		_:
 			vehicle.power_state = not vehicle.power_state
 	return true
+
+
+func _on_power_state_changed(powered: bool) -> void:
+	if is_instance_valid(lever):
+		lever.down = powered
 
 
 func _get_option_id(option_index: int) -> StringName:

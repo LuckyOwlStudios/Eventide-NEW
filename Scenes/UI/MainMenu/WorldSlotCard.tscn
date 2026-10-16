@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/UI/MainMenu/world_slot_card.gd" id="1_card"]
+
+[node name="WorldSlotCard" type="Button"]
+custom_minimum_size = Vector2(0, 96)
+theme_type_variation = &"MenuCard"
+script = ExtResource("1_card")
+
+[node name="Content" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = -18.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="NumberLabel" type="Label" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardNumberLabel"
+text = "01"
+vertical_alignment = 1
+
+[node name="Text" type="VBoxContainer" parent="Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="NameLabel" type="Label" parent="Content/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardTitleLabel"
+text = "World name"
+text_overrun_behavior = 3
+
+[node name="DetailLabel" type="Label" parent="Content/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardDetailLabel"
+text = "Last played"
+text_overrun_behavior = 3
+
+[node name="JumpBox" type="VBoxContainer" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="JumpCaption" type="Label" parent="Content/JumpBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardDetailLabel"
+text = "JUMP"
+horizontal_alignment = 2
+
+[node name="JumpLabel" type="Label" parent="Content/JumpBox"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardTitleLabel"
+theme_override_font_sizes/font_size = 34
+text = "0"
+horizontal_alignment = 2
+
+[node name="TagLabel" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardTagLabel"
+text = "CONTINUE"
+vertical_alignment = 1

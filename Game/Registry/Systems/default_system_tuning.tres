@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SystemTuning" format=3 uid="uid://y7m28bmxvroo"]
+
+[ext_resource type="Script" uid="uid://ccmng3v3gh3fb" path="res://Components/Space/system_tuning.gd" id="1_tuning"]
+[ext_resource type="Resource" path="res://Game/Registry/Systems/Templates/NormalSystem.tres" id="2_normal"]
+
+[resource]
+script = ExtResource("1_tuning")
+starting_template = ExtResource("2_normal")

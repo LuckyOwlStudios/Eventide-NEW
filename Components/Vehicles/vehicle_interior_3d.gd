@@ -54,6 +54,7 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
 	_interiors.erase(self)
+	_forget_freed()
 	for body in _inside.duplicate():
 		_leave(body)
 
@@ -88,22 +89,18 @@ func tick() -> void:
 	_ticked_frame = frame
 
 	var now := vehicle.global_transform
-	var change := now * _previous.affine_inverse()
-	change.basis = change.basis.orthonormalized()
+	var turn := (now.basis * _previous.basis.inverse()).orthonormalized()
+	var from := _previous.origin
+	var to := now.origin
 	_previous = now
 
-	for id in _owned.keys():
-		if not is_instance_id_valid(id):
-			_owned.erase(id)
+	_forget_freed()
 	for body in _inside.duplicate():
-		if not is_instance_valid(body):
-			_inside.erase(body)
-			continue
 		if not _owned.has(body.get_instance_id()):
 			_take(body)
 		if _rides_on_something_carried(body):
 			continue
-		_carry(body, change)
+		_carry(body, turn, from, to)
 
 
 ## How fast the point is going through the world, because of this vehicle.
@@ -118,6 +115,68 @@ func get_velocity_at(point: Vector3) -> Vector3:
 
 func get_occupants() -> Array[PhysicsBody3D]:
 	return _inside.duplicate()
+
+
+## Puts [param body] in this interior at once, at rest in it: for something that was just placed
+## inside (a teleport). Left alone, the physics engine only notices it a few steps later, and a ship
+## that is moving leaves it behind in the meantime. [param velocity] is how fast it moves against
+## the vehicle, nothing by default, whatever speed it had in the world before. With
+## [member exchange_velocity] off its velocity is left as it is.
+func admit(body: PhysicsBody3D, velocity := Vector3.ZERO) -> void:
+	if body == null or body == vehicle:
+		return
+	if not _inside.has(body):
+		_inside.append(body)
+	if exchange_velocity:
+		_set_velocity(body, velocity)
+		_set_angular_velocity(body, Vector3.ZERO)
+	if is_instance_valid(vehicle):
+		body.add_collision_exception_with(vehicle)
+	if not _owned.has(body.get_instance_id()):
+		_owned[body.get_instance_id()] = true
+		occupant_entered.emit(body)
+
+
+## Whether [param point] (in the world) is inside the space of this interior, that is inside one of
+## its shapes. It works from the shapes alone, so it is right at any moment, unlike
+## [method get_occupants], which only knows what the physics engine has noticed so far. Boxes,
+## spheres, capsules and cylinders are checked exactly, any other shape by its bounding box.
+func contains_point(point: Vector3) -> bool:
+	for child in get_children():
+		var shape_node := child as CollisionShape3D
+		if shape_node == null or shape_node.disabled or shape_node.shape == null:
+			continue
+		if _shape_contains(shape_node.shape, shape_node.global_transform.affine_inverse() * point):
+			return true
+	return false
+
+
+static func _shape_contains(shape: Shape3D, local: Vector3) -> bool:
+	if shape is BoxShape3D:
+		var half := (shape as BoxShape3D).size * 0.5
+		return absf(local.x) <= half.x and absf(local.y) <= half.y and absf(local.z) <= half.z
+	if shape is SphereShape3D:
+		return local.length() <= (shape as SphereShape3D).radius
+	if shape is CapsuleShape3D:
+		var capsule := shape as CapsuleShape3D
+		var spine := maxf(capsule.height * 0.5 - capsule.radius, 0.0)
+		return local.distance_to(Vector3(0.0, clampf(local.y, -spine, spine), 0.0)) <= capsule.radius
+	if shape is CylinderShape3D:
+		var cylinder := shape as CylinderShape3D
+		return Vector2(local.x, local.z).length() <= cylinder.radius and absf(local.y) <= cylinder.height * 0.5
+	var mesh := shape.get_debug_mesh()
+	return mesh != null and mesh.get_aabb().has_point(local)
+
+
+## Drops the bodies that were freed while they were inside (a crate that was used up, say). Erasing
+## one by value would raise an error, since the array cannot find a freed object, so it goes by place.
+func _forget_freed() -> void:
+	for id in _owned.keys():
+		if not is_instance_id_valid(id):
+			_owned.erase(id)
+	for index in range(_inside.size() - 1, -1, -1):
+		if not is_instance_valid(_inside[index]):
+			_inside.remove_at(index)
 
 
 func _find_vehicle() -> RigidBody3D:
@@ -172,13 +231,20 @@ func _leave(body: PhysicsBody3D) -> void:
 	occupant_left.emit(body)
 
 
-func _carry(body: PhysicsBody3D, change: Transform3D) -> void:
-	var moved := change * body.global_transform
+## Moves the body the way the vehicle moved: turned by [param turn] about where the vehicle's origin was
+## ([param from]) and then to where it is now ([param to]). The body's offset from the origin is a few
+## meters at most, so it is turned precisely, however far from the world's origin the vehicle is; turning
+## the whole position about the world's origin instead (as one combined transform does) multiplies a
+## number tens of kilometers long by a rotation that is only exact to a few parts in ten million, and
+## that gave everything in a turned, stationary ship a slow slide of several millimeters a tick.
+func _carry(body: PhysicsBody3D, turn: Basis, from: Vector3, to: Vector3) -> void:
+	var placed := body.global_transform
+	var moved := Transform3D(turn * placed.basis, to + turn * (placed.origin - from))
 	if body is CharacterBody3D:
 		_teleport_character(body as CharacterBody3D, moved)
 	body.global_transform = moved
-	_set_velocity(body, change.basis * _get_velocity(body))
-	_set_angular_velocity(body, change.basis * _get_angular_velocity(body))
+	_set_velocity(body, turn * _get_velocity(body))
+	_set_angular_velocity(body, turn * _get_angular_velocity(body))
 
 
 ## Puts the character at [param destination] without the physics engine treating it as having moved

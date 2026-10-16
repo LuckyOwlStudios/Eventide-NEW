@@ -1,0 +1,193 @@
+[gd_scene format=3 uid="uid://cqfs40nq2at8j"]
+
+[ext_resource type="Script" uid="uid://bolao4jc7aqi3" path="res://Scenes/UI/MainMenu/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/MainMenu/SpaceBackdrop.tscn" id="2_backdrop"]
+[ext_resource type="Script" uid="uid://bb7b0pofte4u2" path="res://Components/UI/Overlays/dimmer_overlay.gd" id="3_dimmer"]
+[ext_resource type="PackedScene" path="res://Components/UI/Menu/GameTitle.tscn" id="4_title"]
+[ext_resource type="Script" uid="uid://rpg3oolhkica" path="res://Components/UI/Buttons/blinking_focus_indicator.gd" id="5_focus"]
+[ext_resource type="PackedScene" uid="uid://c3011x23tw2mi" path="res://Scenes/UI/Lobby/LobbyPanel.tscn" id="6_lobby"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/MainMenu/HostGameMenu.tscn" id="7_host"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/MainMenu/JoinGameMenu.tscn" id="8_join"]
+[ext_resource type="PackedScene" uid="uid://dm1dpahbx7uh1" path="res://Scenes/UI/Settings/SettingsMenu.tscn" id="9_settings"]
+
+[node name="MainMenu" type="Control" unique_id=1258022001]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="SpaceBackdrop" parent="." unique_id=1382301423 instance=ExtResource("2_backdrop")]
+
+[node name="Dimmer" type="ColorRect" parent="." unique_id=700434868]
+unique_name_in_owner = true
+process_mode = 3
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015686275, 0.019607844, 0.023529412, 0.8352941)
+script = ExtResource("3_dimmer")
+
+[node name="MainPanel" type="Control" parent="." unique_id=921066273]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameTitle" parent="MainPanel" unique_id=675164520 instance=ExtResource("4_title")]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+
+[node name="MenuLayout" type="VBoxContainer" parent="MainPanel" unique_id=2098818544]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 1.0
+anchor_right = 0.06
+anchor_bottom = 1.0
+offset_top = -70.0
+offset_right = 460.0
+offset_bottom = -70.0
+grow_vertical = 0
+theme_override_constants/separation = 3
+
+[node name="ButtonVBoxContainer" type="VBoxContainer" parent="MainPanel/MenuLayout" unique_id=528902615]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HostButton" type="Button" parent="MainPanel/MenuLayout/ButtonVBoxContainer" unique_id=869409859]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 38)
+layout_mode = 2
+theme_type_variation = &"PauseMenuButton"
+text = "HOST GAME"
+alignment = 0
+
+[node name="BlinkingFocusIndicator" type="Control" parent="MainPanel/MenuLayout/ButtonVBoxContainer/HostButton" unique_id=1348909301]
+anchors_preset = 0
+script = ExtResource("5_focus")
+metadata/_custom_type_script = "uid://rpg3oolhkica"
+
+[node name="JoinButton" type="Button" parent="MainPanel/MenuLayout/ButtonVBoxContainer" unique_id=304858787]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 38)
+layout_mode = 2
+theme_type_variation = &"PauseMenuButton"
+text = "JOIN GAME"
+alignment = 0
+
+[node name="BlinkingFocusIndicator" type="Control" parent="MainPanel/MenuLayout/ButtonVBoxContainer/JoinButton" unique_id=1178892847]
+anchors_preset = 0
+script = ExtResource("5_focus")
+metadata/_custom_type_script = "uid://rpg3oolhkica"
+
+[node name="OptionsButton" type="Button" parent="MainPanel/MenuLayout/ButtonVBoxContainer" unique_id=592745633]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 38)
+layout_mode = 2
+theme_type_variation = &"PauseMenuButton"
+text = "OPTIONS"
+alignment = 0
+
+[node name="BlinkingFocusIndicator" type="Control" parent="MainPanel/MenuLayout/ButtonVBoxContainer/OptionsButton" unique_id=779696491]
+anchors_preset = 0
+script = ExtResource("5_focus")
+metadata/_custom_type_script = "uid://rpg3oolhkica"
+
+[node name="ExitButton" type="Button" parent="MainPanel/MenuLayout/ButtonVBoxContainer" unique_id=1769065361]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 38)
+layout_mode = 2
+theme_type_variation = &"PauseMenuButton"
+text = "EXIT GAME"
+alignment = 0
+
+[node name="BlinkingFocusIndicator" type="Control" parent="MainPanel/MenuLayout/ButtonVBoxContainer/ExitButton" unique_id=828194983]
+anchors_preset = 0
+script = ExtResource("5_focus")
+metadata/_custom_type_script = "uid://rpg3oolhkica"
+
+[node name="DividerPanel" type="Panel" parent="MainPanel/MenuLayout" unique_id=2072422506]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_type_variation = &"Divider"
+
+[node name="DescriptionLabel" type="Label" parent="MainPanel/MenuLayout" unique_id=1601335615]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_type_variation = &"PauseDescriptionLabel"
+text = "Start a new world or continue a saved one"
+vertical_alignment = 1
+
+[node name="LobbyPanel" parent="MainPanel" unique_id=914254051 instance=ExtResource("6_lobby")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.975
+anchor_top = 0.025
+anchor_right = 0.975
+anchor_bottom = 0.025
+offset_left = -380.0
+offset_bottom = 138.0
+grow_horizontal = 0
+
+[node name="HostGameMenu" parent="." unique_id=83295112 instance=ExtResource("7_host")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="JoinGameMenu" parent="." unique_id=635275478 instance=ExtResource("8_join")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="SettingsMenu" parent="." unique_id=1371519388 instance=ExtResource("9_settings")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="FadeRect" type="ColorRect" parent="." unique_id=1880519378]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="LoadingLabel" type="Label" parent="FadeRect" unique_id=1142398408]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"BootPromptLabel"
+text = "LOADING..."
+horizontal_alignment = 1
+vertical_alignment = 1

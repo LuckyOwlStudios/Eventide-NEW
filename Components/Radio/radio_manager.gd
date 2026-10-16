@@ -1,7 +1,7 @@
 @icon("uid://crbw5yphhlqwc")
 ## World-level radio registry, channel router, range evaluator, and network relay.
 class_name RadioManager
-extends Node
+extends InGameSystem
 
 signal default_frequency_changed(frequency_code: int)
 signal radio_registered(radio: Radio)

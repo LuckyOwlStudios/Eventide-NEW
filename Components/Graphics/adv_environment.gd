@@ -8,7 +8,12 @@ extends WorldEnvironment
 ##
 ## It never turns on something the scene turned off. The Environment and each light keep
 ## whatever they were authored with, and the quality can only take it away.
-## (The pause blur follows the same setting; see [BlurOverlay].)
+## (The pause blur follows the same setting; see [BlurOverlay], and the flares and rays of the stars follow it too,
+## through [signal preset_applied]; see [StarFlares].)
+
+## Emitted every time a preset is applied: when the level is chosen, when the player changes the quality and when
+## [method apply] is called. Anything that costs frame time and should follow the quality can listen to this.
+signal preset_applied(preset: GraphicsPreset)
 
 @export_group("Presets")
 ## Leave a preset empty to use the built-in one for that level.
@@ -56,6 +61,7 @@ func apply() -> void:
 	viewport.scaling_3d_scale = preset.render_scale
 	viewport.msaa_3d = preset.msaa
 	viewport.positional_shadow_atlas_size = preset.positional_shadow_atlas_size
+	preset_applied.emit(preset)
 
 
 ## The preset used at [param level]: the one set here, or the built-in one.
@@ -72,12 +78,12 @@ func get_preset(level: GraphicsQuality.Level) -> GraphicsPreset:
 func _built_in_preset(level: GraphicsQuality.Level) -> GraphicsPreset:
 	match level:
 		GraphicsQuality.Level.LOW:
-			return GraphicsPreset.create(false, false, 0.75, Viewport.MSAA_DISABLED, 1024)
+			return GraphicsPreset.create(false, false, 0.75, Viewport.MSAA_DISABLED, 1024, false, 0)
 		GraphicsQuality.Level.HIGH:
-			return GraphicsPreset.create(true, true, 1.0, Viewport.MSAA_DISABLED, 2048)
+			return GraphicsPreset.create(true, true, 1.0, Viewport.MSAA_DISABLED, 2048, true, 48)
 		GraphicsQuality.Level.ULTRA:
-			return GraphicsPreset.create(true, true, 1.0, Viewport.MSAA_2X, 4096)
-	return GraphicsPreset.create(true, true, 1.0, Viewport.MSAA_DISABLED, 2048)
+			return GraphicsPreset.create(true, true, 1.0, Viewport.MSAA_2X, 4096, true, 64)
+	return GraphicsPreset.create(true, true, 1.0, Viewport.MSAA_DISABLED, 2048, true, 24)
 
 
 func _on_setting_changed(id: StringName, _value: Variant) -> void:

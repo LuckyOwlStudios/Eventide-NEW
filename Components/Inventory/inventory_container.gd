@@ -12,6 +12,18 @@ extends Resource
 ## Pass as the cell to let the container pick the spot.
 const AUTO_CELL := Vector2i(-1, -1)
 
+## What it means for a character to have an item in this container (see [ItemHolder]).
+enum Carrying {
+	## Packed away, like a backpack or a chest. The items are only data: nothing of them exists in the world.
+	PACKED_AWAY,
+	## On the character's body, like a pocket or a belt. An item whose scene has parts for carrying (a
+	## light that stays lit, a sound) has them running, though it is not in hand.
+	CARRIED,
+	## Carried, and the items here also hear their carried input: the key that switches a worn flashlight on.
+	## Several items of one kind in READY containers all hear it, so a container for one lamp has one slot.
+	READY,
+}
+
 signal item_added(instance: ItemInstance)
 signal item_removed(instance: ItemInstance)
 ## An item already inside gained or lost units, or moved within the container.
@@ -26,6 +38,8 @@ signal item_changed(instance: ItemInstance)
 @export var accepted_items: Array[Item] = []
 ## Put in the container when the inventory is set up.
 @export var starting_items: Array[ItemInstance] = []
+## Whether a character who has this container wears what is in it, or has it packed away.
+@export var carrying := Carrying.PACKED_AWAY
 
 
 ## Whether the container takes this kind of item at all. Says nothing about whether there is room.

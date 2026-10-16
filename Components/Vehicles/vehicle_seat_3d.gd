@@ -9,6 +9,12 @@ extends Seat3D
 ## seat can sit inside a ship's modules.
 @export var vehicle: Node3D
 
+
+func _init() -> void:
+	# Sitting at the controls is not eased into.
+	transition_time = 0.0
+
+
 func _ready() -> void:
 	if not is_instance_valid(vehicle):
 		vehicle = _find_controllable_above()
@@ -16,6 +22,15 @@ func _ready() -> void:
 		push_error("VehicleSeat3D %s: %s cannot be controlled (it is not a Vehicle3D or Turret3D)." % [name, vehicle.name])
 		vehicle = null
 	super._ready()
+
+## The occupant is flying the vehicle: no items, and the vehicle's camera does the looking.
+func are_items_allowed() -> bool:
+	return false
+
+
+func can_occupant_look() -> bool:
+	return false
+
 
 func _can_accept_occupant(candidate: Node) -> bool:
 	return (

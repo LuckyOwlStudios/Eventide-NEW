@@ -5,7 +5,7 @@ extends Node
 ## ONLY=<name> runs one test, such as ONLY=player_scene.
 
 const PLAYER_SCENE := preload("res://Scenes/Player/Player.tscn")
-const FLASHLIGHT: Item = preload("res://Game/Registry/Items/Flashlight/flashlight.tres")
+const FLASHLIGHT: Item = preload("res://Game/Registry/Items/Flashlight/flashlight_item.tres")
 
 var _failures := 0
 
@@ -49,8 +49,8 @@ func _test_holder() -> void:
 	_check(holder.equipped_instance == light and holder.equipped_actor is FlashlightActor, "as its actor")
 	_check(mount.get_child_count() == 1 and holder.equipped_actor.get_parent() == mount, "which sits on the mount")
 	_check(equipped == [light], "and announces it")
-	holder.primary_use()
-	_check((holder.equipped_actor as FlashlightActor).is_on, "use goes to the actor")
+	await _press(&"primary_action")
+	_check((holder.equipped_actor as FlashlightActor).is_on, "the actor reads its own input")
 	var actor := holder.equipped_actor
 	_check(holder.toggle_inventory_slot(2) and not holder.has_equipped_item(), "the same slot again puts it away")
 	_check(dropped == [light], "and announces that")
@@ -144,6 +144,7 @@ func _test_display() -> void:
 ## The real thing: the hand-wired Player scene.
 func _test_player_scene() -> void:
 	var player := PLAYER_SCENE.instantiate() as CharacterBody3D
+	(player.get_node("ItemHolder") as ItemHolder).view = ItemHolder.View.AUTO
 	var other := PLAYER_SCENE.instantiate() as CharacterBody3D
 	var inventory := player.get_node("Inventory") as Inventory
 	var holder := player.get_node("ItemHolder") as ItemHolder
@@ -151,7 +152,7 @@ func _test_player_scene() -> void:
 	_check(inventory != null and holder != null and display != null, "the player has an inventory, an item holder and a hotbar display")
 	var hotbar := inventory.get_container(&"hotbar") as InventorySlotContainer
 	_check(hotbar != null and hotbar.size == 4, "the player's inventory has a four-slot hotbar")
-	_check(inventory.get_containers().size() == 1, "and nothing else yet")
+	_check(inventory.get_containers().size() == 3 and inventory.get_container(&"lamp") != null and inventory.get_container(&"back_slot") != null, "beside a back slot and a lamp slot, for lamps that are worn and not held")
 	var light := hotbar.get_instance(0)
 	_check(light is FlashlightInstance and light.item == FLASHLIGHT, "which starts with a flashlight in the first slot")
 	_check(holder.inventory == inventory and holder.get_hotbar() == hotbar, "the holder reads that hotbar")
@@ -166,10 +167,10 @@ func _test_player_scene() -> void:
 	await get_tree().process_frame
 	_check(display.get_child_count() == 4, "the display shows four slots")
 	_check(_tooltip(display, 0) == "Flashlight" and _icon(display, 0).texture == FLASHLIGHT.icon, "with the flashlight in the first")
-	_check(_tooltip(display, 1) == "Empty", "and the rest empty")
+	_check(_tooltip(display, 2) == "Empty", "and empty slots after the starting items")
 	await _press(&"inventory_slot_1")
 	_check(holder.equipped_instance == light, "key 1 equips the flashlight")
-	var mount := player.get_node("HeadRoot/YawPivot/PitchPivot/Camera3D/ItemMount")
+	var mount := holder.actor_parent
 	_check(mount.get_child_count() == 1 and mount.get_child(0) is FlashlightActor, "on the player's item mount")
 	_check((holder.equipped_actor as FlashlightActor).flashlight_instance == light, "using the player's own flashlight")
 	_check(_border(display, 0) == 3, "and the display shows it in hand")

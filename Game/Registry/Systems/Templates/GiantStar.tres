@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="SystemTemplate" format=3]
+
+[ext_resource type="Script" path="res://Components/Space/system_template.gd" id="1_boxlh"]
+[ext_resource type="Script" path="res://Components/Space/star.gd" id="2_maxnq"]
+
+[sub_resource type="Resource" id="Resource_se07o"]
+script = ExtResource("2_maxnq")
+distance = 0.07
+distance_variation = 0.03
+color = Color(1, 0.36, 0.2, 1)
+color_variation = 0.2
+
+[resource]
+script = ExtResource("1_boxlh")
+display_name = "Giant Star"
+weight = 2.0
+min_jump = 5
+temperature_min = 85.0
+temperature_max = 115.0
+density_min = 0.375
+density_max = 0.875
+stars = Array[ExtResource("2_maxnq")]([SubResource("Resource_se07o")])

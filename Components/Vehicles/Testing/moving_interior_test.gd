@@ -44,7 +44,7 @@ func _run() -> void:
 	_crate = _make_crate(Vector3(0.8, 0.4, 0.0))
 	_car = _make_car(Vector3(-1.2, 0.5, 3.6))
 	await _frames(120)
-	var interior := _mule.get_node("Area") as VehicleInterior3D
+	var interior := _mule.get_node("VehicleInterior3D") as VehicleInterior3D
 	_check(interior != null, "the Mule's inside is a VehicleInterior3D")
 	var occupants := interior.get_occupants()
 	_check(occupants.has(_player) and occupants.has(_crate) and occupants.has(_car), "it has the player, the crate and the car (%d things)" % occupants.size())

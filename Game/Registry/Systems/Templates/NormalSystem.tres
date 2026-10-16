@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SystemTemplate" format=3 uid="uid://deoxeqh0sktq3"]
+
+[ext_resource type="Script" uid="uid://bivmfnopkt0t5" path="res://Components/Space/system_template.gd" id="1_2iq8w"]
+[ext_resource type="Script" uid="uid://x56pgedt7y1i" path="res://Components/Space/star.gd" id="2_1dmmy"]
+
+[sub_resource type="Resource" id="Resource_eb8ng"]
+script = ExtResource("2_1dmmy")
+color = Color(1, 0.9, 0.6, 1)
+
+[resource]
+script = ExtResource("1_2iq8w")
+display_name = "Normal System"
+weight = 10.0
+density_min = 0.125
+density_max = 0.875
+stars = Array[ExtResource("2_1dmmy")]([SubResource("Resource_eb8ng")])

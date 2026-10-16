@@ -8,6 +8,7 @@ signal in_game_ui_opened(ui: Control)
 signal in_game_ui_closed(ui: Control)
 signal ui_open_state_changed(is_open: bool)
 
+const MAIN_MENU_SCENE := "res://Scenes/UI/MainMenu/MainMenu.tscn"
 const GAMEPLAY_SCENE_GROUP: StringName = &"gameplay_scene"
 const IN_GAME_UI_GROUP: StringName = &"in_game_ui"
 const OUTSIDE_GAMEPLAY_BLOCKER_ID := -1
@@ -36,8 +37,10 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	can_pause.add(OUTSIDE_GAMEPLAY_BLOCKER_ID, "Not in a gameplay scene.")
 	pause_menu.resume_requested.connect(close_pause)
+	pause_menu.main_menu_requested.connect(return_to_main_menu)
 	pause_menu.quit_requested.connect(get_tree().quit)
-	get_tree().scene_changed.connect(_on_scene_changed)
+	# scene_changed carries no scene; _sync_current_scene looks the current one up.
+	get_tree().scene_changed.connect(_sync_current_scene)
 	get_tree().node_added.connect(_on_node_added)
 	blur.set_blur_immediate(0.0)
 	dimmer.set_dim_immediate(0.0)
@@ -372,3 +375,12 @@ func _set_blocker(id: int, reason: String, blocked: bool) -> void:
 
 func _is_gameplay_scene(scene: Node) -> bool:
 	return is_instance_valid(scene) and scene.is_in_group(GAMEPLAY_SCENE_GROUP)
+
+## Leaves the current game and opens the main menu. Hosts keep their lobby; guests leave
+## the host's lobby for one of their own.
+func return_to_main_menu() -> void:
+	close_pause()
+	clear_effects()
+	SteamLobby.end_game()
+	WorldSaves.active_slot = 0
+	get_tree().change_scene_to_file(MAIN_MENU_SCENE)

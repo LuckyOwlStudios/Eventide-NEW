@@ -1,14 +1,76 @@
 [gd_scene format=3 uid="uid://fs4r81nv1eh"]
 
 [ext_resource type="Script" uid="uid://b7yfqxljawcwu" path="res://Components/Attributes/UI/lerping_attribute_bar.gd" id="1_bar"]
+[ext_resource type="Texture2D" uid="uid://wjdq8lyodvg8" path="res://Assets/Textures/UI/Icons/plus.svg" id="2_u2g5i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bc2h1"]
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.6)
 
 [sub_resource type="Gradient" id="Gradient_default"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
-[node name="LerpingAttributeBar" type="Control" unique_id=1151568596]
-custom_minimum_size = Vector2(320, 20)
-layout_mode = 3
-anchors_preset = 0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aveqt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aveqt"]
+bg_color = Color(1, 0, 0, 1)
+border_width_top = 4
+border_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
+bg_color = Color(1, 1, 1, 1)
+border_width_top = 4
+
+[node name="LerpingAttributeBar" type="PanelContainer" unique_id=181208207]
+custom_minimum_size = Vector2(240, 20)
+offset_right = 240.0
+offset_bottom = 20.0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bc2h1")
 script = ExtResource("1_bar")
 bar_gradient = SubResource("Gradient_default")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=432068922]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=2016255811]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer" unique_id=999902564]
+layout_mode = 2
+texture = ExtResource("2_u2g5i")
+expand_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer" unique_id=698071053]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 8
+
+[node name="LerpProgressBar" type="ProgressBar" parent="HBoxContainer/MarginContainer2" unique_id=797015903]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxEmpty_aveqt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aveqt")
+value = 35.53
+show_percentage = false
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/MarginContainer2/LerpProgressBar" unique_id=1843972666]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxEmpty_g4v7s")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yf5fn")
+value = 100.0
+show_percentage = false

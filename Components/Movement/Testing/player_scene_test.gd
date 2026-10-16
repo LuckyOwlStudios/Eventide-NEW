@@ -1,6 +1,6 @@
 extends Node
 ## Drives the real Player scene through Input Map actions to check the wiring:
-## the controller -> stats, stamina, camera rig and the Rotator.
+## the controller -> the character's speed, stamina, the head and the Rotator.
 ##
 ## godot --headless --fixed-fps 60 --path . res://Components/Movement/Testing/PlayerSceneTest.tscn
 
@@ -36,18 +36,18 @@ func _run() -> void:
 	floor_body.position = Vector3(0.0, -0.5, 0.0)
 	_world.add_child(floor_body)
 
-	var player := PLAYER_SCENE.instantiate() as CharacterBody3D
+	var player := PLAYER_SCENE.instantiate() as Player
 	player.position = Vector3(0.0, 0.05, 0.0)
 	_world.add_child(player)
 	var controller := player.get_node("PlayerCharacterController") as CharacterController
 	var stamina := player.get_node("StaminaAttribute") as Stamina
-	var head := player.get_node("HeadRoot") as Node3D
+	var head := player.get_node("Head") as Node3D
 	await _ticks(40)
 
 	_check(controller.is_grounded(), "the player settles on the ground")
 	_check(controller.net_sync != null, "the controller found its net sync")
 	_check(not controller.is_physics_processing(), "the net sync drives the controller, not the controller itself")
-	_check(controller.stats.movement_speed.value == 5.0, "speed comes from the stats node (%.1f)" % controller.stats.movement_speed.value)
+	_check(controller.get_body() == player and player.movement_speed.value == 5.0, "the controller moves the player, whose speed attribute is 5 (%.1f)" % player.movement_speed.value)
 
 	var start := player.global_position
 	Input.action_press("move_forward")
@@ -80,11 +80,11 @@ func _run() -> void:
 	Input.action_press("crouch")
 	await _ticks(45)
 	_check(controller.is_crouching(), "holding crouch crouches")
-	_check(head.position.y < 0.8, "and the camera rig drops (%.2f)" % head.position.y)
+	_check(head.position.y < 0.8, "and the head drops (%.2f)" % head.position.y)
 	Input.action_release("crouch")
 	await _ticks(45)
 	_check(not controller.is_crouching(), "releasing crouch stands up")
-	_check(head.position.y > 1.5, "and the camera rig comes back (%.2f)" % head.position.y)
+	_check(head.position.y > 1.5, "and the head comes back (%.2f)" % head.position.y)
 
 	controller.movement_blocker.add(5, "test lock")
 	var locked_at := player.global_position

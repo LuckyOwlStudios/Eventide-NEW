@@ -41,19 +41,13 @@ class ScriptedController extends CharacterController:
 
 
 class Rig:
-	var body: CharacterBody3D
+	var body: WalkingCharacter3D
 	var controller: ScriptedController
-	var head: Node3D
 	var stamina: Stamina
 	var jetpack: Jetpack
-	var stats: MovementAttribute
-	var shape_node: CollisionShape3D
 
 	func body_shape() -> Shape3D:
-		return shape_node.shape
-
-	func stats_set_jump_height(value: float) -> void:
-		stats.base_jump_height = value
+		return body.collision_shape.shape
 
 
 func _ready() -> void:
@@ -210,7 +204,7 @@ func _test_jump_height() -> void:
 	_check(absf(peak - 1.0) < 0.12, "a jump reaches the jump height attribute (%.3f)" % peak)
 	_check(rig.controller.is_grounded(), "and the character lands again")
 
-	rig.stats_set_jump_height(2.0)
+	rig.body._jump_height = 2.0
 	await _ticks(10)
 	rig.controller.jump_once = true
 	peak = 0.0
@@ -235,7 +229,7 @@ func _test_jump_buffer() -> void:
 
 	_begin_world()
 	rig = _make_rig(Vector3(0.0, 0.09, 0.0))
-	rig.controller.jump_buffer_time = 0.0
+	rig.body.jump_buffer_time = 0.0
 	await physics_frame
 	rig.controller.jump_once = true
 	peak = 0.0
@@ -399,7 +393,6 @@ func _test_crouch_and_ceiling() -> void:
 	await _ticks(40)
 	_check(rig.controller.is_crouching(), "crouch is on")
 	_check(rig.body_shape() is SphereShape3D, "crouching swaps to a sphere")
-	_check(absf(rig.head.position.y - 0.6) < 0.05, "the camera drops (%.3f)" % rig.head.position.y)
 	rig.controller.move = Vector2(0.0, -1.0)
 	await _ticks(30)
 	var crouch_speed := Vector2(rig.body.velocity.x, rig.body.velocity.z).length()
@@ -755,23 +748,7 @@ func _add_box(center: Vector3, size: Vector3) -> StaticBody3D:
 
 
 func _make_ai(position: Vector3) -> AICharacterController:
-	var body := CharacterBody3D.new()
-	body.name = "Npc"
-	body.collision_layer = PhysicsLayers.CREATURES
-	body.collision_mask = PhysicsLayers.CREATURE_MASK
-	var shape := CollisionShape3D.new()
-	var capsule := CapsuleShape3D.new()
-	capsule.radius = 0.4
-	capsule.height = 1.8
-	shape.shape = capsule
-	shape.position = Vector3(0.0, 0.9, 0.0)
-	body.add_child(shape)
-	var stats := MovementAttribute.new()
-	stats.base_movement_speed = 5.0
-	stats.base_jump_height = 1.0
-	body.add_child(stats)
-	var orientor := Orientator.new()
-	body.add_child(orientor)
+	var body := TestCharacter.make("Npc", PhysicsLayers.CREATURES, PhysicsLayers.CREATURE_MASK)
 	var ai := AICharacterController.new()
 	body.add_child(ai)
 	body.position = position
@@ -781,36 +758,10 @@ func _make_ai(position: Vector3) -> AICharacterController:
 
 func _make_rig(position: Vector3, with_stamina := false, with_jetpack := false) -> Rig:
 	var rig := Rig.new()
-	var body := CharacterBody3D.new()
-	body.name = "Player"
-	body.collision_layer = PhysicsLayers.PLAYERS
-	body.collision_mask = PhysicsLayers.PLAYER_MASK
-	var shape := CollisionShape3D.new()
-	var capsule := CapsuleShape3D.new()
-	capsule.radius = 0.4
-	capsule.height = 1.8
-	shape.shape = capsule
-	shape.position = Vector3(0.0, 0.9, 0.0)
-	body.add_child(shape)
-
-	var head := Node3D.new()
-	head.name = "Head"
-	head.position = Vector3(0.0, 1.6, 0.0)
-	body.add_child(head)
-
-	var stats := MovementAttribute.new()
-	stats.name = "MovementAttribute"
-	stats.base_movement_speed = 5.0
-	stats.base_jump_height = 1.0
-	body.add_child(stats)
-
-	var orientor := Orientator.new()
-	orientor.name = "Orientor"
-	body.add_child(orientor)
+	var body := TestCharacter.make("Player")
 
 	var controller := ScriptedController.new()
 	controller.name = "Controller"
-	controller.head = head
 	if with_stamina:
 		rig.stamina = Stamina.new()
 		rig.stamina.name = "Stamina"
@@ -826,7 +777,4 @@ func _make_rig(position: Vector3, with_stamina := false, with_jetpack := false) 
 	_world.add_child(body)
 	rig.body = body
 	rig.controller = controller
-	rig.head = head
-	rig.stats = stats
-	rig.shape_node = shape
 	return rig

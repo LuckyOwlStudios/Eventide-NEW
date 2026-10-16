@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Components/Inventory/Testing/first_person_render_test.gd" id="1_test"]
+
+[node name="FirstPersonRenderTest" type="Node"]
+script = ExtResource("1_test")

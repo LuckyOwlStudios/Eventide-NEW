@@ -222,3 +222,13 @@ mesh = SubResource("CylinderMesh_x4ig1")
 [node name="Light4" type="MeshInstance3D" parent="RightAccentLights" unique_id=1490401644]
 transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 2.655, 1.6648659, 3)
 mesh = SubResource("CylinderMesh_x4ig1")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=1760112461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 1.5)
+size = Vector3(4, 2.5, 1)
+
+[node name="CSGCylinder3D23" type="CSGCylinder3D" parent="." unique_id=1606193167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 1.5, 1.5)
+radius = 1.0
+height = 2.953125
+sides = 12

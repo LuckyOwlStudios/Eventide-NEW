@@ -1,27 +1,98 @@
 [gd_scene format=3 uid="uid://bawj444abgxbt"]
 
-[ext_resource type="Script" uid="uid://dfbq0k8qyqolu" path="res://Game/Registry/Items/Flashlight/flashlight_actor.gd" id="1_actor"]
+[ext_resource type="PackedScene" uid="uid://do8samksnectp" path="res://Components/Inventory/Item/WorldItem.tscn" id="1_world"]
+[ext_resource type="Script" uid="uid://dfbq0k8qyqolu" path="res://Game/Registry/Items/Flashlight/flashlight_actor.gd" id="2_actor"]
+[ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="3_option"]
+[ext_resource type="Texture2D" uid="uid://poy6qmbu5dit" path="res://Assets/Textures/Lights/flashlight_projection.png" id="4_dmp57"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
-albedo_color = Color(0.12, 0.14, 0.17, 1)
-metallic = 0.65
-roughness = 0.3
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3nro7"]
+height = 0.3112793
+radius = 0.06201172
 
-[sub_resource type="BoxMesh" id="BoxMesh_body"]
-material = SubResource("StandardMaterial3D_body")
-size = Vector3(0.16, 0.16, 0.42)
+[sub_resource type="Resource" id="Resource_pickup"]
+script = ExtResource("3_option")
+option_id = &"pickup"
+prompt = "Pickup"
+metadata/_custom_type_script = "uid://c0qugb31qanoa"
 
-[node name="Flashlight" type="Node3D" unique_id=576033009]
-script = ExtResource("1_actor")
+[sub_resource type="Resource" id="Resource_toggle"]
+script = ExtResource("3_option")
+option_id = &"toggle"
+input_action = &"primary_action"
+prompt = "Toggle"
+metadata/_custom_type_script = "uid://c0qugb31qanoa"
 
-[node name="Body" type="MeshInstance3D" parent="." unique_id=1691286873]
-mesh = SubResource("BoxMesh_body")
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_snhhi"]
+height = 0.37109375
+radius = 0.09423828
 
-[node name="Light" type="SpotLight3D" parent="." unique_id=2119882771]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4v7s"]
+albedo_color = Color(0.09923177, 0.09923177, 0.09923177, 1)
+metallic = 0.66
+roughness = 0.38
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_g4v7s")
+top_radius = 0.038
+bottom_radius = 0.038
+height = 0.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2hn72"]
+material = SubResource("StandardMaterial3D_g4v7s")
+top_radius = 0.05
+bottom_radius = 0.063
+height = 0.063
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hn72"]
+albedo_color = Color(0.09923177, 0.09923177, 0.09923177, 1)
+metallic = 0.66
+roughness = 0.38
+emission_enabled = true
+emission = Color(0.83137256, 0.74509805, 0, 1)
+emission_energy_multiplier = 10.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bvt5g"]
+material = SubResource("StandardMaterial3D_2hn72")
+top_radius = 0.044921875
+bottom_radius = 0.044921875
+height = 0.013671875
+
+[node name="Flashlight" unique_id=615013078 instance=ExtResource("1_world")]
+script = ExtResource("2_actor")
+power_drain_per_second = 1.0
+item_id = &"flashlight"
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=1516619094]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_3nro7")
+
+[node name="InteractableObject3D" parent="." index="1" unique_id=2128994857]
+interaction_options = Array[Object]([SubResource("Resource_pickup"), SubResource("Resource_toggle")])
+selector_size = Vector3(0.2, 0.2, 0.2)
+
+[node name="CollisionShape3D" parent="InteractableObject3D" index="0" unique_id=597592492]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_snhhi")
+
+[node name="Light" type="SpotLight3D" parent="." index="3" unique_id=2119882771 groups=["item_always"]]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.23)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.16559283)
 light_color = Color(1, 0.93, 0.74, 1)
 light_energy = 3.0
+light_projector = ExtResource("4_dmp57")
 shadow_enabled = true
 spot_range = 18.0
 spot_angle = 28.0
+
+[node name="Body" type="MeshInstance3D" parent="." index="4" unique_id=2103092121]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.029515088)
+mesh = SubResource("CylinderMesh_g4v7s")
+
+[node name="Head" type="MeshInstance3D" parent="." index="5" unique_id=265382688]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -8.195885e-09, -0.12504688)
+mesh = SubResource("CylinderMesh_2hn72")
+
+[node name="Lightmesh" type="MeshInstance3D" parent="." index="6" unique_id=1214593618]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -5.7627316e-09, -0.15223002)
+mesh = SubResource("CylinderMesh_bvt5g")

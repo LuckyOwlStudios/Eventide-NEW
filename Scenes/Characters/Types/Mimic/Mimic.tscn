@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ddi732tldqge0"]
+
+[ext_resource type="PackedScene" uid="uid://ckf6bpnp5kpjg" path="res://Scenes/Characters/BaseCharacter.tscn" id="1_l3id3"]
+[ext_resource type="PackedScene" uid="uid://dtwxn8w2jkgds" path="res://Assets/Models/Characters/Player/PlayerModel.blend" id="2_l3id3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l3id3"]
+resource_local_to_scene = true
+radius = 0.4
+height = 1.8
+
+[node name="Mimic" unique_id=2092718941 instance=ExtResource("1_l3id3")]
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=1592797814]
+shape = SubResource("CapsuleShape3D_l3id3")
+
+[node name="PlayerModel" parent="Model" parent_id_path=PackedInt32Array(444457450) index="0" unique_id=673032235 instance=ExtResource("2_l3id3")]

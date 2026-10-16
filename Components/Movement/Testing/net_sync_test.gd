@@ -217,25 +217,13 @@ func _make_character(
 	authority: int,
 	controller: CharacterController,
 	position: Vector3,
-) -> CharacterBody3D:
-	var body := CharacterBody3D.new()
-	body.name = node_name
-	body.collision_layer = PhysicsLayers.CREATURES if node_name == "NPC" else PhysicsLayers.PLAYERS
-	body.collision_mask = PhysicsLayers.CREATURE_MASK if node_name == "NPC" else PhysicsLayers.PLAYER_MASK
+) -> WalkingCharacter3D:
+	var body := TestCharacter.make(
+		node_name,
+		PhysicsLayers.CREATURES if node_name == "NPC" else PhysicsLayers.PLAYERS,
+		PhysicsLayers.CREATURE_MASK if node_name == "NPC" else PhysicsLayers.PLAYER_MASK,
+	)
 	body.set_multiplayer_authority(authority)
-	var shape := CollisionShape3D.new()
-	var capsule := CapsuleShape3D.new()
-	capsule.radius = 0.4
-	capsule.height = 1.8
-	shape.shape = capsule
-	shape.position = Vector3(0.0, 0.9, 0.0)
-	body.add_child(shape)
-	var stats := MovementAttribute.new()
-	stats.name = "MovementAttribute"
-	body.add_child(stats)
-	var orientor := Orientator.new()
-	orientor.name = "Orientor"
-	body.add_child(orientor)
 	controller.name = "Controller"
 	body.add_child(controller)
 	var sync := CharacterNetSync.new()

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cm5gxa22j4lkp" path="res://Scenes/UI/Pause/pause_menu.gd" id="1_menu"]
 [ext_resource type="Script" uid="uid://rpg3oolhkica" path="res://Components/UI/Buttons/blinking_focus_indicator.gd" id="3_ittbr"]
 [ext_resource type="PackedScene" uid="uid://dm1dpahbx7uh1" path="res://Scenes/UI/Settings/SettingsMenu.tscn" id="4_settings"]
+[ext_resource type="Script" path="res://Components/UI/Buttons/confirmation_button.gd" id="5_confirm"]
 
 [node name="PauseMenu" type="Control" unique_id=155904663]
 process_mode = 3
@@ -30,7 +31,7 @@ anchor_left = 0.06
 anchor_top = 1.0
 anchor_right = 0.06
 anchor_bottom = 1.0
-offset_top = -308.0
+offset_top = -346.0
 offset_right = 460.0
 offset_bottom = -70.0
 grow_vertical = 0
@@ -70,7 +71,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 38)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ResumeButton")
-focus_neighbor_bottom = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
 theme_type_variation = &"PauseMenuButton"
 text = "OPTIONS"
 alignment = 0
@@ -80,14 +81,34 @@ anchors_preset = 0
 script = ExtResource("3_ittbr")
 metadata/_custom_type_script = "uid://rpg3oolhkica"
 
-[node name="QuitButton" type="Button" parent="MenuPanel/MenuLayout/ButtonVBoxContainer" unique_id=1344292045]
+[node name="MainMenuButton" type="Button" parent="MenuPanel/MenuLayout/ButtonVBoxContainer" unique_id=780637934]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 38)
 layout_mode = 2
 focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+theme_type_variation = &"PauseMenuButton"
+text = "RETURN TO MAIN MENU"
+script = ExtResource("5_confirm")
+confirmation_message = "Return to the main menu?
+You will leave the current game."
+alignment = 0
+
+[node name="BlinkingFocusIndicator" type="Control" parent="MenuPanel/MenuLayout/ButtonVBoxContainer/MainMenuButton" unique_id=1241596452]
+anchors_preset = 0
+script = ExtResource("3_ittbr")
+metadata/_custom_type_script = "uid://rpg3oolhkica"
+
+[node name="QuitButton" type="Button" parent="MenuPanel/MenuLayout/ButtonVBoxContainer" unique_id=1344292045]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 38)
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
 focus_neighbor_bottom = NodePath("../ResumeButton")
 theme_type_variation = &"PauseMenuButton"
 text = "QUIT TO DESKTOP"
+script = ExtResource("5_confirm")
+confirmation_message = "Quit to desktop?"
 alignment = 0
 
 [node name="BlinkingFocusIndicator" type="Control" parent="MenuPanel/MenuLayout/ButtonVBoxContainer/QuitButton" unique_id=1544861029]

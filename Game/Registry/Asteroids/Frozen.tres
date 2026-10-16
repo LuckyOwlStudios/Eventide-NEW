@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Asteroid" format=3]
+
+[ext_resource type="Script" path="res://Components/Space/asteroid_decorator.gd" id="1_2bl42"]
+[ext_resource type="PackedScene" path="res://Game/Registry/Asteroids/Decorators/IceCrystal.tscn" id="2_o3bw4"]
+[ext_resource type="Script" path="res://Components/Space/asteroid_drop.gd" id="3_4ll7j"]
+[ext_resource type="Script" path="res://Components/Space/asteroid.gd" id="4_cwluo"]
+
+[sub_resource type="Resource" id="Resource_a36nw"]
+script = ExtResource("1_2bl42")
+scene = ExtResource("2_o3bw4")
+clusters_min = 10
+clusters_max = 18
+size_min = 0.25
+size_max = 0.65
+flat_shaded = true
+
+[resource]
+script = ExtResource("4_cwluo")
+display_name = "Frozen"
+temperature_min = -130.0
+temperature_max = -45.0
+temperature_peak = -100.0
+tint = Color(0.75, 0.88, 1, 1)
+use_texture = false
+roughness = 0.2
+specular = 0.8
+normal_strength = 0.35
+glow = 0.07
+decorators = Array[ExtResource("1_2bl42")]([SubResource("Resource_a36nw")])

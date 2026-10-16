@@ -25,8 +25,6 @@ const HULL_HEIGHT := 3.25
 ## An area for the cargo hull of the ship that changes depending on the amount of segments
 var _segment_rebuild_queued := false
 
-@onready var top_rear_module: Node3D = $MuleStern/CSGCylinder3D/TopRearModule
-
 func _ready() -> void:
 	super._ready()
 	_rebuild_segments()
@@ -44,7 +42,7 @@ func _rebuild_segments() -> void:
 		return
 
 	var segment_container := get_node_or_null("Segments") as Node3D
-	var dynamic_cargo_area := get_node_or_null("Area/DynamicCargoArea") as CollisionShape3D
+	var dynamic_cargo_area := get_node_or_null("VehicleInterior3D/DynamicCargoArea") as CollisionShape3D
 	var hull := get_node_or_null("Hull") as CollisionShape3D
 	var mule_bow := get_node_or_null("MuleBow") as Node3D
 	var mule_stern := get_node_or_null("MuleStern") as Node3D

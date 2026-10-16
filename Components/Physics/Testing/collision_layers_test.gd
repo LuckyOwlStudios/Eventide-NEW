@@ -5,7 +5,7 @@ extends Node
 
 const PLAYER_SCENE := preload("res://Scenes/Player/Player.tscn")
 const MULE_SCENE := preload("res://Scenes/Vehicles/Mule/Mule.tscn")
-const WORLD_SCENE := preload("res://Game/World.tscn")
+const WORLD_SCENE := preload("res://Game/InGameSession.tscn")
 
 var physics_frame: Signal
 var _world: Node3D
@@ -80,7 +80,7 @@ func _test_scene_setup() -> void:
 	add_child(player)
 	_check(player.collision_layer == PhysicsLayers.PLAYERS, "the player is on the Players layer (%d)" % player.collision_layer)
 	_check(player.collision_mask == PhysicsLayers.PLAYER_MASK, "and scans the player mask (%d)" % player.collision_mask)
-	var ray := player.get_node("HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D") as RayCast3D
+	var ray := player.get_node("Head/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D") as RayCast3D
 	_check(ray.collision_mask & PhysicsLayers.INTERACTABLES != 0, "the player's interaction ray can see interactables (mask %d)" % ray.collision_mask)
 	var hides := ray.collision_mask & PhysicsLayers.SOLID == PhysicsLayers.SOLID
 	print("  info the player's ray %s walls and hulls hiding interactables (mask %d, default is %d)" % ["has" if hides else "does NOT have", ray.collision_mask, PhysicsLayers.INTERACTION_RAY_MASK])
@@ -454,20 +454,7 @@ func _make_item(center: Vector3, mass: float, size := Vector3(0.5, 0.5, 0.5)) ->
 
 
 func _make_character(position: Vector3, layer: int, mask: int) -> Walker:
-	var body := CharacterBody3D.new()
-	body.collision_layer = layer
-	body.collision_mask = mask
-	var shape := CollisionShape3D.new()
-	var capsule := CapsuleShape3D.new()
-	capsule.radius = 0.4
-	capsule.height = 1.8
-	shape.shape = capsule
-	shape.position = Vector3(0.0, 0.9, 0.0)
-	body.add_child(shape)
-	var stats := MovementAttribute.new()
-	body.add_child(stats)
-	var orientor := Orientator.new()
-	body.add_child(orientor)
+	var body := TestCharacter.make("Character", layer, mask)
 	var walker := Walker.new()
 	body.add_child(walker)
 	body.position = position

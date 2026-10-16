@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Components/Physics/suspension_3d.gd" id="1_suspension"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_metal"]
+albedo_color = Color(0.42, 0.44, 0.48, 1)
+metallic = 0.55
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_piston"]
+material = SubResource("StandardMaterial3D_metal")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.4
+radial_segments = 20
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ankle"]
+material = SubResource("StandardMaterial3D_metal")
+top_radius = 0.1
+bottom_radius = 0.19
+height = 0.14
+radial_segments = 20
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pad"]
+material = SubResource("StandardMaterial3D_metal")
+top_radius = 0.23
+bottom_radius = 0.23
+height = 0.08
+radial_segments = 28
+rings = 1
+
+[node name="LandingGear" type="RayCast3D"]
+target_position = Vector3(0, -1.15, 0)
+collision_mask = 513
+script = ExtResource("1_suspension")
+strength = 20.0
+dampening = 0.4
+grip = 1.0
+
+[node name="Leg" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.15, 0)
+
+[node name="Pad" type="MeshInstance3D" parent="Leg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("CylinderMesh_pad")
+
+[node name="Ankle" type="MeshInstance3D" parent="Leg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("CylinderMesh_ankle")
+
+[node name="Piston" type="MeshInstance3D" parent="Leg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92, 0)
+mesh = SubResource("CylinderMesh_piston")

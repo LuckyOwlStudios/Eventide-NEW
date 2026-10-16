@@ -127,6 +127,7 @@ enum Gait {
 
 var _body: CharacterBody3D
 var _rest := Transform3D.IDENTITY
+var _pose := Transform3D.IDENTITY
 var _tilt := Vector2.ZERO
 var _amplitude := 0.0
 var _phase := 0.0
@@ -202,7 +203,8 @@ func _process(delta: float) -> void:
 		if pose != null:
 			offset += pose.offset * bob_strength
 			rotation += pose.rotation * bob_strength
-	target.transform = _rest * Transform3D(Basis.from_euler(rotation), offset)
+	_pose = Transform3D(Basis.from_euler(rotation), offset)
+	target.transform = _rest * _pose
 	_prev_vertical_speed = vertical_speed
 	_was_grounded = controller.is_grounded()
 
@@ -236,6 +238,13 @@ func get_phase() -> float:
 	return _phase
 
 
+## How far everything above has moved the target from its place at rest, as of the last frame: tilt,
+## bobbing, landing dips and all. The target's transform is its rest transform times this. Things that
+## hang from the target and want to move differently, such as a held item (see [ItemMotion]), read it.
+func get_pose() -> Transform3D:
+	return _pose
+
+
 ## The tilt right now: roll in X (positive leans left) and pitch in Y (negative looks
 ## down), in degrees.
 func get_tilt_degrees() -> Vector2:
@@ -257,6 +266,7 @@ func reset() -> void:
 	_phase = 0.0
 	_previous_profile = null
 	_blend = 1.0
+	_pose = Transform3D.IDENTITY
 	if is_instance_valid(target):
 		target.transform = _rest
 
@@ -387,9 +397,9 @@ func _step_impact(delta: float) -> void:
 
 func _jump_speed() -> float:
 	var gravity := controller.gravity_vector.length()
-	if gravity < 0.1 or not is_instance_valid(controller.stats):
+	if gravity < 0.1:
 		return 6.0
-	return sqrt(2.0 * gravity * controller.stats.jump_height.value)
+	return sqrt(2.0 * gravity * controller.get_body().jump_height.value)
 
 
 # --- Bobbing -----------------------------------------------------------------
@@ -523,13 +533,11 @@ func _best_override() -> HeadBobProfile:
 # --- Helpers -----------------------------------------------------------------
 
 func _walking_speed() -> float:
-	if is_instance_valid(controller.stats):
-		return controller.stats.movement_speed.value
-	return 5.0
+	return controller.get_body().movement_speed.value
 
 
 func _sprint_speed() -> float:
-	return _walking_speed() * controller.sprint_speed_multiplier
+	return _walking_speed() * controller.get_body().sprint_multiplier.value
 
 
 func _exponential_weight(speed: float, delta: float) -> float:

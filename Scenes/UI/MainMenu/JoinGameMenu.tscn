@@ -1,0 +1,93 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/UI/MainMenu/join_game_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://Components/UI/Menu/BackHint.tscn" id="2_back"]
+
+[node name="JoinGameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.14
+anchor_right = 0.75
+anchor_bottom = 0.86
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MenuPanel"
+
+[node name="Layout" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="PanelContainer/Layout"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MenuHeaderLabel"
+text = "JOIN GAME"
+
+[node name="RefreshButton" type="Button" parent="PanelContainer/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 34)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SettingsButton"
+text = "REFRESH"
+
+[node name="StateLabel" type="Label" parent="PanelContainer/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SettingsLabel"
+text = "Searching for games..."
+
+[node name="ServerView" type="ScrollContainer" parent="PanelContainer/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ServerList" type="VBoxContainer" parent="PanelContainer/Layout/ServerView"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="DescriptionDivider" type="ColorRect" parent="PanelContainer/Layout"]
+custom_minimum_size = Vector2(470, 1)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+color = Color(0.72, 0.74, 0.76, 0.5)
+
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_type_variation = &"SettingsMutedLabel"
+text = "Choose a game to join."
+vertical_alignment = 1
+
+[node name="BackHint" parent="." instance=ExtResource("2_back")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -76.0
+offset_right = -60.0
+offset_bottom = -36.0
+grow_horizontal = 0
+grow_vertical = 0

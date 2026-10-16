@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://c78pjijgmj3t5"]
 
+[ext_resource type="Script" path="res://Scenes/UI/startup.gd" id="1_startup"]
+[ext_resource type="PackedScene" path="res://Components/UI/Menu/GameTitle.tscn" id="2_title"]
+
 [node name="Startup" type="Control" unique_id=1932980788]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +10,89 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_startup")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BootPage" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="BootPage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Content" type="VBoxContainer" parent="BootPage/Center"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 56
+
+[node name="GameTitle" parent="BootPage/Center/Content" instance=ExtResource("2_title")]
+layout_mode = 2
+
+[node name="Prompts" type="VBoxContainer" parent="BootPage/Center/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="PromptLabel" type="Label" parent="BootPage/Center/Content/Prompts"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"BootPromptLabel"
+text = "PRESS ANY BUTTON"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="BootPage/Center/Content/Prompts"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"SettingsLabel"
+text = "STEAM: CONNECTED"
+horizontal_alignment = 1
+
+[node name="Intro" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="SplashLabel" type="Label" parent="Intro"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"StartupLabel"
+text = "A LuckyOwl Game"
+horizontal_alignment = 1
+vertical_alignment = 1

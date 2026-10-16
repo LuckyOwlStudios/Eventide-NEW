@@ -1,0 +1,84 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/UI/MainMenu/host_game_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/Lobby/LobbyPanel.tscn" id="2_lobby"]
+[ext_resource type="PackedScene" path="res://Components/UI/Menu/BackHint.tscn" id="3_back"]
+
+[node name="HostGameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.5
+anchor_right = 0.75
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MenuPanel"
+
+[node name="Layout" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="PanelContainer/Layout"]
+layout_mode = 2
+theme_type_variation = &"MenuHeaderLabel"
+text = "HOST GAME"
+
+[node name="SlotList" type="VBoxContainer" parent="PanelContainer/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="DescriptionDivider" type="ColorRect" parent="PanelContainer/Layout"]
+custom_minimum_size = Vector2(470, 1)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+color = Color(0.72, 0.74, 0.76, 0.5)
+
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_type_variation = &"SettingsMutedLabel"
+text = "Choose a world to host."
+vertical_alignment = 1
+
+[node name="LobbyPanel" parent="." instance=ExtResource("2_lobby")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -440.0
+offset_top = -100.0
+offset_right = -60.0
+offset_bottom = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="BackHint" parent="." instance=ExtResource("3_back")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -76.0
+offset_right = -60.0
+offset_bottom = -36.0
+grow_horizontal = 0
+grow_vertical = 0

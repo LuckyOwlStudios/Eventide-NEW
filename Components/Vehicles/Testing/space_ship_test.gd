@@ -398,6 +398,9 @@ func _test_mule() -> void:
 	_check(mule.camera_rig != null, "has its camera rig")
 	var hull := mule.get_node("Hull") as CollisionShape3D
 	var hull_box := hull.shape as BoxShape3D
+	# The scene is saved with however many segments it was last left with.
+	mule.segments = 1
+	await _frames(2)
 	_check(is_equal_approx(hull_box.size.z, 12.0), "has a hull as long as the ship (%.1f)" % hull_box.size.z)
 	mule.segments = 2
 	await _frames(2)

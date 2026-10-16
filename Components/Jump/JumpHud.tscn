@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://b50lenaenu8qo"]
+
+[ext_resource type="Script" uid="uid://cgta3o0bcmdfx" path="res://Components/Jump/jump_hud.gd" id="1_hud"]
+
+[node name="JumpHud" type="CanvasLayer" unique_id=2057452563]
+layer = 2
+script = ExtResource("1_hud")
+
+[node name="Root" type="Control" parent="." unique_id=1439237892]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopPanel" type="PanelContainer" parent="Root" unique_id=1922761581]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -230.0
+offset_top = 14.0
+offset_right = 230.0
+offset_bottom = 120.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_type_variation = &"MenuPanel"
+
+[node name="Layout" type="VBoxContainer" parent="Root/TopPanel" unique_id=1716665430]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Header" type="HBoxContainer" parent="Root/TopPanel/Layout" unique_id=1050364180]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="JumpCaption" type="Label" parent="Root/TopPanel/Layout/Header" unique_id=1441324797]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"SettingsMutedLabel"
+theme_override_font_sizes/font_size = 26
+text = "JUMP"
+
+[node name="JumpLabel" type="Label" parent="Root/TopPanel/Layout/Header" unique_id=937657649]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"MenuHeaderLabel"
+theme_override_font_sizes/font_size = 64
+text = "0"
+
+[node name="SystemLabel" type="Label" parent="Root/TopPanel/Layout" unique_id=1577073404]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SettingsMutedLabel"
+theme_override_font_sizes/font_size = 24
+text = "SYSTEM"
+horizontal_alignment = 1
+
+[node name="ClimateLabel" type="Label" parent="Root/TopPanel/Layout" unique_id=117784827]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SettingsMutedLabel"
+theme_override_font_sizes/font_size = 18
+text = "TEMPERATE"
+horizontal_alignment = 1
+
+[node name="PresenceTitle" type="Label" parent="Root/TopPanel/Layout" unique_id=1351859577]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardTitleLabel"
+theme_override_font_sizes/font_size = 30
+text = "COSMIC PRESENCE"
+horizontal_alignment = 1
+
+[node name="BarRow" type="HBoxContainer" parent="Root/TopPanel/Layout" unique_id=1406536953]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="BarStack" type="Control" parent="Root/TopPanel/Layout/BarRow" unique_id=140744220]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="TrailBar" type="ProgressBar" parent="Root/TopPanel/Layout/BarRow/BarStack" unique_id=2049530256]
+unique_name_in_owner = true
+modulate = Color(1, 0.35, 0.28, 0.9)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"InteractionHoldProgress"
+show_percentage = false
+
+[node name="PresenceBar" type="ProgressBar" parent="Root/TopPanel/Layout/BarRow/BarStack" unique_id=1634259007]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"InteractionHoldProgress"
+theme_override_font_sizes/font_size = 17
+
+[node name="MultiplierLabel" type="Label" parent="Root/TopPanel/Layout/BarRow" unique_id=1588930000]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme_type_variation = &"CardTitleLabel"
+theme_override_font_sizes/font_size = 30
+text = "x1"
+horizontal_alignment = 2
+
+[node name="Banner" type="VBoxContainer" parent="Root" unique_id=853729179]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 240.0
+offset_right = 420.0
+offset_bottom = 440.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="BannerTitle" type="Label" parent="Root/Banner" unique_id=1415134928]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"MenuHeaderLabel"
+theme_override_font_sizes/font_size = 52
+text = "JUMPING"
+horizontal_alignment = 1
+
+[node name="BannerDetail" type="Label" parent="Root/Banner" unique_id=1265816355]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardTitleLabel"
+theme_override_font_sizes/font_size = 34
+horizontal_alignment = 1
+
+[node name="HintLabel" type="Label" parent="Root" unique_id=1761046232]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -80.0
+offset_right = 360.0
+offset_bottom = -14.0
+grow_vertical = 0
+theme_type_variation = &"SettingsMutedLabel"
+text = "J  JUMP NOW (DEBUG)
+K  PRESENCE x2 (DEBUG)"
+
+[node name="Flash" type="ColorRect" parent="Root" unique_id=532895203]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.78, 0.9, 1, 0)

@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://d1ijq6f2ql4u1"]
+
+[ext_resource type="PackedScene" uid="uid://do8samksnectp" path="res://Components/Inventory/Item/WorldItem.tscn" id="1_r0qaf"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bnd2k"]
+height = 0.13476563
+radius = 0.024414063
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jgcqy"]
+height = 0.17529297
+radius = 0.053710938
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4v7s"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0qaf"]
+albedo_color = Color(1, 0.5372549, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+albedo_color = Color(0.6255971, 0.6255971, 0.62559694, 1)
+metallic = 1.0
+roughness = 0.15
+
+[node name="BatteryActor" unique_id=615013078 instance=ExtResource("1_r0qaf")]
+item_id = &"battery"
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=1516619094]
+shape = SubResource("CylinderShape3D_bnd2k")
+
+[node name="InteractableObject3D" parent="." index="1" unique_id=2128994857]
+selector_size = Vector3(0.1, 0.1, 0.1)
+
+[node name="CollisionShape3D" parent="InteractableObject3D" index="0" unique_id=597592492]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0009765625, 0)
+shape = SubResource("CylinderShape3D_jgcqy")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." index="3" unique_id=1072220232]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D" index="0" unique_id=1669729014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00029297173, 0)
+radius = 0.025
+height = 0.07421875
+material = SubResource("StandardMaterial3D_g4v7s")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D" index="1" unique_id=202084700]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.051937133, 0)
+radius = 0.025
+height = 0.032055665
+material = SubResource("StandardMaterial3D_r0qaf")
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="CSGCombiner3D" index="2" unique_id=2079003295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.051932245, 0)
+radius = 0.025
+height = 0.032055665
+material = SubResource("StandardMaterial3D_r0qaf")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D" index="3" unique_id=12456446]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07065694, 0)
+radius = 0.009765625
+height = 0.006506346
+material = SubResource("StandardMaterial3D_yf5fn")

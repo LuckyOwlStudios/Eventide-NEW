@@ -10,6 +10,28 @@ signal vacated(controller: Node)
 @export var seat_mount: Node3D
 @export var dismount_point: Node3D
 
+@export_group("Items")
+## Whether the occupant can still use and see their items while sitting here. Off, items are put out of
+## reach like on a ladder: no input, and the one in hand is hidden. A vehicle seat is never allowed, the
+## occupant is flying the vehicle.
+@export var allow_items := false
+
+@export_group("Sitting")
+## Seconds it takes to ease into the seat when sitting down, and out of it when standing up, camera
+## included. 0 is instant. A vehicle seat starts at 0.
+@export_range(0.0, 2.0, 0.01, "suffix:s") var transition_time := 0.15
+
+@export_group("Looking")
+## Whether the occupant can look around from the seat, inside the limits below. Off, the view stays
+## as it was when they sat down.
+@export var occupant_can_look := false
+## Total horizontal arc they can look through, centered on the way the seat faces. 180 is 90 degrees to
+## each side, 360 is all the way around.
+@export_range(1.0, 360.0, 1.0, "suffix:°") var look_yaw_arc := 180.0
+## How far down they can look (negative) and up (positive), from level.
+@export_range(-90.0, 0.0, 1.0, "suffix:°") var look_minimum_pitch := -90.0
+@export_range(0.0, 90.0, 1.0, "suffix:°") var look_maximum_pitch := 90.0
+
 var occupant: Node
 
 func _ready() -> void:
@@ -46,6 +68,16 @@ func release_occupancy(candidate: Node) -> bool:
 	runtime_status = "Seat is available."
 	vacated.emit(previous)
 	return true
+
+
+## Whether the occupant keeps their items. A seat that flies something overrides this to false.
+func are_items_allowed() -> bool:
+	return allow_items
+
+
+## Whether the occupant looks around for themselves, within the seat's limits.
+func can_occupant_look() -> bool:
+	return occupant_can_look
 
 
 func get_seat_transform() -> Transform3D:

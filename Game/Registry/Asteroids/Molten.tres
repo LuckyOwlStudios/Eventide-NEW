@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Asteroid" format=3]
+
+[ext_resource type="Script" path="res://Components/Space/asteroid_decorator.gd" id="1_am1f7"]
+[ext_resource type="Script" path="res://Components/Space/asteroid_drop.gd" id="2_pagon"]
+[ext_resource type="Script" path="res://Components/Space/asteroid.gd" id="3_md52m"]
+
+[resource]
+script = ExtResource("3_md52m")
+display_name = "Molten"
+temperature_min = 40.0
+temperature_max = 130.0
+temperature_peak = 105.0
+tint = Color(0.3, 0.25, 0.23, 1)
+roughness = 0.9
+cracks = true
+crack_color = Color(1, 0.5, 0.1, 1)
+crack_energy = 5.0
+crack_width = 0.24
+crack_halo = 0.4

@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://icihho8b8rfv"]
+
+[ext_resource type="Script" uid="uid://uvspg4e38k22" path="res://Components/Jump/jump_director.gd" id="1_director"]
+[ext_resource type="Script" uid="uid://d07m0gqv3e0dd" path="res://Components/Space/chunk_streamer.gd" id="2_streamer"]
+[ext_resource type="PackedScene" uid="uid://b50lenaenu8qo" path="res://Components/Jump/JumpHud.tscn" id="3_hud"]
+[ext_resource type="Resource" uid="uid://y7m28bmxvroo" path="res://Game/Registry/Systems/default_system_tuning.tres" id="4_tuning"]
+[ext_resource type="Script" uid="uid://cichr70y7y6xi" path="res://Components/Jump/cosmic_presence.gd" id="5_presence"]
+[ext_resource type="Script" uid="uid://dj5jbrhfpmayl" path="res://Components/Space/star_field.gd" id="6_stars"]
+[ext_resource type="Script" uid="uid://bpxkxaxltlfwm" path="res://Components/Jump/jump_camera_effect.gd" id="7_camera"]
+
+[node name="JumpDirector" type="Node" unique_id=77699118 node_paths=PackedStringArray("streamer", "presence")]
+script = ExtResource("1_director")
+streamer = NodePath("ChunkStreamer")
+presence = NodePath("CosmicPresence")
+tuning = ExtResource("4_tuning")
+
+[node name="ChunkStreamer" type="Node3D" parent="." unique_id=1166808844]
+script = ExtResource("2_streamer")
+
+[node name="CosmicPresence" type="Node" parent="." unique_id=650251678]
+script = ExtResource("5_presence")
+
+[node name="StarField" type="Node3D" parent="." unique_id=1098137571]
+script = ExtResource("6_stars")
+
+[node name="CameraEffect" type="Node" parent="." unique_id=1532702169]
+script = ExtResource("7_camera")
+
+[node name="JumpHud" parent="." unique_id=147311231 instance=ExtResource("3_hud")]

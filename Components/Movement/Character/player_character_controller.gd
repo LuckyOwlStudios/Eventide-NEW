@@ -48,7 +48,7 @@ func _input(event: InputEvent) -> void:
 		and input_enabled
 		and is_instance_valid(rotator)
 		and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
-		and NetworkSession.is_local_authority(character)
+		and NetworkSession.is_local_authority(get_body())
 		and _is_rolling()
 	):
 		_roll_mouse_angle += motion.relative.x * deg_to_rad(rotator.sensitivity)

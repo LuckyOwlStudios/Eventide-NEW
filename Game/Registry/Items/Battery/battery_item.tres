@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://rq20qbg8obg4"]
+
+[ext_resource type="Texture2D" uid="uid://cmpssaoe6iq3" path="res://addons/at-icons/node/american_football.svg" id="1_0t0m5"]
+[ext_resource type="Script" uid="uid://dtecqbok1dsgq" path="res://Components/Inventory/item.gd" id="1_d0vxc"]
+[ext_resource type="PackedScene" uid="uid://d1ijq6f2ql4u1" path="res://Game/Registry/Items/Battery/BatteryItemActor.tscn" id="1_s8alf"]
+
+[resource]
+script = ExtResource("1_d0vxc")
+id = &"battery"
+display_name = "Battery"
+description = "A component used to power devices"
+icon = ExtResource("1_0t0m5")
+max_stack_size = 16
+actor_scene = ExtResource("1_s8alf")
+metadata/_custom_type_script = "uid://dtecqbok1dsgq"

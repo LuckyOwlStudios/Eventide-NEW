@@ -1,0 +1,65 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/UI/MainMenu/server_row.gd" id="1_row"]
+
+[node name="ServerRow" type="Button"]
+custom_minimum_size = Vector2(0, 80)
+theme_type_variation = &"MenuCard"
+script = ExtResource("1_row")
+
+[node name="Content" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = -18.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="Text" type="VBoxContainer" parent="Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="HostLabel" type="Label" parent="Content/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardTitleLabel"
+text = "Host's game"
+text_overrun_behavior = 3
+
+[node name="WorldLabel" type="Label" parent="Content/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardDetailLabel"
+text = "World"
+text_overrun_behavior = 3
+
+[node name="PlayersLabel" type="Label" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardDetailLabel"
+text = "1 / 4"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TagLabel" type="Label" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"CardTagLabel"
+text = "JOIN"
+horizontal_alignment = 2
+vertical_alignment = 1

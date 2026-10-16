@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dtrohpvq1bd8w"]
+
+[ext_resource type="Texture2D" uid="uid://cu3cjd144la4w" path="res://Assets/Icons/flashlight_icon.png" id="1_kspk4"]
+[ext_resource type="Texture2D" uid="uid://bhkgbyu4b52sy" path="res://Assets/UI/Selector.svg" id="2_h6eu3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
+
+[node name="HotbarSlot" type="PanelContainer" unique_id=1354665658]
+custom_minimum_size = Vector2(72, 72)
+offset_right = 72.0
+offset_bottom = 72.0
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=529072984]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yf5fn")
+
+[node name="ItemIcon" type="TextureRect" parent="PanelContainer" unique_id=1172890]
+layout_mode = 2
+texture = ExtResource("1_kspk4")
+expand_mode = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer" unique_id=880632122]
+layout_mode = 2
+texture = ExtResource("2_h6eu3")

@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://bry3npyddc8bg"]
 
-[ext_resource type="Script" uid="uid://wg05rcpnxu0o" path="res://Scenes/Player/player_controller.gd" id="1_h54ih"]
+[ext_resource type="Script" uid="uid://wg05rcpnxu0o" path="res://Scenes/Player/player.gd" id="1_h54ih"]
+[ext_resource type="PackedScene" uid="uid://df6xfjowl6aw2" path="res://Scenes/Characters/Walking/WalkingCharacter3D.tscn" id="1_walking"]
 [ext_resource type="Script" uid="uid://bp4nmxk7cvakx" path="res://Components/Camera/base_camera.gd" id="2_8cj01"]
+[ext_resource type="PackedScene" uid="uid://dtwxn8w2jkgds" path="res://Assets/Models/Characters/Player/PlayerModel.blend" id="3_fcbn2"]
 [ext_resource type="Script" uid="uid://blnsevokptyy5" path="res://Components/Movement/rotator.gd" id="4_look"]
 [ext_resource type="Script" uid="uid://dros8m1qst8yr" path="res://Components/VoiceChat/player_voice_chat.gd" id="5_jmcll"]
+[ext_resource type="PackedScene" uid="uid://dd5s4l61bpke5" path="res://Assets/Models/Characters/Player/PlayerFirstPersonModel.blend" id="5_karlm"]
 [ext_resource type="PackedScene" uid="uid://dvpkwo6h7y0sj" path="res://addons/twovoip/voiphelper/two_voip_mic.tscn" id="6_twovoip_mic"]
 [ext_resource type="Script" uid="uid://842e4s3lsgsn" path="res://Components/Radio/radio.gd" id="7_t26db"]
 [ext_resource type="PackedScene" uid="uid://c613yggmsl08x" path="res://addons/twovoip/voiphelper/two_voip_speaker.tscn" id="7_twovoip_speaker"]
@@ -11,7 +14,7 @@
 [ext_resource type="Script" uid="uid://de57cjhlw15p" path="res://Components/Inventory/item_holder.gd" id="10_item_holder"]
 [ext_resource type="PackedScene" path="res://Scenes/UI/Inventory/InventoryHotbar.tscn" id="11_hotbar"]
 [ext_resource type="Texture2D" uid="uid://bjvhyfwqn6jxf" path="res://addons/at-icons/node/microphone.svg" id="11_i2g7t"]
-[ext_resource type="Resource" uid="uid://bqp2v3rq7j2nm" path="res://Game/Registry/Items/Flashlight/flashlight.tres" id="12_flashlight"]
+[ext_resource type="Resource" uid="uid://bqp2v3rq7j2nm" path="res://Game/Registry/Items/Flashlight/flashlight_item.tres" id="12_flashlight"]
 [ext_resource type="Script" uid="uid://pxbrrwlxt2bg" path="res://Components/VoiceChat/UI/mic_activity_icon.gd" id="12_io2mu"]
 [ext_resource type="Script" uid="uid://cbflbmfb7hx46" path="res://Game/Registry/Items/Flashlight/flashlight_instance.gd" id="13_flashlight_instance"]
 [ext_resource type="Script" uid="uid://dkxoluktox8nu" path="res://Components/Interaction/interaction_raycast_3d.gd" id="14_interaction"]
@@ -23,82 +26,128 @@
 [ext_resource type="PackedScene" uid="uid://fs4r81nv1eh" path="res://Components/Attributes/UI/LerpingAttributeBar.tscn" id="19_attribute_bar"]
 [ext_resource type="Script" uid="uid://dtecqbok1dsgq" path="res://Components/Inventory/item.gd" id="19_vrod0"]
 [ext_resource type="Script" uid="uid://d0xugmu7b47ru" path="res://Components/Inventory/inventory_slot_container.gd" id="20_fcbn2"]
-[ext_resource type="Texture2D" uid="uid://nchp2s3lf2e2" path="res://Components/Attributes/UI/medkit_white.svg" id="20_health_icon"]
 [ext_resource type="Texture2D" uid="uid://cbhkd08igavmm" path="res://Components/Attributes/UI/lightning_bolt_white.svg" id="21_stamina_icon"]
-[ext_resource type="Script" uid="uid://dp80cmp5h3n78" path="res://Components/Orientor/orientor.gd" id="21_yb677"]
 [ext_resource type="Script" uid="uid://dp1uv17ft2p84" path="res://Components/Vehicles/vehicle_controller.gd" id="22_vehicle_controller"]
+[ext_resource type="Resource" uid="uid://cdvg2sumkxqm" path="res://Game/Registry/Items/Lightpack/lightpack_item.tres" id="23_hjq2i"]
 [ext_resource type="Script" uid="uid://dbjqs6dmq5sjs" path="res://Components/Traversal/ladder_controller.gd" id="23_ladder_controller"]
-[ext_resource type="Script" uid="uid://7vphsxim0psu" path="res://Components/Movement/Character/movement_attribute.gd" id="24_movement_stats"]
 [ext_resource type="Script" uid="uid://bbclvnbuj8sp7" path="res://Components/Movement/Character/player_character_controller.gd" id="26_player_controller"]
 [ext_resource type="Script" uid="uid://47ss3h73ryta" path="res://Components/Movement/Character/character_net_sync.gd" id="27_net_sync"]
 [ext_resource type="Script" uid="uid://ca3dgm0rxcgxn" path="res://Components/Movement/Character/HeadMotion/head_motion.gd" id="30_head_motion"]
-[ext_resource type="Script" uid="uid://b04b0257hd6va" path="res://Components/Movement/Character/HeadMotion/footstep_player.gd" id="31_footstep_player"]
 [ext_resource type="Resource" uid="uid://6v8ov0hqjkdu" path="res://Components/Movement/Character/HeadMotion/Profiles/WalkBob.tres" id="32_walk_bob"]
 [ext_resource type="Resource" uid="uid://dn6176cmpdjui" path="res://Components/Movement/Character/HeadMotion/Profiles/SprintBob.tres" id="33_sprint_bob"]
 [ext_resource type="Resource" uid="uid://5rjidr5lo5ha" path="res://Components/Movement/Character/HeadMotion/Profiles/StrollBob.tres" id="34_stroll_bob"]
 [ext_resource type="Resource" uid="uid://c2mu4qxfltcdn" path="res://Components/Movement/Character/HeadMotion/Profiles/CrouchBob.tres" id="35_crouch_bob"]
 [ext_resource type="Script" uid="uid://dq4sxlfpls0va" path="res://Components/Movement/Character/jetpack.gd" id="35_lw74r"]
-[ext_resource type="Script" uid="uid://bj6lt1ihhp7kp" path="res://Components/Physics/soft_collision_3d.gd" id="36_tf3ct"]
+[ext_resource type="Texture2D" uid="uid://wjdq8lyodvg8" path="res://Assets/Textures/UI/Icons/plus.svg" id="35_vrod0"]
+[ext_resource type="Script" uid="uid://cs7rua16e8bh2" path="res://Components/Inventory/item_motion.gd" id="37_item_motion"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fcbn2"]
+resource_local_to_scene = true
 radius = 0.4
 height = 1.8
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
-
-[sub_resource type="Resource" id="Resource_flashlight_instance"]
+[sub_resource type="Resource" id="Resource_ifris"]
 script = ExtResource("13_flashlight_instance")
 item = ExtResource("12_flashlight")
+metadata/_custom_type_script = "uid://cbflbmfb7hx46"
+
+[sub_resource type="Resource" id="Resource_3q52n"]
+script = ExtResource("9_item_instance")
+item = ExtResource("23_hjq2i")
+metadata/_custom_type_script = "uid://37ga06wg7j1f"
 
 [sub_resource type="Resource" id="Resource_hotbar"]
 script = ExtResource("20_fcbn2")
 size = 4
 id = &"hotbar"
-starting_items = Array[ExtResource("9_item_instance")]([SubResource("Resource_flashlight_instance")])
+starting_items = Array[ExtResource("9_item_instance")]([SubResource("Resource_ifris"), SubResource("Resource_3q52n")])
+carrying = 1
 metadata/_custom_type_script = "uid://d0xugmu7b47ru"
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_g4v7s"]
-color = Color(1, 1, 1, 1)
-thickness = 8
+[sub_resource type="Resource" id="Resource_fcbn2"]
+script = ExtResource("20_fcbn2")
+id = &"back_slot"
+metadata/_custom_type_script = "uid://d0xugmu7b47ru"
 
-[node name="Player" type="CharacterBody3D" unique_id=260935112 node_paths=PackedStringArray("health", "stamina")]
+[sub_resource type="Resource" id="Resource_lamp_flashlight"]
+script = ExtResource("13_flashlight_instance")
+item = ExtResource("12_flashlight")
+metadata/_custom_type_script = "uid://cbflbmfb7hx46"
+
+[sub_resource type="Resource" id="Resource_lamp"]
+script = ExtResource("20_fcbn2")
+id = &"lamp"
+accepted_tags = Array[StringName]([&"lamp"])
+starting_items = Array[ExtResource("9_item_instance")]([SubResource("Resource_lamp_flashlight")])
+carrying = 2
+metadata/_custom_type_script = "uid://d0xugmu7b47ru"
+
+[node name="Player" unique_id=1196741830 node_paths=PackedStringArray("health", "stamina", "first_person_root") instance=ExtResource("1_walking")]
 collision_layer = 2
-collision_mask = 29
 platform_floor_layers = 4294901777
 script = ExtResource("1_h54ih")
 health = NodePath("HealthAttribute")
 stamina = NodePath("StaminaAttribute")
+head_height = 0.9
+head_follow_speed = 14.0
+correction_smoothing_speed = 12.0
+perspective = 1
+first_person_root = NodePath("Head")
+model_follows_look = true
+model_turn_speed = 12.0
+stance = 0
+_movement_speed = 5.0
+ground_acceleration = 30.0
+air_acceleration = 8.0
+coyote_time = 0.12
+jump_buffer_time = 0.12
+step_height = 0.35
+max_floor_angle = 46.0
+_can_crouch = true
+_can_run = true
+_can_jump = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1153685732]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-shape = SubResource("CapsuleShape3D_player")
+[node name="CollisionShape3D" parent="." index="0" unique_id=1592797814]
+shape = SubResource("CapsuleShape3D_fcbn2")
 
-[node name="HeadRoot" type="Node3D" parent="." unique_id=2048153428]
+[node name="ThirdPersonItemMount" type="Marker3D" parent="Model" parent_id_path=PackedInt32Array(444457450) index="0" unique_id=1900000001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.35, -0.55)
+
+[node name="PlayerModel" parent="Model" parent_id_path=PackedInt32Array(444457450) index="1" unique_id=673032235 instance=ExtResource("3_fcbn2")]
+
+[node name="Head" type="Node3D" parent="." index="5" unique_id=2048153428]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62, 0)
 
-[node name="YawPivot" type="Node3D" parent="HeadRoot" unique_id=1179328855]
+[node name="YawPivot" type="Node3D" parent="Head" index="0" unique_id=1179328855]
 
-[node name="PitchPivot" type="Node3D" parent="HeadRoot/YawPivot" unique_id=1233805380]
+[node name="PitchPivot" type="Node3D" parent="Head/YawPivot" index="0" unique_id=1233805380]
 
-[node name="Camera3D" type="Camera3D" parent="HeadRoot/YawPivot/PitchPivot" unique_id=263506805]
+[node name="Camera3D" type="Camera3D" parent="Head/YawPivot/PitchPivot" index="0" unique_id=263506805]
 script = ExtResource("2_8cj01")
 metadata/_custom_type_script = "uid://bp4nmxk7cvakx"
 
-[node name="InteractionRayCast3D" type="RayCast3D" parent="HeadRoot/YawPivot/PitchPivot/Camera3D" unique_id=1350245565 node_paths=PackedStringArray("interaction_source", "interaction_prompter")]
+[node name="InteractionRayCast3D" type="RayCast3D" parent="Head/YawPivot/PitchPivot/Camera3D" index="0" unique_id=1350245565 node_paths=PackedStringArray("interaction_source", "interaction_prompter")]
 target_position = Vector3(0, 0, -3)
-collision_mask = 64
+collision_mask = 81
 collide_with_areas = true
 script = ExtResource("14_interaction")
 interaction_source = NodePath("../../../../..")
 interaction_prompter = NodePath("InteractableObjectPrompter")
 
-[node name="InteractableObjectPrompter" parent="HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D" unique_id=1501321948 instance=ExtResource("15_interaction_prompter")]
+[node name="InteractableObjectPrompter" parent="Head/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D" index="0" unique_id=1501321948 instance=ExtResource("15_interaction_prompter")]
 
-[node name="ItemMount" type="Marker3D" parent="HeadRoot/YawPivot/PitchPivot/Camera3D" unique_id=964718294]
+[node name="FirstPersonRoot" type="Node3D" parent="Head/YawPivot/PitchPivot/Camera3D" index="1" unique_id=554085254]
+
+[node name="ItemMotionPivot" type="Node3D" parent="Head/YawPivot/PitchPivot/Camera3D/FirstPersonRoot" index="0" unique_id=1900000002]
+
+[node name="ItemMount" type="Marker3D" parent="Head/YawPivot/PitchPivot/Camera3D/FirstPersonRoot/ItemMotionPivot" index="0" unique_id=964718294]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.25, -0.55)
 
-[node name="PlayerVoiceChat" type="Node3D" parent="HeadRoot/YawPivot/PitchPivot" unique_id=1476090613 node_paths=PackedStringArray("two_voip_mic", "local_voip_speaker", "network_voip_speaker")]
+[node name="PlayerFirstPersonModel" parent="Head/YawPivot/PitchPivot/Camera3D/FirstPersonRoot/ItemMotionPivot" index="1" unique_id=1717915734 instance=ExtResource("5_karlm")]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, -0.14999998, 0)
+
+[node name="PlayerVoiceChat" type="Node3D" parent="Head/YawPivot/PitchPivot" index="1" unique_id=1476090613 node_paths=PackedStringArray("two_voip_mic", "local_voip_speaker", "network_voip_speaker")]
 script = ExtResource("5_jmcll")
 optimize_for_voice = false
 debug_enabled = true
@@ -107,97 +156,82 @@ local_voip_speaker = NodePath("LocalAudioStreamPlayer3D/TwoVoipSpeaker")
 network_voip_speaker = NodePath("NetworkAudioStreamPlayer3D/TwoVoipSpeaker")
 metadata/_custom_type_script = "uid://dros8m1qst8yr"
 
-[node name="TwoVoipMic" parent="HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat" unique_id=1865631188 instance=ExtResource("6_twovoip_mic")]
+[node name="TwoVoipMic" parent="Head/YawPivot/PitchPivot/PlayerVoiceChat" index="0" unique_id=1865631188 instance=ExtResource("6_twovoip_mic")]
 
-[node name="LocalAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat" unique_id=836737535]
+[node name="LocalAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Head/YawPivot/PitchPivot/PlayerVoiceChat" index="1" unique_id=836737535]
 emission_angle_degrees = 90.0
 
-[node name="TwoVoipSpeaker" parent="HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat/LocalAudioStreamPlayer3D" unique_id=666812395 instance=ExtResource("7_twovoip_speaker")]
+[node name="TwoVoipSpeaker" parent="Head/YawPivot/PitchPivot/PlayerVoiceChat/LocalAudioStreamPlayer3D" index="0" unique_id=666812395 instance=ExtResource("7_twovoip_speaker")]
 audiobufferlagtimetargettolerance = 0.0
 
-[node name="NetworkAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat" unique_id=1746760025]
+[node name="NetworkAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Head/YawPivot/PitchPivot/PlayerVoiceChat" index="2" unique_id=1746760025]
 emission_angle_degrees = 90.0
 
-[node name="TwoVoipSpeaker" parent="HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat/NetworkAudioStreamPlayer3D" unique_id=1490333458 instance=ExtResource("7_twovoip_speaker")]
+[node name="TwoVoipSpeaker" parent="Head/YawPivot/PitchPivot/PlayerVoiceChat/NetworkAudioStreamPlayer3D" index="0" unique_id=1490333458 instance=ExtResource("7_twovoip_speaker")]
 audiobufferlagtimetargettolerance = 0.0
 
-[node name="ThirdPersonRoot" type="Node3D" parent="." unique_id=1863697733]
+[node name="CarriedItemMount" type="Marker3D" parent="Head/YawPivot/PitchPivot" index="2" unique_id=1900000003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.15, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ThirdPersonRoot" unique_id=1821967263]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_g4v7s")
-
-[node name="Radio" type="Node3D" parent="." unique_id=720242909 node_paths=PackedStringArray("voice_chat")]
+[node name="Radio" type="Node3D" parent="." index="6" unique_id=720242909 node_paths=PackedStringArray("voice_chat")]
 script = ExtResource("7_t26db")
 device_label = "Player Walkie-Talkie"
-voice_chat = NodePath("../HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat")
+voice_chat = NodePath("../Head/YawPivot/PitchPivot/PlayerVoiceChat")
 metadata/_custom_type_script = "uid://842e4s3lsgsn"
 
-[node name="SoftCollision3D" type="Node" parent="." unique_id=1270775002]
-script = ExtResource("36_tf3ct")
-metadata/_custom_type_script = "uid://bj6lt1ihhp7kp"
-
-[node name="Orientor" type="Node" parent="." unique_id=580396143]
-script = ExtResource("21_yb677")
-metadata/_custom_type_script = "uid://dp80cmp5h3n78"
-
-[node name="Rotator" type="Node" parent="." unique_id=554106115 node_paths=PackedStringArray("yaw_pivot", "pitch_pivot")]
+[node name="Rotator" type="Node" parent="." index="7" unique_id=554106115 node_paths=PackedStringArray("yaw_pivot", "pitch_pivot")]
 script = ExtResource("4_look")
-yaw_pivot = NodePath("../HeadRoot/YawPivot")
-pitch_pivot = NodePath("../HeadRoot/YawPivot/PitchPivot")
+yaw_pivot = NodePath("../Head/YawPivot")
+pitch_pivot = NodePath("../Head/YawPivot/PitchPivot")
 metadata/_custom_type_script = "uid://blnsevokptyy5"
 
-[node name="PlayerCharacterController" type="Node" parent="." unique_id=764652907 node_paths=PackedStringArray("rotator", "character", "stats", "net_sync", "orientor", "collision_shape", "stamina", "head")]
+[node name="PlayerCharacterController" type="Node" parent="." index="8" unique_id=764652907 node_paths=PackedStringArray("rotator", "net_sync", "stamina")]
 script = ExtResource("26_player_controller")
 rotator = NodePath("../Rotator")
-character = NodePath("..")
-stats = NodePath("../MovementAttribute")
 net_sync = NodePath("../CharacterNetSync")
-orientor = NodePath("../Orientor")
-collision_shape = NodePath("../CollisionShape3D")
 stamina = NodePath("../StaminaAttribute")
-head = NodePath("../HeadRoot")
 
-[node name="HealthAttribute" type="Node" parent="." unique_id=2004094872]
+[node name="HealthAttribute" type="Node" parent="." index="9" unique_id=2004094872]
 script = ExtResource("17_spxdj")
 metadata/_custom_type_script = "uid://bhvyx0wc2ixmi"
 
-[node name="StaminaAttribute" type="Node" parent="." unique_id=1690833458]
+[node name="StaminaAttribute" type="Node" parent="." index="10" unique_id=1690833458]
 script = ExtResource("18_stamina")
 
-[node name="MovementAttribute" type="Node" parent="." unique_id=1833839511]
-script = ExtResource("24_movement_stats")
-
-[node name="Inventory" type="Node" parent="." unique_id=815178438]
+[node name="Inventory" type="Node" parent="." index="11" unique_id=815178438]
 script = ExtResource("17_to4uw")
-containers = Array[ExtResource("18_p7cr0")]([SubResource("Resource_hotbar")])
+containers = Array[ExtResource("18_p7cr0")]([SubResource("Resource_hotbar"), SubResource("Resource_fcbn2"), SubResource("Resource_lamp")])
 metadata/_custom_type_script = "uid://ckd5rah8n2xh3"
 
-[node name="ItemHolder" type="Node" parent="." unique_id=318815422 node_paths=PackedStringArray("inventory", "actor_parent")]
+[node name="ItemHolder" type="Node" parent="." index="12" unique_id=318815422 node_paths=PackedStringArray("inventory", "actor_parent", "third_person_parent", "carried_parent", "seat_controller", "ladder_controller")]
 script = ExtResource("10_item_holder")
 inventory = NodePath("../Inventory")
-actor_parent = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/ItemMount")
+actor_parent = NodePath("../Head/YawPivot/PitchPivot/Camera3D/FirstPersonRoot/ItemMotionPivot/ItemMount")
+third_person_parent = NodePath("../Model/ThirdPersonItemMount")
+carried_parent = NodePath("../Head/YawPivot/PitchPivot/CarriedItemMount")
+seat_controller = NodePath("../VehicleController")
+ladder_controller = NodePath("../LadderController")
 
-[node name="VehicleController" type="Node" parent="." unique_id=1485242158 node_paths=PackedStringArray("player_camera", "player_view_root", "visual_root", "character_controller", "player_rotator", "interaction_ray")]
+[node name="VehicleController" type="Node" parent="." index="13" unique_id=1485242158 node_paths=PackedStringArray("player_camera", "player_view_root", "visual_root", "character_controller", "player_rotator", "interaction_ray")]
 script = ExtResource("22_vehicle_controller")
-player_camera = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D")
-player_view_root = NodePath("../HeadRoot")
-visual_root = NodePath("../ThirdPersonRoot")
+player_camera = NodePath("../Head/YawPivot/PitchPivot/Camera3D")
+player_view_root = NodePath("../Head")
+visual_root = NodePath("../Model")
 character_controller = NodePath("../PlayerCharacterController")
 player_rotator = NodePath("../Rotator")
-interaction_ray = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D")
+interaction_ray = NodePath("../Head/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D")
 
-[node name="LadderController" type="Node" parent="." unique_id=1657702923 node_paths=PackedStringArray("character_controller", "orientation_component", "interaction_ray", "player_rotator", "seat_controller")]
+[node name="LadderController" type="Node" parent="." index="14" unique_id=1657702923 node_paths=PackedStringArray("character_controller", "orientation_component", "interaction_ray", "player_rotator", "seat_controller")]
 script = ExtResource("23_ladder_controller")
 character_controller = NodePath("../PlayerCharacterController")
-orientation_component = NodePath("../Orientor")
-interaction_ray = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D")
+orientation_component = NodePath("../Orientator")
+interaction_ray = NodePath("../Head/YawPivot/PitchPivot/Camera3D/InteractionRayCast3D")
 player_rotator = NodePath("../Rotator")
 seat_controller = NodePath("../VehicleController")
 
-[node name="HeadMotion" type="Node" parent="." unique_id=1724680301 node_paths=PackedStringArray("target", "controller")]
+[node name="HeadMotion" type="Node" parent="." index="15" unique_id=1724680301 node_paths=PackedStringArray("target", "controller")]
 script = ExtResource("30_head_motion")
-target = NodePath("../HeadRoot/YawPivot/PitchPivot/Camera3D")
+target = NodePath("../Head/YawPivot/PitchPivot/Camera3D")
 controller = NodePath("../PlayerCharacterController")
 bob_strength = 0.75
 walk_profile = ExtResource("32_walk_bob")
@@ -206,48 +240,50 @@ stroll_profile = ExtResource("34_stroll_bob")
 crouch_profile = ExtResource("35_crouch_bob")
 impact_strength = 0.5
 
-[node name="FootstepPlayer" type="Node" parent="." unique_id=1724680302 node_paths=PackedStringArray("head_motion")]
-script = ExtResource("31_footstep_player")
+[node name="ItemMotion" type="Node" parent="." index="16" unique_id=1900000004 node_paths=PackedStringArray("pivot", "head_motion", "holder")]
+script = ExtResource("37_item_motion")
+pivot = NodePath("../Head/YawPivot/PitchPivot/Camera3D/FirstPersonRoot/ItemMotionPivot")
 head_motion = NodePath("../HeadMotion")
+holder = NodePath("../ItemHolder")
 
-[node name="Jetpack" type="Node" parent="." unique_id=1020602988]
+[node name="Jetpack" type="Node" parent="." index="17" unique_id=1020602988]
 script = ExtResource("35_lw74r")
 metadata/_custom_type_script = "uid://dq4sxlfpls0va"
 
-[node name="CharacterNetSync" type="Node" parent="." unique_id=484725145 node_paths=PackedStringArray("controller")]
+[node name="CharacterNetSync" type="Node" parent="." index="18" unique_id=484725145 node_paths=PackedStringArray("controller")]
 script = ExtResource("27_net_sync")
 controller = NodePath("../PlayerCharacterController")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=495458726]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="19" unique_id=495458726]
 
-[node name="AttributeBars" type="VBoxContainer" parent="CanvasLayer" unique_id=1868833305]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -67.0
-offset_right = 344.0
-offset_bottom = -24.0
+[node name="AttributeBars" type="VBoxContainer" parent="CanvasLayer" index="0" unique_id=1868833305]
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.95
+anchor_right = 0.025
+anchor_bottom = 0.95
+offset_top = -42.0
+offset_right = 240.0
 grow_vertical = 0
-theme_override_constants/separation = 3
+theme_override_constants/separation = 2
 
-[node name="HealthBar" parent="CanvasLayer/AttributeBars" unique_id=560190859 node_paths=PackedStringArray("attribute_node") instance=ExtResource("19_attribute_bar")]
+[node name="HealthBar" parent="CanvasLayer/AttributeBars" index="0" unique_id=560190859 node_paths=PackedStringArray("attribute_node") instance=ExtResource("19_attribute_bar")]
 layout_mode = 2
 attribute_node = NodePath("../../../HealthAttribute")
-icon = ExtResource("20_health_icon")
+icon = ExtResource("35_vrod0")
 
-[node name="StaminaBar" parent="CanvasLayer/AttributeBars" unique_id=1287202040 node_paths=PackedStringArray("attribute_node") instance=ExtResource("19_attribute_bar")]
+[node name="StaminaBar" parent="CanvasLayer/AttributeBars" index="1" unique_id=1287202040 node_paths=PackedStringArray("attribute_node") instance=ExtResource("19_attribute_bar")]
 layout_mode = 2
 attribute_node = NodePath("../../../StaminaAttribute")
 increase_color = Color(0.2, 0.9019608, 1, 1)
 decrease_color = Color(0.9490196, 0.63529414, 0.12156863, 1)
 icon = ExtResource("21_stamina_icon")
 
-[node name="InventoryHotbar" parent="CanvasLayer" unique_id=385567340 node_paths=PackedStringArray("item_holder") instance=ExtResource("11_hotbar")]
+[node name="InventoryHotbar" parent="CanvasLayer" index="1" unique_id=385567340 node_paths=PackedStringArray("item_holder") instance=ExtResource("11_hotbar")]
 anchors_preset = 7
 item_holder = NodePath("../../ItemHolder")
 
-[node name="MicIcon" type="TextureRect" parent="CanvasLayer" unique_id=2127712436 node_paths=PackedStringArray("player_voice_chat")]
+[node name="MicIcon" type="TextureRect" parent="CanvasLayer" index="2" unique_id=2127712436 node_paths=PackedStringArray("player_voice_chat")]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -262,37 +298,7 @@ grow_vertical = 0
 texture = ExtResource("11_i2g7t")
 expand_mode = 1
 script = ExtResource("12_io2mu")
-player_voice_chat = NodePath("../../HeadRoot/YawPivot/PitchPivot/PlayerVoiceChat")
+player_voice_chat = NodePath("../../Head/YawPivot/PitchPivot/PlayerVoiceChat")
 metadata/_custom_type_script = "uid://pxbrrwlxt2bg"
 
-[node name="LeftLine" type="Panel" parent="CanvasLayer" unique_id=6354906]
-anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.9
-anchor_right = 0.475
-anchor_bottom = 0.95
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxLine_g4v7s")
-
-[node name="RightLine" type="Panel" parent="CanvasLayer" unique_id=1186350728]
-anchors_preset = -1
-anchor_left = 0.525
-anchor_top = 0.9
-anchor_right = 0.7
-anchor_bottom = 0.95
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxLine_g4v7s")
-
-[node name="HUD" type="Control" parent="CanvasLayer" unique_id=876072770]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[editable path="Head/YawPivot/PitchPivot/Camera3D/FirstPersonRoot/ItemMotionPivot/PlayerFirstPersonModel"]

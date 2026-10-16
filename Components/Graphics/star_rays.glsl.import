@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://d4l5hhlsxyq0c"
+path="res://.godot/imported/star_rays.glsl-4986333234e9f7989d5b88f03f776c2e.res"
+
+[deps]
+
+source_file="res://Components/Graphics/star_rays.glsl"
+dest_files=["res://.godot/imported/star_rays.glsl-4986333234e9f7989d5b88f03f776c2e.res"]
+
+[params]
+

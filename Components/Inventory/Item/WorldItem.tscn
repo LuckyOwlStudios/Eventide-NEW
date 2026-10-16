@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://do8samksnectp"]
+
+[ext_resource type="Script" uid="uid://cuu4fkq550n4o" path="res://Components/Inventory/item_actor.gd" id="1_actor"]
+[ext_resource type="Script" uid="uid://deefu60f5dqwu" path="res://Components/Inventory/Item/item_pickup.gd" id="1_qhu6f"]
+[ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="2_rgjov"]
+[ext_resource type="Script" uid="uid://bj6lt1ihhp7kp" path="res://Components/Physics/soft_collision_3d.gd" id="3_soft"]
+
+[sub_resource type="Resource" id="Resource_oliwl"]
+script = ExtResource("2_rgjov")
+option_id = &"pickup"
+prompt = "Pickup"
+metadata/_custom_type_script = "uid://c0qugb31qanoa"
+
+[node name="WorldItem" type="RigidBody3D" unique_id=615013078]
+collision_layer = 32
+collision_mask = 49
+script = ExtResource("1_actor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1516619094 groups=["item_world"]]
+
+[node name="InteractableObject3D" type="Area3D" parent="." unique_id=2128994857 groups=["item_world"]]
+script = ExtResource("1_qhu6f")
+interaction_options = Array[Object]([SubResource("Resource_oliwl")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableObject3D" unique_id=597592492]
+
+[node name="SoftCollision3D" type="Node" parent="." unique_id=1288374501 groups=["item_world"]]
+script = ExtResource("3_soft")
+push_mask = 4
+strength = 5.0
+friction_while_pushed = 0.52
+metadata/_custom_type_script = "uid://bj6lt1ihhp7kp"

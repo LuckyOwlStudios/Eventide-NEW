@@ -31,6 +31,8 @@ func _ready() -> void:
 
 	var ordinary_seat = SEAT_SCRIPT.new()
 	ordinary_seat.name = "OrdinarySeat"
+	# This is about what sitting does to the actor, so it is instant. Easing in and out has its own test.
+	ordinary_seat.transition_time = 0.0
 	var ordinary_mount := Marker3D.new()
 	ordinary_mount.name = "SeatMount"
 	ordinary_mount.position = Vector3(2.0, 1.0, 0.0)

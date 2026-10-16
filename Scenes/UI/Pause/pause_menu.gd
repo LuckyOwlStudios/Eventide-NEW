@@ -2,11 +2,13 @@ class_name PauseMenu
 extends Control
 
 signal resume_requested
+signal main_menu_requested
 signal quit_requested
 
 @onready var resume_button: Button = %ResumeButton
 @onready var options_button: Button = %OptionsButton
-@onready var quit_button: Button = %QuitButton
+@onready var main_menu_button: ConfirmationButton = %MainMenuButton
+@onready var quit_button: ConfirmationButton = %QuitButton
 @onready var menu_panel: Control = %MenuPanel
 @onready var description_label: Label = %DescriptionLabel
 @onready var settings_menu: SettingsMenu = %SettingsMenu
@@ -18,11 +20,13 @@ func _ready() -> void:
 	close()
 	resume_button.pressed.connect(resume_requested.emit)
 	options_button.pressed.connect(_open_settings)
-	quit_button.pressed.connect(quit_requested.emit)
+	main_menu_button.confirmed.connect(main_menu_requested.emit)
+	quit_button.confirmed.connect(quit_requested.emit)
 	settings_menu.closed.connect(_on_settings_closed)
 	_button_descriptions = {
 		resume_button: "Return to the game",
 		options_button: "Adjust game, video, audio, and control settings",
+		main_menu_button: "Leave this game and return to the main menu",
 		quit_button: "Exit " + ProjectSettings.get_setting("application/config/name"),
 	}
 	for button in _button_descriptions:

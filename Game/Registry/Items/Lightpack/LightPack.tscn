@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://d66xtrvq3c4a"]
+
+[ext_resource type="PackedScene" uid="uid://do8samksnectp" path="res://Components/Inventory/Item/WorldItem.tscn" id="1_jhwxu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3q52n"]
+size = Vector3(0.4, 0.625, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xxr2l"]
+size = Vector3(0.4580078, 0.6813965, 0.32226563)
+
+[node name="LightPack" unique_id=615013078 instance=ExtResource("1_jhwxu")]
+item_id = &"lightpack"
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=1516619094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3125, 0.125)
+shape = SubResource("BoxShape3D_3q52n")
+
+[node name="CollisionShape3D" parent="InteractableObject3D" parent_id_path=PackedInt32Array(2128994857) index="0" unique_id=597592492]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3121643, 0.125)
+shape = SubResource("BoxShape3D_xxr2l")
+
+[node name="Model" type="Node3D" parent="." index="3" unique_id=842065151]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Model" index="0" unique_id=817845550]
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Model/CSGCombiner3D" index="0" unique_id=208763632]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.2, 0, 0)
+polygon = PackedVector2Array(0, 0, 0, 0.625, 0.125, 0.625, 0.25, 0.5, 0.25, 0.125, 0.125, 0)
+depth = 0.4
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Model/CSGCombiner3D" index="1" unique_id=439786049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0.125)
+radius = 0.04736328
+height = 0.08984375
+
+[node name="SpringArm3D" type="SpringArm3D" parent="." index="4" unique_id=1027186797]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, 0.125)
+spring_length = 0.5
+
+[node name="Root" type="Marker3D" parent="SpringArm3D" index="0" unique_id=244585135]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -2.9802322e-08, 0.5)
+
+[node name="Light" type="OmniLight3D" parent="SpringArm3D/Root" index="0" unique_id=925212144]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.05, 0)
+light_energy = 2.0
+omni_range = 12.0
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="SpringArm3D/Root" index="1" unique_id=1452606955]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="SpringArm3D/Root/CSGCombiner3D" index="0" unique_id=1121657969]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19970703, 0)
+radius = 0.025
+height = 0.35058594
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="SpringArm3D/Root/CSGCombiner3D" index="1" unique_id=355140920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+radius = 0.05039103

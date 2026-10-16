@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://df6xfjowl6aw2"]
+
+[ext_resource type="PackedScene" uid="uid://ckf6bpnp5kpjg" path="res://Scenes/Characters/BaseCharacter.tscn" id="1_88p3o"]
+[ext_resource type="Script" uid="uid://oy647p42canf" path="res://Scenes/Characters/Walking/walking_character.gd" id="2_04eyi"]
+[ext_resource type="Script" uid="uid://b04b0257hd6va" path="res://Components/Movement/Character/HeadMotion/footstep_player.gd" id="3_04eyi"]
+[ext_resource type="Script" uid="uid://dp80cmp5h3n78" path="res://Components/Orientor/orientor.gd" id="4_04eyi"]
+[ext_resource type="Script" uid="uid://bj6lt1ihhp7kp" path="res://Components/Physics/soft_collision_3d.gd" id="5_soft"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hqfhs"]
+resource_local_to_scene = true
+radius = 0.4
+height = 1.8
+
+[node name="WalkingCharacter3D" unique_id=1196741830 instance=ExtResource("1_88p3o")]
+script = ExtResource("2_04eyi")
+_movement_speed = 3.0
+_sprint_multiplier = 1.5
+_crouch_multiplier = 0.5
+_stroll_multiplier = 0.5
+_jump_height = 1.0
+crouch_dimensions = Vector2(0.8, 0.8)
+crouch_shape_type = 1
+_can_crouch = false
+_can_run = false
+_can_jump = false
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=1592797814]
+shape = SubResource("CapsuleShape3D_hqfhs")
+
+[node name="Orientator" type="Node" parent="." index="2" unique_id=1755942903]
+script = ExtResource("4_04eyi")
+metadata/_custom_type_script = "uid://dp80cmp5h3n78"
+
+[node name="FootstepPlayer" type="Node" parent="." index="3" unique_id=718446954]
+script = ExtResource("3_04eyi")
+metadata/_custom_type_script = "uid://b04b0257hd6va"
+
+[node name="SoftCollision3D" type="Node" parent="." index="4" unique_id=1270775002]
+script = ExtResource("5_soft")
+strength = 5.0
+metadata/_custom_type_script = "uid://bj6lt1ihhp7kp"

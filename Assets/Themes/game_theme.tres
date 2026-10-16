@@ -1,8 +1,15 @@
 [gd_resource type="Theme" format=3 uid="uid://bhq3f1pcberir"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_551l1"]
-color = Color(0.72156864, 0.7411765, 0.7607843, 0.6509804)
-thickness = 2
+color = Color(1, 1, 1, 0.6509804)
+thickness = 4
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_mt1l0"]
+color = Color(1, 1, 1, 0.6509804)
+grow_begin = -5.0
+grow_end = -4.0
+thickness = 4
+vertical = true
 
 [sub_resource type="StyleBoxFlat" id="InteractionProgressBackground"]
 bg_color = Color(1, 1, 1, 0.16)
@@ -20,6 +27,78 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="MenuCardDisabled"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.015)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72156864, 0.7411765, 0.7607843, 0.12)
+
+[sub_resource type="StyleBoxFlat" id="MenuCardFocus"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.4, 0.18, 1)
+
+[sub_resource type="StyleBoxFlat" id="MenuCardHover"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.08)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72156864, 0.7411765, 0.7607843, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="MenuCardNormal"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.03)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72156864, 0.7411765, 0.7607843, 0.22)
+
+[sub_resource type="StyleBoxFlat" id="MenuCardPressed"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.79, 0.39, 0.17, 0.16)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.82, 0.4, 0.18, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="MenuPanelStyle"]
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 18.0
+content_margin_bottom = 14.0
+bg_color = Color(0.015686275, 0.019607844, 0.023529412, 0.62)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72156864, 0.7411765, 0.7607843, 0.5019608)
 
 [sub_resource type="StyleBoxEmpty" id="PauseButtonEmpty"]
 content_margin_left = 30.0
@@ -75,8 +154,45 @@ corner_radius_bottom_left = 2
 [sub_resource type="StyleBoxEmpty" id="SettingsScrollEmpty"]
 
 [resource]
+BootPromptLabel/base_type = &"Label"
+BootPromptLabel/colors/font_color = Color(0.85, 0.86, 0.88, 1)
+BootPromptLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+BootPromptLabel/constants/outline_size = 2
+BootPromptLabel/font_sizes/font_size = 30
+CardDetailLabel/base_type = &"Label"
+CardDetailLabel/colors/font_color = Color(0.66, 0.67, 0.69, 1)
+CardDetailLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+CardDetailLabel/constants/outline_size = 2
+CardDetailLabel/font_sizes/font_size = 20
+CardNumberLabel/base_type = &"Label"
+CardNumberLabel/colors/font_color = Color(0.42, 0.43, 0.46, 1)
+CardNumberLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+CardNumberLabel/constants/outline_size = 2
+CardNumberLabel/font_sizes/font_size = 44
+CardTagLabel/base_type = &"Label"
+CardTagLabel/colors/font_color = Color(0.82, 0.4, 0.18, 1)
+CardTagLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+CardTagLabel/constants/outline_size = 2
+CardTagLabel/font_sizes/font_size = 22
+CardTitleLabel/base_type = &"Label"
+CardTitleLabel/colors/font_color = Color(0.95, 0.96, 0.98, 1)
+CardTitleLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+CardTitleLabel/constants/outline_size = 2
+CardTitleLabel/font_sizes/font_size = 26
 Divider/base_type = &"Panel"
 Divider/styles/panel = SubResource("StyleBoxLine_551l1")
+DividerVertical/base_type = &"Panel"
+DividerVertical/styles/panel = SubResource("StyleBoxLine_mt1l0")
+GameSubtitleLabel/base_type = &"Label"
+GameSubtitleLabel/colors/font_color = Color(0.78, 0.79, 0.81, 1)
+GameSubtitleLabel/colors/font_outline_color = Color(0, 0, 0, 0.85)
+GameSubtitleLabel/constants/outline_size = 4
+GameSubtitleLabel/font_sizes/font_size = 74
+GameTitleLabel/base_type = &"Label"
+GameTitleLabel/colors/font_color = Color(0.82, 0.4, 0.18, 1)
+GameTitleLabel/colors/font_outline_color = Color(0, 0, 0, 0.85)
+GameTitleLabel/constants/outline_size = 6
+GameTitleLabel/font_sizes/font_size = 200
 InteractionHoldProgress/base_type = &"ProgressBar"
 InteractionHoldProgress/styles/background = SubResource("InteractionProgressBackground")
 InteractionHoldProgress/styles/fill = SubResource("InteractionProgressFill")
@@ -95,11 +211,27 @@ InteractionPromptLabel/font_sizes/font_size = 22
 Label/font_sizes/font_size = 18
 MainHeaderLabel/base_type = &"Label"
 MainHeaderLabel/font_sizes/font_size = 36
+MenuCard/base_type = &"Button"
+MenuCard/colors/font_color = Color(0.72, 0.73, 0.75, 1)
+MenuCard/colors/font_disabled_color = Color(0.32, 0.33, 0.35, 1)
+MenuCard/colors/font_focus_color = Color(1, 1, 1, 1)
+MenuCard/colors/font_hover_color = Color(1, 1, 1, 1)
+MenuCard/colors/font_outline_color = Color(0, 0, 0, 0.8)
+MenuCard/colors/font_pressed_color = Color(1, 1, 1, 1)
+MenuCard/constants/outline_size = 2
+MenuCard/font_sizes/font_size = 24
+MenuCard/styles/disabled = SubResource("MenuCardDisabled")
+MenuCard/styles/focus = SubResource("MenuCardFocus")
+MenuCard/styles/hover = SubResource("MenuCardHover")
+MenuCard/styles/normal = SubResource("MenuCardNormal")
+MenuCard/styles/pressed = SubResource("MenuCardPressed")
 MenuHeaderLabel/base_type = &"Label"
 MenuHeaderLabel/colors/font_color = Color(0.81960785, 0.4, 0.18039216, 1)
 MenuHeaderLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
 MenuHeaderLabel/constants/outline_size = 2
 MenuHeaderLabel/font_sizes/font_size = 32
+MenuPanel/base_type = &"PanelContainer"
+MenuPanel/styles/panel = SubResource("MenuPanelStyle")
 PauseBackLabel/base_type = &"Label"
 PauseBackLabel/colors/font_color = Color(0.68, 0.69, 0.71, 1)
 PauseBackLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
@@ -165,5 +297,10 @@ SettingsVScrollBar/styles/grabber = SubResource("SettingsScrollGrabber")
 SettingsVScrollBar/styles/grabber_highlight = SubResource("SettingsScrollGrabber")
 SettingsVScrollBar/styles/grabber_pressed = SubResource("SettingsScrollGrabber")
 SettingsVScrollBar/styles/scroll = SubResource("SettingsScrollEmpty")
+StartupLabel/base_type = &"Label"
+StartupLabel/colors/font_color = Color(0.95, 0.96, 0.98, 1)
+StartupLabel/colors/font_outline_color = Color(0, 0, 0, 0.8)
+StartupLabel/constants/outline_size = 2
+StartupLabel/font_sizes/font_size = 60
 SubHeaderLabel/base_type = &"Label"
 SubHeaderLabel/font_sizes/font_size = 24

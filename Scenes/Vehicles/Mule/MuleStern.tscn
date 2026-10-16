@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c0qugb31qanoa" path="res://Components/Interaction/interaction_option.gd" id="5_41q1o"]
 [ext_resource type="Script" uid="uid://dffxoy312fs7" path="res://Components/Doors/door_switch_3d.gd" id="6_41q1o"]
 [ext_resource type="Script" uid="uid://ey2qin5odqdt" path="res://Components/Doors/hinged_door_3d.gd" id="7_hatch"]
+[ext_resource type="PackedScene" path="res://Scenes/Vehicles/Mule/MuleLandingGear.tscn" id="8_gear"]
 
 [sub_resource type="Gradient" id="Gradient_ohkxu"]
 interpolation_mode = 1
@@ -30,16 +31,10 @@ size = Vector3(1.375, 0.25, 1.5)
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1794167867]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.125, 0)
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="." unique_id=1630999675]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 2.719, 1.5)
-radius = 1.0
-height = 0.5625
-sides = 12
+[node name="TopRearModule" type="Node3D" parent="." unique_id=642690015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 2.969, 1.5)
 
-[node name="TopRearModule" type="Node3D" parent="CSGCylinder3D" unique_id=642690015]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-
-[node name="MediumTurret3D" parent="CSGCylinder3D/TopRearModule" unique_id=295808033 instance=ExtResource("1_sgmyo")]
+[node name="MediumTurret3D" parent="TopRearModule" unique_id=295808033 instance=ExtResource("1_sgmyo")]
 debug = false
 
 [node name="BlinkingOmniLight3D" type="OmniLight3D" parent="." unique_id=577427643]
@@ -98,3 +93,23 @@ door = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hatch/Hinge/InteractableObject3D" unique_id=863953175]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0625)
 shape = SubResource("BoxShape3D_de0lr")
+
+[node name="LandingGearFrontLeft" parent="." unique_id=1121014512 instance=ExtResource("8_gear")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.15, -1)
+strength = 16.0
+dampening = 0.25
+
+[node name="LandingGearFrontRight" parent="." unique_id=1923621136 instance=ExtResource("8_gear")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.15, -1)
+strength = 16.0
+dampening = 0.25
+
+[node name="LandingGearRearLeft" parent="." unique_id=2064774789 instance=ExtResource("8_gear")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.15, 2)
+strength = 16.0
+dampening = 0.25
+
+[node name="LandingGearRearRight" parent="." unique_id=1446652530 instance=ExtResource("8_gear")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.15, 2)
+strength = 16.0
+dampening = 0.25
